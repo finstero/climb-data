@@ -2,6 +2,9 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
+// material ui
+import Button from '@material-ui/core/Button';
+
 function AddRoute() {
 
     const history = useHistory();
@@ -24,7 +27,11 @@ function AddRoute() {
                         <option key={grade.id} value={grade.id}>{grade.grade}</option>
                     ))}
                 </select>
+                <Button type="submit" variant="contained" color="primary">
+                    Done
+                </Button>
             </form>
+            <Button variant="contained" color="secondary">Cancel</Button>
         </>
     )
 }
