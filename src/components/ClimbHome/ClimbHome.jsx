@@ -1,8 +1,12 @@
+import { useHistory } from 'react-router-dom';
 
 function ClimbHome() {
 
+    const history = useHistory();
+
+    // move user to RoutesHome
     const handleRoutesClick = () => {
-        
+        history.push('/routes/home');
     }
 
     return (

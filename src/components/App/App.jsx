@@ -20,6 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import ClimbHome from '../ClimbHome/ClimbHome';
+import RoutesHome from '../RoutesHome/RoutesHome';
 
 import './App.css';
 
@@ -63,6 +64,13 @@ function App() {
           exact
           path="/climbhome">
             <ClimbHome />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+          exact
+          path="/routes/home"
+          >
+            <RoutesHome />
           </ProtectedRoute>
 
           <ProtectedRoute
