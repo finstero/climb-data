@@ -21,6 +21,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import ClimbHome from '../ClimbHome/ClimbHome';
 import RoutesHome from '../RoutesHome/RoutesHome';
+import AddRoute from '../AddRoute/AddRoute';
 
 import './App.css';
 
@@ -71,6 +72,13 @@ function App() {
           path="/routes/home"
           >
             <RoutesHome />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+          exact
+          path="/routes/add"
+          >
+            <AddRoute />
           </ProtectedRoute>
 
           <ProtectedRoute
