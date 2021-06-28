@@ -7,7 +7,7 @@ function* getGrades () {
     try {
 
     const grades = yield axios.get('/api/grades');
-    yield put({type: 'SET_GRADES', payload: routes.data});
+    yield put({type: 'SET_GRADES', payload: grades.data});
 
     } catch {
 

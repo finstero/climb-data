@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+// import { combineReducers } from 'redux';
 
 
 const gradesReducer = (state = [], action) => {
@@ -10,6 +10,4 @@ const gradesReducer = (state = [], action) => {
     }
 }
 
-export default combineReducers({
-    gradesReducer,
-})
+export default gradesReducer;
