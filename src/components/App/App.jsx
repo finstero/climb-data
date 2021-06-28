@@ -19,6 +19,7 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import ClimbHome from '../ClimbHome/ClimbHome';
 
 import './App.css';
 
@@ -57,7 +58,13 @@ function App() {
           >
             <UserPage />
           </ProtectedRoute>
-          
+
+          <ProtectedRoute
+          exact
+          path="/climbhome">
+            <ClimbHome />
+          </ProtectedRoute>
+
           <ProtectedRoute
             // logged in shows InfoPage else shows LoginPage
             exact
