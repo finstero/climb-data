@@ -25,6 +25,9 @@ import AddRoute from '../AddRoute/AddRoute';
 
 import './App.css';
 
+// material ui
+import '@fontsource/roboto';
+
 function App() {
   const dispatch = useDispatch();
 
