@@ -18,13 +18,13 @@ function AddRoute() {
 
     const history = useHistory();
     const dispatch = useDispatch();
-    const [grade, setGrade] = useState('');
+    const [grade, setGrade] = useState('1');
     const [selectedDate, setSelectedDate] = useState(new Date('2021-06-18T21:11:54'));
-    const [sendStatus, setSendStatus] = useState('');
-    const [rope, setRope] = useState('');
-    const [wall, setWall] = useState('');
-    const [hold, setHold] = useState('');
-    const [flash, setFlash] = useState('');
+    const [sendStatus, setSendStatus] = useState('true');
+    const [rope, setRope] = useState('1');
+    const [wall, setWall] = useState('1');
+    const [hold, setHold] = useState('1');
+    const [flash, setFlash] = useState('true');
     const [notes, setNotes] = useState('');
     const [image, setImage] = useState('');
 
