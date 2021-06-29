@@ -24,18 +24,33 @@ function AddRoute() {
     const [rope, setRope] = useState('');
     const [wall, setWall] = useState('');
     const [hold, setHold] = useState('');
-    const [flashed, setFlashed] = useState('');
+    const [flash, setFlash] = useState('');
     const [notes, setNotes] = useState('');
     const [image, setImage] = useState('');
 
     useEffect(() => {
         dispatch({
             type: 'FETCH_GRADES'
-        },
-            {
-                type: 'FETCH_WALL_TYPES'
-            })
+        })
     }, []);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        dispatch({
+            type: 'ADD_ROUTE',
+            payload: {
+                ysd_id: grade,
+                date: selectedDate,
+                sent: sendStatus,
+                rope_type_id: rope,
+                wall_id: wall,
+                holds_id: hold,
+                flash: flash,
+                notes: notes,
+                image: image
+            }
+        })
+    }
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
@@ -49,9 +64,9 @@ function AddRoute() {
 
     return (
         <>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <label for="grades">Choose a grade:</label>
-                <select onChange={(event) => {setGrade(event.target.value)}} name="grades" id="grades">
+                <select onChange={(event) => {setGrade(event.target.value)}} value={grade} name="grades" id="grades">
                     {grades.map(grade => (
                         <option key={grade.id} value={grade.id}>{grade.grade}</option>
                     ))}
@@ -74,36 +89,36 @@ function AddRoute() {
                     </Grid>
                 </MuiPickersUtilsProvider>
                 <label for="sent">Send status:</label>
-                <select onChange={(event) => {setSendStatus(event.target.value)}} name="sent" id="sent">
-                    <option value="sent">sent</option>
-                    <option value="project">project</option>
+                <select onChange={(event) => {setSendStatus(event.target.value)}} value={sendStatus} name="sent" id="sent">
+                    <option value="true">sent</option>
+                    <option value="false">project</option>
                 </select>
                 <label for="rope">Type of climb:</label>
-                <select onChange={(event) => {setRope(event.target.value)}} name="rope" id="rope">
-                    <option value="top rope">top rope</option>
-                    <option value="lead">lead</option>
-                    <option value="autobelay">autobelay</option>
+                <select onChange={(event) => {setRope(event.target.value)}} value={rope} name="rope" id="rope">
+                    <option value="1">top rope</option>
+                    <option value="2">lead</option>
+                    <option value="3">autobelay</option>
                 </select>
                 <label for="wall">Wall angle:</label>
-                <select onChange={(event) => {setWall(event.target.value)}} name="wall" id="wall">
-                    <option value="slab">slab</option>
-                    <option value="vertical">vertical</option>
-                    <option value="overhang">overhang</option>
+                <select onChange={(event) => {setWall(event.target.value)}} value={wall} name="wall" id="wall">
+                    <option value="1">slab</option>
+                    <option value="2">vertical</option>
+                    <option value="3">overhang</option>
                 </select>
                 <label for="hold">Main hold type:</label>
-                <select onChange={(event) => {setHold(event.target.value)}} name="hold" id="hold">
-                    <option value="crimps">crimps</option>
-                    <option value="slopers">slopers</option>
-                    <option value="pinches">pinches</option>
-                    <option value="jugs">jugs</option>
+                <select onChange={(event) => {setHold(event.target.value)}} value={hold} name="hold" id="hold">
+                    <option value="1">crimps</option>
+                    <option value="2">slopers</option>
+                    <option value="3">jugs</option>
+                    <option value="4">pinches</option>
                 </select>
                 <label for="flash">Flashed?</label>
-                <select onChange={(event) => {setFlashed(event.target.value)}} name="flash" id="flash">
+                <select onChange={(event) => {setFlash(event.target.value)}} value={flash} name="flash" id="flash">
                     <option value="true">yes</option>
                     <option value="false">no</option>
                 </select>
-                <TextField onChange={(event) => {setNotes(event.target.value)}} id="outlined-basic" label="notes" variant="outlined" />
-                <TextField onChange={(event) => {setImage(event.target.value)}} id="outlined-basic" label="image url" variant="outlined" />
+                <TextField onChange={(event) => {setNotes(event.target.value)}} value={notes} id="outlined-basic" label="notes" variant="outlined" />
+                <TextField onChange={(event) => {setImage(event.target.value)}} value={image} id="outlined-basic" label="image url" variant="outlined" />
                 <Button type="submit" variant="contained" color="primary">
                     Done
                 </Button>
