@@ -51,6 +51,9 @@ function AddRoute() {
                 image: image
             }
         })
+        setGrade('1');
+        setNotes('');
+        setImage('');
     }
 
     const handleDateChange = (date) => {
