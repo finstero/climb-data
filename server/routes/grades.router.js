@@ -5,10 +5,12 @@ const router = express.Router();
 
 // /api/grades
 router.get('/', (req, res) => {
-    const query = `SELECT * FROM "ysd";`;
 
-    console.log('in get in grades router');
-    pool.query(query)
+    const query = `SELECT * FROM $1;`;
+
+    console.log('in get in grades router, query', req.query.gradeScheme);
+
+    pool.query(query, [req.query.gradeScheme])
     .then(result => {
         console.log('result.rows in grades get router', result.rows);
         res.send(result.rows);
