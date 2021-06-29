@@ -1,7 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
-function* getGrades () {
+function* getAddOptions () {
 
     try {
 
@@ -16,8 +16,8 @@ function* getGrades () {
 
 }
 
-function* gradesSaga () {
-    yield takeLatest('FETCH_GRADES', getGrades);
+function* addOptionsSaga () {
+    yield takeLatest('FETCH_ADD_OPTIONS', getAddOptions);
 }
 
-export default gradesSaga;
+export default addOptionsSaga;
