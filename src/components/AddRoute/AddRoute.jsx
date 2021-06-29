@@ -18,17 +18,32 @@ function AddRoute() {
 
     const history = useHistory();
     const dispatch = useDispatch();
+    const [grade, setGrade] = useState('');
     const [selectedDate, setSelectedDate] = useState(new Date('2021-06-18T21:11:54'));
+    const [sendStatus, setSendStatus] = useState('');
+    const [rope, setRope] = useState('');
+    const [wall, setWall] = useState('');
+    const [hold, setHold] = useState('');
+    const [flashed, setFlashed] = useState('');
+    const [notes, setNotes] = useState('');
+    const [image, setImage] = useState('');
 
     useEffect(() => {
         dispatch({
             type: 'FETCH_GRADES'
-        })
+        },
+            {
+                type: 'FETCH_WALL_TYPES'
+            })
     }, []);
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
     };
+
+    const handleCancel = () => {
+        history.push('/routes/home')
+    }
 
     const grades = useSelector(store => store.gradesReducer)
 
@@ -36,7 +51,7 @@ function AddRoute() {
         <>
             <form>
                 <label for="grades">Choose a grade:</label>
-                <select name="grades" id="grades">
+                <select onChange={(event) => {setGrade(event.target.value)}} name="grades" id="grades">
                     {grades.map(grade => (
                         <option key={grade.id} value={grade.id}>{grade.grade}</option>
                     ))}
@@ -59,33 +74,42 @@ function AddRoute() {
                     </Grid>
                 </MuiPickersUtilsProvider>
                 <label for="sent">Send status:</label>
-                <select name="sent" id="sent">
-
+                <select onChange={(event) => {setSendStatus(event.target.value)}} name="sent" id="sent">
+                    <option value="sent">sent</option>
+                    <option value="project">project</option>
                 </select>
                 <label for="rope">Type of climb:</label>
-                <select name="rope" id="rope">
-
+                <select onChange={(event) => {setRope(event.target.value)}} name="rope" id="rope">
+                    <option value="top rope">top rope</option>
+                    <option value="lead">lead</option>
+                    <option value="autobelay">autobelay</option>
                 </select>
                 <label for="wall">Wall angle:</label>
-                <select name="wall" id="wall">
-
+                <select onChange={(event) => {setWall(event.target.value)}} name="wall" id="wall">
+                    <option value="slab">slab</option>
+                    <option value="vertical">vertical</option>
+                    <option value="overhang">overhang</option>
                 </select>
                 <label for="hold">Main hold type:</label>
-                <select name="hold" id="hold">
-
+                <select onChange={(event) => {setHold(event.target.value)}} name="hold" id="hold">
+                    <option value="crimps">crimps</option>
+                    <option value="slopers">slopers</option>
+                    <option value="pinches">pinches</option>
+                    <option value="jugs">jugs</option>
                 </select>
                 <label for="flash">Flashed?</label>
-                <select name="flash" id="flash">
-
+                <select onChange={(event) => {setFlashed(event.target.value)}} name="flash" id="flash">
+                    <option value="true">yes</option>
+                    <option value="false">no</option>
                 </select>
-                <TextField id="outlined-basic" label="notes" variant="outlined" />
-                <TextField id="outlined-basic" label="image url" variant="outlined" />
+                <TextField onChange={(event) => {setNotes(event.target.value)}} id="outlined-basic" label="notes" variant="outlined" />
+                <TextField onChange={(event) => {setImage(event.target.value)}} id="outlined-basic" label="image url" variant="outlined" />
                 <Button type="submit" variant="contained" color="primary">
                     Done
                 </Button>
 
             </form>
-            <Button variant="contained" color="secondary">Cancel</Button>
+            <Button onClick={handleCancel} variant="contained" color="secondary">Cancel</Button>
         </>
     )
 }
