@@ -5,7 +5,7 @@ function* postRoute (action) {
     console.log('action.payload in postRoute saga function',action.payload);
     try {
 
-    yield axios.post('/api/route', action.payload);
+    yield axios.post('/api/routes', action.payload);
     // yield put({type: 'FETCH_ROUTES', payload: ??.data}); // ADD LATER
 
     } catch {

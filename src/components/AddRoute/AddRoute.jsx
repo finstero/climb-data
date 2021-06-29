@@ -19,7 +19,7 @@ function AddRoute() {
     const history = useHistory();
     const dispatch = useDispatch();
     const [grade, setGrade] = useState('1');
-    const [selectedDate, setSelectedDate] = useState(new Date('2021-06-18T21:11:54'));
+    const [selectedDate, setSelectedDate] = useState(new Date('2021-06-18T11:11:54'));
     const [sendStatus, setSendStatus] = useState('true');
     const [rope, setRope] = useState('1');
     const [wall, setWall] = useState('1');
@@ -53,6 +53,7 @@ function AddRoute() {
     }
 
     const handleDateChange = (date) => {
+
         setSelectedDate(date);
     };
 
