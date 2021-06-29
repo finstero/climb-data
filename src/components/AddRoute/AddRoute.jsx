@@ -12,6 +12,7 @@ import {
     KeyboardTimePicker,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
+import TextField from '@material-ui/core/TextField';
 
 function AddRoute() {
 
@@ -48,7 +49,7 @@ function AddRoute() {
                             format="MM/dd/yyyy"
                             margin="normal"
                             id="date-picker-inline"
-                            label="Date picker inline"
+                            label="Date"
                             value={selectedDate}
                             onChange={handleDateChange}
                             KeyboardButtonProps={{
@@ -57,9 +58,32 @@ function AddRoute() {
                         />
                     </Grid>
                 </MuiPickersUtilsProvider>
+                <label for="sent">Send status:</label>
+                <select name="sent" id="sent">
+
+                </select>
+                <label for="rope">Type of climb:</label>
+                <select name="rope" id="rope">
+
+                </select>
+                <label for="wall">Wall angle:</label>
+                <select name="wall" id="wall">
+
+                </select>
+                <label for="hold">Main hold type:</label>
+                <select name="hold" id="hold">
+
+                </select>
+                <label for="flash">Flashed?</label>
+                <select name="flash" id="flash">
+
+                </select>
+                <TextField id="outlined-basic" label="notes" variant="outlined" />
+                <TextField id="outlined-basic" label="image url" variant="outlined" />
                 <Button type="submit" variant="contained" color="primary">
                     Done
                 </Button>
+
             </form>
             <Button variant="contained" color="secondary">Cancel</Button>
         </>
