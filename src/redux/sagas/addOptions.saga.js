@@ -1,7 +1,22 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
-function* getAddOptions (action) {
+function* getAddOptions () {
+    console.log('in getAddOptions');
+    try {
+
+    const grades = yield axios.get(`/api/grades`);
+    yield put({type: 'SET_GRADES', payload: grades.data});
+
+    } catch {
+
+        console.log('error in getAddOptions saga');
+
+    }
+
+}
+
+function* getGradeScheme (action) {
     console.log('in getAddOptions action.payload', action.payload);
     try {
 
@@ -18,6 +33,7 @@ function* getAddOptions (action) {
 
 function* addOptionsSaga () {
     yield takeLatest('FETCH_ADD_OPTIONS', getAddOptions);
+    yield takeLatest('FETCH_GRADE_SCHEME', getGradeScheme);
 }
 
 export default addOptionsSaga;

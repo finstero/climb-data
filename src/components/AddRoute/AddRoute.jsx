@@ -18,7 +18,7 @@ function AddRoute() {
 
     const history = useHistory();
     const dispatch = useDispatch();
-    const [gradeScheme, setGradeScheme] = useState('ysd');
+    // const [gradeScheme, setGradeScheme] = useState('ysd');
     const [grade, setGrade] = useState('1');
     const [selectedDate, setSelectedDate] = useState(new Date('2021-06-18T11:11:54'));
     const [sendStatus, setSendStatus] = useState('true');
@@ -29,21 +29,18 @@ function AddRoute() {
     const [notes, setNotes] = useState('');
     const [image, setImage] = useState('');
 
-    useEffect(() => {
-        dispatch({
-            type: 'FETCH_ADD_OPTIONS',
-            payload: {
-                gradeScheme: gradeScheme,
-            }
-        })
-    }, []);
+    // useEffect(() => {
+    //     dispatch({
+    //         type: 'FETCH_ADD_OPTIONS',
+    //     })
+    // }, []);
 
     const handleSubmit = (event) => {
         event.preventDefault();
         dispatch({
             type: 'ADD_ROUTE',
             payload: {
-                ysd_id: grade,
+                grades_id: grade,
                 date: selectedDate,
                 sent: sendStatus,
                 rope_type_id: rope,
@@ -62,7 +59,7 @@ function AddRoute() {
     };
 
     const handleCancel = () => {
-        history.push('/routes/home')
+        history.goBack();
     }
 
     const grades = useSelector(store => store.addRouteOptions.gradesReducer)
@@ -70,12 +67,6 @@ function AddRoute() {
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="grades-scheme">Grading scheme:</label>
-                <select onChange={(event) => { setGradeScheme(event.target.value) }} value={gradeScheme} name="grades-scheme" id="grades-scheme">
-                    <option value="ysd">yosemite decimal system</option>
-                    <option value="ysd_simple">yosemite decimal system - simple</option>
-                    <option value="french">french</option>
-                </select>
                 <label htmlFor="grades">Choose a grade:</label>
                 <select onChange={(event) => { setGrade(event.target.value) }} value={grade} name="grades" id="grades">
                     {grades.map(grade => (

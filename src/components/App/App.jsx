@@ -22,6 +22,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import ClimbHome from '../ClimbHome/ClimbHome';
 import RoutesHome from '../RoutesHome/RoutesHome';
 import AddRoute from '../AddRoute/AddRoute';
+import GradeScheme from '../GradeScheme/GradeScheme';
 
 import './App.css';
 
@@ -75,6 +76,13 @@ function App() {
           path="/routes/home"
           >
             <RoutesHome />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+          exact
+          path="/routes/grades"
+          >
+            <GradeScheme />
           </ProtectedRoute>
 
           <ProtectedRoute

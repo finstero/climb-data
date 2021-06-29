@@ -5,7 +5,7 @@ function RoutesHome() {
     const history = useHistory();
 
     const handleAdd = () => {
-        history.push('/routes/add')
+        history.push('/routes/grades')
     }
 
     return (

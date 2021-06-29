@@ -23,11 +23,11 @@ const router = express.Router();
 router.post('/', (req, res) => {
     console.log('req.body in routes post', req.body);
     const insertRouteQuery = 
-        ` INSERT INTO "routes" ("notes", "image", "flash", "sent", "date", "user_id", "ysd_id", "rope_type_id")
+        ` INSERT INTO "routes" ("notes", "image", "flash", "sent", "date", "user_id", "grades_id", "rope_type_id")
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         RETURNING "id";`;
 
-    pool.query(insertRouteQuery, [req.body.notes, req.body.image, req.body.flash, req.body.sent, req.body.date, req.user.id, req.body.ysd_id, req.body.rope_type_id])
+    pool.query(insertRouteQuery, [req.body.notes, req.body.image, req.body.flash, req.body.sent, req.body.date, req.user.id, req.body.grades_id, req.body.rope_type_id])
     .then(result => {
         console.log('result in climbingRoutes post', result);
         console.log('created route id', result.rows[0].id);
