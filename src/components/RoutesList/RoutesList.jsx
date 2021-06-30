@@ -9,6 +9,13 @@ function RoutesList () {
 
     const allRoutes = useSelector(store => store.routes.allRoutes);
 
+    const handleRouteClick = (route) => {
+        console.log('clicked');
+        dispatch({
+            type: 'FETCH_ONE_ROUTE'
+        })
+        history.push(`/routes/details/${route.id}`)
+    }
 
 useEffect(() => {
     dispatch({
@@ -20,7 +27,7 @@ useEffect(() => {
         <>
             <ul>
                 {allRoutes.map(route => (
-                    <li>{route.grade}, {route.date.slice(0,10)}, {route.type}</li>
+                    <li key={route.id}onClick={() => handleRouteClick(route)}>{route.grade}, {route.date.slice(0,10)}, {route.type}</li>
                 ))}
             </ul>
         </>

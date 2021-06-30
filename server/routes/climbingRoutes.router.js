@@ -11,18 +11,20 @@ router.get('/latest', rejectUnauthenticated, (req, res) => {
     const query = `SELECT "routes".id, "routes".notes, "routes".image, "routes".flash, "routes".sent, 
                     "routes".date, "grades".grade, "grades".type, "rope".type, "wall".angle, 
                     "holds".type FROM "routes"
+                    JOIN "user" ON "user".id = "routes".user_id
                     JOIN "grades" ON "grades".id = "routes".grades_id
                     JOIN "rope" ON "rope".id = "routes".rope_type_id
                     JOIN "routes_holds" ON "routes_holds".routes_id = "routes".id
                     JOIN "holds" ON "routes_holds".holds_id = "holds".id
                     JOIN "routes_wall" ON "routes_wall".routes_id = "routes".id
                     JOIN "wall" ON "routes_wall".wall_id = "wall".id
+                    WHERE "user".id = $1
                     ORDER BY "routes".id DESC
                     LIMIT 1
                     ;`;
 
     console.log('in get in grades latest router');
-    pool.query(query)
+    pool.query(query, [req.user.id])
     .then(result => {
         console.log('result.rows in grades get router', result.rows);
         res.send(result.rows);
@@ -36,21 +38,23 @@ router.get('/latest', rejectUnauthenticated, (req, res) => {
 router.get('/', rejectUnauthenticated, (req, res) => {
 
     const getAllRoutesQuery = 
-    `SELECT "routes".id, "routes".notes, "routes".image, "routes".flash, "routes".sent, 
-    "routes".date, "grades".grade, "grades".type, "grades".id, "rope".type, "wall".angle, 
-    "holds".type FROM "routes"
-    JOIN "grades" ON "grades".id = "routes".grades_id
-    JOIN "rope" ON "rope".id = "routes".rope_type_id
-    JOIN "routes_holds" ON "routes_holds".routes_id = "routes".id
-    JOIN "holds" ON "routes_holds".holds_id = "holds".id
-    JOIN "routes_wall" ON "routes_wall".routes_id = "routes".id
-    JOIN "wall" ON "routes_wall".wall_id = "wall".id
-    ORDER BY "grades".Id ASC
-    ;`;
+                `SELECT "routes".id, "routes".notes, "routes".image, "routes".flash, "routes".sent, 
+                "routes".date, "grades".grade, "grades".type, "grades".id AS "grades_id", "rope".type, "wall".angle, 
+                "holds".type FROM "routes"
+                JOIN "user" ON "user".id = "routes".user_id
+                JOIN "grades" ON "grades".id = "routes".grades_id
+                JOIN "rope" ON "rope".id = "routes".rope_type_id
+                JOIN "routes_holds" ON "routes_holds".routes_id = "routes".id
+                JOIN "holds" ON "routes_holds".holds_id = "holds".id
+                JOIN "routes_wall" ON "routes_wall".routes_id = "routes".id
+                JOIN "wall" ON "routes_wall".wall_id = "wall".id
+                WHERE "user".id = $1
+                ORDER BY "grades".id ASC
+                ;`;
 
-    pool.query(getAllRoutesQuery)
+    pool.query(getAllRoutesQuery, [req.user.id])
     .then(result => {
-        // console.log('all routes', result.rows);
+        console.log('all routes', result.rows);
         res.send(result.rows);
     })
     .catch(error => {
