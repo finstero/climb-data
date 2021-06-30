@@ -13,11 +13,25 @@ function* postRoute (action) {
         console.log('error in postRoute saga');
 
     }
-
 }
 
-function* postRouteSaga () {
+function* getRoute () {
+    console.log('in getRoute saga');
+    try {
+
+        yield axios.get('/api/routes');
+        // yield put({type: 'FETCH_ROUTES', payload: ??.data}); // ADD LATER
+    
+        } catch {
+    
+            console.log('error in getRoute saga');
+    
+        }
+}
+
+function* routesSaga () {
     yield takeLatest('ADD_ROUTE', postRoute);
+    yield takeLatest('FETCH_ROUTE', getRoute);
 }
 
-export default postRouteSaga;
+export default routesSaga;
