@@ -6,7 +6,7 @@ const {
 } = require('../modules/authentication-middleware');
 
 
-//api/routes/latest
+// api/routes/latest
 router.get('/latest', rejectUnauthenticated, (req, res) => {
     const query = `SELECT "routes".id, "routes".notes, "routes".image, "routes".flash, "routes".sent, 
                     "routes".date, "grades".grade, "grades".type, "rope".type, "wall".angle, 
@@ -46,11 +46,11 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     JOIN "routes_wall" ON "routes_wall".routes_id = "routes".id
     JOIN "wall" ON "routes_wall".wall_id = "wall".id
     ORDER BY "grades".Id ASC
-    ;`
+    ;`;
 
     pool.query(getAllRoutesQuery)
     .then(result => {
-        console.log('all routes', result.rows);
+        // console.log('all routes', result.rows);
         res.send(result.rows);
     })
     .catch(error => {

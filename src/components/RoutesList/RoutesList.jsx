@@ -14,7 +14,7 @@ useEffect(() => {
     dispatch({
         type: 'FETCH_ALL_ROUTES'
     })
-})
+}, []);
 
     return(
         <>
