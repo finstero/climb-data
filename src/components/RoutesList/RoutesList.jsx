@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 function RoutesList() {
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const allRoutes = useSelector(store => store.routes.allRoutes);
 
@@ -14,7 +15,7 @@ function RoutesList() {
         console.log('clicked');
         dispatch({
             type: 'FETCH_ONE_ROUTE',
-            payload: ''
+            payload: {id: route.id}
         })
         history.push(`/routes/details/${route.id}`)
     }

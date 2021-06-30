@@ -114,7 +114,7 @@ function App() {
           path="/routes/details/:id"
           children={<RouteDetails />}
           >
-            <RoutesList />
+            <RouteDetails />
           </ProtectedRoute>
 
           <ProtectedRoute

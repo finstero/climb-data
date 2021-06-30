@@ -38,7 +38,30 @@ router.get('/latest', rejectUnauthenticated, (req, res) => {
 
 // gets route details for route clicked on by user
 router.get('/details/:id', rejectUnauthenticated, (req, res) => {
+    console.log('hopefully id', req.params);
 
+    const query = 
+                `SELECT "routes".id, "routes".notes, "routes".image, "routes".flash, "routes".sent, 
+                "routes".date, "grades".grade, "grades".type, "rope".type, "wall".angle, 
+                "holds".type FROM "routes"
+                JOIN "user" ON "user".id = "routes".user_id
+                JOIN "grades" ON "grades".id = "routes".grades_id
+                JOIN "rope" ON "rope".id = "routes".rope_type_id
+                JOIN "routes_holds" ON "routes_holds".routes_id = "routes".id
+                JOIN "holds" ON "routes_holds".holds_id = "holds".id
+                JOIN "routes_wall" ON "routes_wall".routes_id = "routes".id
+                JOIN "wall" ON "routes_wall".wall_id = "wall".id
+                WHERE "user".id = $1 AND "routes".id = $2
+                ;`
+        pool.query(query, [req.user.id, req.params.id])
+        .then(result => {
+            console.log('one route', result.rows);
+            res.send(result.rows);
+        })
+        .catch(error => {
+            console.log('error in get oneRoute', error);
+            res.sendStatus(500);
+        })
 })
 
 // gets all routes for user
