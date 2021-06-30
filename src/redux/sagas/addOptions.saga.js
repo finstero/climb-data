@@ -16,6 +16,7 @@ import axios from 'axios';
 
 // }
 
+// handles grabbing all grades for one grade type
 function* getGradeScheme (action) {
     console.log('in getAddOptions action.payload', action.payload);
     try {

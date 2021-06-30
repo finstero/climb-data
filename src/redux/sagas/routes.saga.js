@@ -1,6 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
+// handles posting route
 function* postRoute (action) {
     console.log('action.payload in postRoute saga function',action.payload);
     try {
@@ -15,6 +16,7 @@ function* postRoute (action) {
     }
 }
 
+// handles one route - last to be added by user
 function* getLatestRoute () {
     console.log('in getRoute saga');
     try {
