@@ -7,6 +7,7 @@ const {
 
 
 // api/routes/latest
+// gets latest route posted by user
 router.get('/latest', rejectUnauthenticated, (req, res) => {
     const query = `SELECT "routes".id, "routes".notes, "routes".image, "routes".flash, "routes".sent, 
                     "routes".date, "grades".grade, "grades".type, "rope".type, "wall".angle, 
@@ -35,6 +36,12 @@ router.get('/latest', rejectUnauthenticated, (req, res) => {
     })
 });
 
+// gets route details for route clicked on by user
+router.get('/details/:id', rejectUnauthenticated, (req, res) => {
+
+})
+
+// gets all routes for user
 router.get('/', rejectUnauthenticated, (req, res) => {
 
     const getAllRoutesQuery = 
@@ -65,6 +72,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 })
 
 // /api/routes
+// posts one route 
 router.post('/', rejectUnauthenticated, (req, res) => {
     console.log('req.body in routes post', req.body);
     const insertRouteQuery = 
