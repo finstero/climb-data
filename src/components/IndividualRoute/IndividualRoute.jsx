@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
@@ -10,6 +10,7 @@ function IndividualRoute() {
 
     const dispatch = useDispatch();
     const history = useHistory();
+    // const { id } = useParams();
     const latestRoute = useSelector(store => store.routes.latestRoute);
 
     // useEffect(() => {
@@ -27,7 +28,7 @@ function IndividualRoute() {
             <h2>Last Route Added</h2>
             {latestRoute.map(route => (
                 <div key={route.id}>
-                    <h3>{route.date}</h3>
+                    <h3>{route.date.slice(0,10)}</h3>
                     <p>Grade: {route.grade}</p>
                     <p>Climb type: {route.angle}</p>
                     <p>Flash: {route.flash}</p>

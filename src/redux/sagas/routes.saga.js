@@ -19,7 +19,7 @@ function* getLatestRoute () {
     console.log('in getRoute saga');
     try {
 
-        const latestRoute = yield axios.get('/api/routes/latest');
+        const latestRoute = yield axios.get('/api/routes/latest'); // want :id to be {actual id}
         yield put({type: 'SET_LATEST_ROUTE', payload: latestRoute.data});
         console.log('getLatestRoute saga', latestRoute.data);
         } catch {
