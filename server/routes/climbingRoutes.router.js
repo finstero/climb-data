@@ -1,10 +1,13 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const {
+    rejectUnauthenticated,
+} = require('../modules/authentication-middleware');
 
 
 //api/routes/latest
-router.get('/latest', (req, res) => {
+router.get('/latest', rejectUnauthenticated, (req, res) => {
     const query = `SELECT "routes".id, "routes".notes, "routes".image, "routes".flash, "routes".sent, 
                     "routes".date, "grades".grade, "grades".type, "rope".type, "wall".angle, 
                     "holds".type FROM "routes"
@@ -30,8 +33,35 @@ router.get('/latest', (req, res) => {
     })
 });
 
+router.get('/', rejectUnauthenticated, (req, res) => {
+
+    const getAllRoutesQuery = 
+    `SELECT "routes".id, "routes".notes, "routes".image, "routes".flash, "routes".sent, 
+    "routes".date, "grades".grade, "grades".type, "grades".id, "rope".type, "wall".angle, 
+    "holds".type FROM "routes"
+    JOIN "grades" ON "grades".id = "routes".grades_id
+    JOIN "rope" ON "rope".id = "routes".rope_type_id
+    JOIN "routes_holds" ON "routes_holds".routes_id = "routes".id
+    JOIN "holds" ON "routes_holds".holds_id = "holds".id
+    JOIN "routes_wall" ON "routes_wall".routes_id = "routes".id
+    JOIN "wall" ON "routes_wall".wall_id = "wall".id
+    ORDER BY "grades".Id ASC
+    ;`
+
+    pool.query(getAllRoutesQuery)
+    .then(result => {
+        console.log('all routes', result.rows);
+        res.send(result.rows);
+    })
+    .catch(error => {
+        console.log('error in get all routes', error);
+        res.sendStatus(500);
+    })
+
+})
+
 // /api/routes
-router.post('/', (req, res) => {
+router.post('/', rejectUnauthenticated, (req, res) => {
     console.log('req.body in routes post', req.body);
     const insertRouteQuery = 
         ` INSERT INTO "routes" ("notes", "image", "flash", "sent", "date", "user_id", "grades_id", "rope_type_id")

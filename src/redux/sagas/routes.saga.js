@@ -31,9 +31,20 @@ function* getLatestRoute () {
         }
 }
 
+function* getAllRoutes () {
+    console.log('in getAllRoutes saga');
+    try {
+        const allRoutes = yield axios.get('/api/routes');
+        yield put({type: 'SET_ALL_ROUTES', payload: allRoutes.data})
+    } catch{
+        console.log('error in getAllRoutes saga');
+    }
+}
+
 function* routesSaga () {
     yield takeLatest('ADD_ROUTE', postRoute);
     yield takeLatest('FETCH_LATEST_ROUTE', getLatestRoute);
+    yield takeLatest('FETCH_ALL_ROUTES', getAllRoutes);
 }
 
 export default routesSaga;
