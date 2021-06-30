@@ -10,7 +10,7 @@ const {
 // gets latest route posted by user
 router.get('/latest', rejectUnauthenticated, (req, res) => {
     const query = `SELECT "routes".id, "routes".notes, "routes".image, "routes".flash, "routes".sent, 
-                    "routes".date, "grades".grade, "grades".type, "rope".type, "wall".angle, 
+                    "routes".date, "grades".grade, "grades".type, "rope".type AS "rope_type", "wall".angle, 
                     "holds".type FROM "routes"
                     JOIN "user" ON "user".id = "routes".user_id
                     JOIN "grades" ON "grades".id = "routes".grades_id
@@ -42,7 +42,7 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
 
     const query = 
                 `SELECT "routes".id, "routes".notes, "routes".image, "routes".flash, "routes".sent, 
-                "routes".date, "grades".grade, "grades".type, "rope".type, "wall".angle, 
+                "routes".date, "grades".grade, "grades".type, "rope".type AS "rope_type", "wall".angle, 
                 "holds".type FROM "routes"
                 JOIN "user" ON "user".id = "routes".user_id
                 JOIN "grades" ON "grades".id = "routes".grades_id
@@ -69,7 +69,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
     const getAllRoutesQuery = 
                 `SELECT "routes".id, "routes".notes, "routes".image, "routes".flash, "routes".sent, 
-                "routes".date, "grades".grade, "grades".type, "grades".id AS "grades_id", "rope".type, "wall".angle, 
+                "routes".date, "grades".grade, "grades".type, "grades".id AS "grades_id", "rope".type AS "rope_type", "wall".angle, 
                 "holds".type FROM "routes"
                 JOIN "user" ON "user".id = "routes".user_id
                 JOIN "grades" ON "grades".id = "routes".grades_id

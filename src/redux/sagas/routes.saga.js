@@ -40,7 +40,6 @@ function* getOneRoute(action) {
     } catch {
         console.log('error in getOneRoute saga');
     }
-
 }
 
 function* getAllRoutes() {

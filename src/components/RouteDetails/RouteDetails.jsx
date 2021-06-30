@@ -1,26 +1,43 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
-function RouteDetails () {
+// material ui
+import Button from '@material-ui/core/Button';
+
+function RouteDetails() {
 
     const dispatch = useDispatch();
+    const history = useHistory();
+    const route = useSelector(store => store.routes.oneRoute);
 
-    const oneRoute = useSelector(store => store.routes.oneRoute);
-
-    const {id} = useParams();
+    const { id } = useParams();
 
     useEffect(() => {
         dispatch({
             type: 'FETCH_ONE_ROUTE',
-            payload: {id: id}
+            payload: { id: id }
         })
     }, []);
 
-    return(
+    const handleBack = () => {
+        history.goBack();
+    }
+
+    return (
         <>
-            <h1>{oneRoute.grade}</h1>
-            <h2>Hello</h2>
+            <h1>{route?.date?.slice(0,10)}</h1>
+            <p>Grade: {route.grade}</p>
+            <p>Climb type: {route.rope_type}</p>
+            <p>Wall angle: {route.angle}</p>
+            <p>Flash: {route.flash}</p>
+            <p>Sent: {route.sent}</p>
+            <p>Main hold type: {route.type}</p>
+            <p>Notes: {route.notes}</p>
+            <p>Image: {route.image}</p>
+            <Button>Delete</Button>
+            <Button>Edit</Button>
+            <Button onClick={handleBack}>Back</Button>
         </>
     )
 }
