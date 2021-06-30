@@ -54,6 +54,7 @@ function AddRoute() {
         setGrade('1');
         setNotes('');
         setImage('');
+        history.push('/routes/individual');
     }
 
     const handleDateChange = (date) => {

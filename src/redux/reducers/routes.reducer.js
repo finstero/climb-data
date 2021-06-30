@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-// stores grades of one grade type
-const gradesReducer = (state = [], action) => {
+// stores last route added by user
+const latestRoute = (state = [], action) => {
     switch(action.type) {
-        case 'SET_GRADES':
+        case 'SET_LATEST_ROUTE':
             return action.payload;
         default:
             return state;
@@ -11,5 +11,5 @@ const gradesReducer = (state = [], action) => {
 }
 
 export default combineReducers({
-    gradesReducer,
+    latestRoute,
 });

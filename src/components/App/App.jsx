@@ -23,6 +23,7 @@ import ClimbHome from '../ClimbHome/ClimbHome';
 import RoutesHome from '../RoutesHome/RoutesHome';
 import AddRoute from '../AddRoute/AddRoute';
 import GradeScheme from '../GradeScheme/GradeScheme';
+import IndividualRoute from '../IndividualRoute/IndividualRoute';
 
 import './App.css';
 
@@ -90,6 +91,13 @@ function App() {
           path="/routes/add"
           >
             <AddRoute />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+          exact
+          path="/routes/individual"
+          >
+            <IndividualRoute />
           </ProtectedRoute>
 
           <ProtectedRoute
