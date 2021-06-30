@@ -3,21 +3,32 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 
-// /api/routes
-// router.get('/', (req, res) => {
-//     const query = `SELECT * FROM "ysd";`;
+//api/routes/latest
+router.get('/latest', (req, res) => {
+    const query = `SELECT "routes".id, "routes".notes, "routes".image, "routes".flash, "routes".sent, 
+                    "routes".date, "grades".grade, "grades".type, "rope".type, "wall".angle, 
+                    "holds".type FROM "routes"
+                    JOIN "grades" ON "grades".id = "routes".grades_id
+                    JOIN "rope" ON "rope".id = "routes".rope_type_id
+                    JOIN "routes_holds" ON "routes_holds".routes_id = "routes".id
+                    JOIN "holds" ON "routes_holds".holds_id = "holds".id
+                    JOIN "routes_wall" ON "routes_wall".routes_id = "routes".id
+                    JOIN "wall" ON "routes_wall".wall_id = "wall".id
+                    ORDER BY "routes".id DESC
+                    LIMIT 1
+                    ;`;
 
-//     console.log('in get in grades router');
-//     pool.query(query)
-//     .then(result => {
-//         console.log('result.rows in grades get router', result.rows);
-//         res.send(result.rows);
-//     })
-//     .catch(error => {
-//         console.log('error in grades router get', error);
-//         res.sendStatus(500);
-//     })
-// });
+    console.log('in get in grades latest router');
+    pool.query(query)
+    .then(result => {
+        console.log('result.rows in grades get router', result.rows);
+        res.send(result.rows);
+    })
+    .catch(error => {
+        console.log('error in grades router get', error);
+        res.sendStatus(500);
+    })
+});
 
 // /api/routes
 router.post('/', (req, res) => {

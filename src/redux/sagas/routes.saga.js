@@ -6,7 +6,7 @@ function* postRoute (action) {
     try {
 
     yield axios.post('/api/routes', action.payload);
-    // yield put({type: 'FETCH_ROUTES', payload: ??.data}); // ADD LATER
+    yield put({type: 'FETCH_LATEST_ROUTE'});
 
     } catch {
 
@@ -15,23 +15,23 @@ function* postRoute (action) {
     }
 }
 
-function* getRoute () {
+function* getLatestRoute () {
     console.log('in getRoute saga');
     try {
 
-        yield axios.get('/api/routes');
-        // yield put({type: 'FETCH_ROUTES', payload: ??.data}); // ADD LATER
-    
+        const latestRoute = yield axios.get('/api/routes/latest');
+        yield put({type: 'SET_LATEST_ROUTE', payload: latestRoute.data});
+        console.log('getLatestRoute saga', latestRoute.data);
         } catch {
     
-            console.log('error in getRoute saga');
+            console.log('error in getLatestRoute saga');
     
         }
 }
 
 function* routesSaga () {
     yield takeLatest('ADD_ROUTE', postRoute);
-    yield takeLatest('FETCH_ROUTE', getRoute);
+    yield takeLatest('FETCH_LATEST_ROUTE', getLatestRoute);
 }
 
 export default routesSaga;
