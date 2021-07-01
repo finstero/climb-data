@@ -13,6 +13,7 @@ function RouteDetails() {
 
     const { id } = useParams();
 
+    // loads selected route on page refresh
     useEffect(() => {
         dispatch({
             type: 'FETCH_ONE_ROUTE',
@@ -20,11 +21,16 @@ function RouteDetails() {
         })
     }, []);
 
+    // deletes single route
     const handleDelete = () => {
         dispatch({
             type: 'DELETE_ROUTE',
             payload: { id: id }
         })
+    }
+
+    const handleEdit = () => {
+
     }
 
     const handleBack = () => {
@@ -43,7 +49,7 @@ function RouteDetails() {
             <p>Notes: {route.notes}</p>
             <p>Image: {route.image}</p>
             <Button onClick={handleDelete}>Delete</Button>
-            <Button>Edit</Button>
+            <Button onClick={handleEdit}>Edit</Button>
             <Button onClick={handleBack}>Back</Button>
         </>
     )

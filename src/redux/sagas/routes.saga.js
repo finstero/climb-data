@@ -1,7 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
-// handles posting route
+// handles posting route - at same time calls getLatestRoute
 function* postRoute(action) {
     console.log('action.payload in postRoute saga function', action.payload);
 
@@ -14,7 +14,7 @@ function* postRoute(action) {
     }
 }
 
-// handles one route - last to be added by user
+// handles one route - last to be added by user - stores in reducer
 function* getLatestRoute() {
     console.log('in getRoute saga');
 
@@ -28,7 +28,7 @@ function* getLatestRoute() {
     }
 }
 
-// handles one route - clicked on in RouteList
+// handles one route - clicked on in RouteList - stores in reducer
 function* getOneRoute(action) {
     console.log('in getOneRoute saga');
 
@@ -42,6 +42,7 @@ function* getOneRoute(action) {
     }
 }
 
+// gets all routes for user in database. puts in reducer
 function* getAllRoutes() {
     console.log('in getAllRoutes saga');
 
@@ -54,6 +55,7 @@ function* getAllRoutes() {
     }
 }
 
+// deletes single route selected by user
 function* deleteRoute (action) {
     console.log('in deleteRoute saga', action.payload);
 

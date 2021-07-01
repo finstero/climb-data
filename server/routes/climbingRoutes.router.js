@@ -140,7 +140,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     });
 });
 
-
+// deletes single route
 router.delete(`/details/:id`, rejectUnauthenticated, (req, res) => {
     console.log('in delete route router');
 
