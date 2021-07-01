@@ -60,11 +60,13 @@ function RouteDetails() {
     const handleEdit = () => {
         setEditMode(true);
         setGrade(route.grade);
-        setSendStatus(route.sent);
         setSelectedDate(route.date);
+        setSendStatus(route.sent);
+        setRope(route.rope_type_id);
+        setWall(route.wall_id);
+        setHold(route.holds_id);
         setFlash(route.flash);
         setNotes(route.notes);
-
     }
 
     // moves user back to list view

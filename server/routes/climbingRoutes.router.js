@@ -42,8 +42,8 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
 
     const query = 
                 `SELECT "routes".id, "routes".notes, "routes".image, "routes".flash, "routes".sent, 
-                "routes".date, "grades".grade, "grades".type, "rope".type AS "rope_type", "wall".angle, 
-                "holds".type FROM "routes"
+                "routes".date, "routes".rope_type_id, "grades".grade, "grades".type, "rope".type AS "rope_type", "wall".angle, 
+                "holds".type, "routes_wall".wall_id, "routes_holds".holds_id FROM "routes"
                 JOIN "user" ON "user".id = "routes".user_id
                 JOIN "grades" ON "grades".id = "routes".grades_id
                 JOIN "rope" ON "rope".id = "routes".rope_type_id
@@ -69,7 +69,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
     const getAllRoutesQuery = 
                 `SELECT "routes".id, "routes".notes, "routes".image, "routes".flash, "routes".sent, 
-                "routes".date, "grades".grade, "grades".type, "grades".id AS "grades_id", "rope".type AS "rope_type", "wall".angle, 
+                "routes".date, "routes".rope_type_id, "grades".grade, "grades".type, "grades".id AS "grades_id", "rope".type AS "rope_type", "wall".angle, 
                 "holds".type FROM "routes"
                 JOIN "user" ON "user".id = "routes".user_id
                 JOIN "grades" ON "grades".id = "routes".grades_id
