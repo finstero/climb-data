@@ -30,7 +30,8 @@ function IndividualRoute() {
                 <div key={route.id}>
                     <h3>{route.date.slice(0,10)}</h3>
                     <p>Grade: {route.grade}</p>
-                    <p>Climb type: {route.angle}</p>
+                    <p>Climb type: {route.rope_type}</p>
+                    <p>Wall angle: {route.angle}</p>
                     <p>Flash: {route.flash}</p>
                     <p>Sent: {route.sent}</p>
                     <p>Main hold type: {route.type}</p>

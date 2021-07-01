@@ -24,6 +24,8 @@ import RoutesHome from '../RoutesHome/RoutesHome';
 import AddRoute from '../AddRoute/AddRoute';
 import GradeScheme from '../GradeScheme/GradeScheme';
 import IndividualRoute from '../IndividualRoute/IndividualRoute';
+import RoutesList from '../RoutesList/RoutesList';
+import RouteDetails from '../RouteDetails/RouteDetails';
 
 import './App.css';
 
@@ -98,6 +100,21 @@ function App() {
           path="/routes/individual"
           >
             <IndividualRoute />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+          exact
+          path="/routes/list"
+          >
+            <RoutesList />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+          exact
+          path="/routes/details/:id"
+          children={<RouteDetails />}
+          >
+            <RouteDetails />
           </ProtectedRoute>
 
           <ProtectedRoute
