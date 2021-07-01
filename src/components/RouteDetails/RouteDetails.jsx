@@ -29,7 +29,7 @@ function RouteDetails() {
     // in edit mode only
     const [grade, setGrade] = useState('1');
     const [selectedDate, setSelectedDate] = useState(new Date('2021-06-18T11:11:54'));
-    const [sendStatus, setSendStatus] = useState(route.sent);
+    const [sendStatus, setSendStatus] = useState('');
     const [rope, setRope] = useState('1');
     const [wall, setWall] = useState('2');
     const [hold, setHold] = useState('1');
@@ -56,8 +56,15 @@ function RouteDetails() {
     }
 
     // moves user into edit mode via conditional render
+    // sets local state of all inputs to same as route about to edit
     const handleEdit = () => {
         setEditMode(true);
+        setGrade(route.grade);
+        setSendStatus(route.sent);
+        setSelectedDate(route.date);
+        setFlash(route.flash);
+        setNotes(route.notes);
+
     }
 
     // moves user back to list view
@@ -127,8 +134,8 @@ function RouteDetails() {
                 </MuiPickersUtilsProvider>
                 <label htmlFor="sent">Send status:</label>
                 <select onChange={(event) => { setSendStatus(event.target.value) }} value={sendStatus} name="sent" id="sent">
-                    <option value="true">sent</option>
-                    <option value="false">project</option>
+                    <option value={true}>sent</option>
+                    <option value={false}>project</option>
                 </select>
                 <label htmlFor="rope">Type of climb:</label>
                 <select onChange={(event) => { setRope(event.target.value) }} value={rope} name="rope" id="rope">

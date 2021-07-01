@@ -29,11 +29,11 @@ function AddRoute() {
     const [notes, setNotes] = useState('');
     const [image, setImage] = useState('');
 
-    // useEffect(() => {
-    //     dispatch({
-    //         type: 'FETCH_ADD_OPTIONS',
-    //     })
-    // }, []);
+    useEffect(() => {
+        dispatch({
+            type: 'FETCH_ADD_OPTIONS',
+        })
+    }, []);
 
     const handleSubmit = (event) => {
         event.preventDefault();
