@@ -54,11 +54,23 @@ function* getAllRoutes() {
     }
 }
 
+function* deleteRoute () {
+    console.log('in deleteRoute saga');
+
+    try{
+        yield axios.delete(`/api/routes/details/${action.payload.id}`);
+        yield put({ type: 'FETCH_ALL_ROUTES'});
+    } catch {
+        console.log('error in deleteRoute saga');
+    }
+}
+
 function* routesSaga() {
     yield takeLatest('ADD_ROUTE', postRoute);
     yield takeLatest('FETCH_LATEST_ROUTE', getLatestRoute);
     yield takeLatest('FETCH_ALL_ROUTES', getAllRoutes);
     yield takeLatest('FETCH_ONE_ROUTE', getOneRoute);
+    yield takeLatest('DELETE_ROUTE', deleteRoute);
 }
 
 export default routesSaga;

@@ -140,4 +140,12 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     });
 });
 
+
+router.delete(`/details/:id`, rejectUnauthenticated, (req, res) => {
+    console.log('in delete route router');
+
+    const query = 
+    ``
+})
+
 module.exports = router;

@@ -20,6 +20,13 @@ function RouteDetails() {
         })
     }, []);
 
+    const handleDelete = () => {
+        dispatch({
+            type: 'DELETE_ROUTE',
+            payload: { id: id }
+        })
+    }
+
     const handleBack = () => {
         history.goBack();
     }
@@ -35,7 +42,7 @@ function RouteDetails() {
             <p>Main hold type: {route.type}</p>
             <p>Notes: {route.notes}</p>
             <p>Image: {route.image}</p>
-            <Button>Delete</Button>
+            <Button onClick={handleDelete}>Delete</Button>
             <Button>Edit</Button>
             <Button onClick={handleBack}>Back</Button>
         </>
