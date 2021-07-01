@@ -145,7 +145,17 @@ router.delete(`/details/:id`, rejectUnauthenticated, (req, res) => {
     console.log('in delete route router');
 
     const query = 
-    ``
+    `DELETE FROM "routes"
+    WHERE "routes".id = $1 AND "user_id" = $2
+    ;`
+    pool.query(query, [req.params.id, req.user.id ])
+    .then(result => {
+        res.sendStatus(200);
+    })
+    .catch(error => {
+        console.log('error in details router delete');
+        res.sendStatus(500);
+    })
 })
 
 module.exports = router;

@@ -54,8 +54,8 @@ function* getAllRoutes() {
     }
 }
 
-function* deleteRoute () {
-    console.log('in deleteRoute saga');
+function* deleteRoute (action) {
+    console.log('in deleteRoute saga', action.payload);
 
     try{
         yield axios.delete(`/api/routes/details/${action.payload.id}`);
