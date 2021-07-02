@@ -18,7 +18,7 @@ function AddRoute() {
 
     const history = useHistory();
     const dispatch = useDispatch();
-    const { id } = useParams();
+    const { grading } = useParams();
     // const [gradeScheme, setGradeScheme] = useState('ysd');
 
     // const createdRouteId = useSelector(store => store.id);
@@ -37,6 +37,12 @@ function AddRoute() {
     useEffect(() => {
         dispatch({
             type: 'FETCH_ADD_OPTIONS',
+        });
+        dispatch({
+            type: 'FETCH_GRADE_SCHEME',
+            payload: {
+                gradeScheme: grading,
+            }
         })
     }, []);
 

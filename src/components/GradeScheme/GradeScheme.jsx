@@ -16,13 +16,13 @@ function GradeScheme () {
     // sends selected grade scheme to saga/reducer
     const handleContinue = (event) => {
         event.preventDefault();
-        dispatch({
-            type: 'FETCH_GRADE_SCHEME',
-            payload: {
-                gradeScheme: gradeScheme,
-            }
-        })
-        history.push('/routes/add');
+        // dispatch({
+        //     type: 'FETCH_GRADE_SCHEME',
+        //     payload: {
+        //         gradeScheme: gradeScheme,
+        //     }
+        // })
+        history.push(`/routes/add/${gradeScheme}`);
     }
 
     return(

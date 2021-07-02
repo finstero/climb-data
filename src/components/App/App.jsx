@@ -91,7 +91,8 @@ function App() {
 
           <ProtectedRoute
           exact
-          path="/routes/add"
+          path="/routes/add/:grading"
+          children={<AddRoute />}
           >
             <AddRoute />
           </ProtectedRoute>
