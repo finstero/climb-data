@@ -36,8 +36,8 @@ function IndividualRoute() {
                     <p>Grade: {route.grade}</p>
                     <p>Climb type: {route.rope_type}</p>
                     <p>Wall angle: {route.angle}</p>
-                    <p>Flash: {route.flash}</p>
-                    <p>Sent: {route.sent}</p>
+                    <p>Flash: {route.flash ? ' yes' : ' no'}</p>
+                    <p>Sent: {route.sent ? ' yes' : ' no'}</p>
                     <p>Main hold type: {route.type}</p>
                     <p>Notes: {route.notes}</p>
                     <p>Image: {route.image}</p>

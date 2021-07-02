@@ -9,13 +9,13 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     console.log('in graph router get');
     const query = 
         `SELECT "grades".grade, count("routes") FROM "grades"
-        LEFT JOIN "routes" ON "grades".id = "routes".grades_id
+        LEFT JOIN "routes" ON "grades".id = "routes".grades_id AND "routes".user_id = $1
         LEFT JOIN "rope" ON "rope".id = "routes".rope_type_id
         LEFT JOIN "routes_holds" ON "routes_holds".routes_id = "routes".id
         LEFT JOIN "holds" ON "routes_holds".holds_id = "holds".id
         LEFT JOIN "routes_wall" ON "routes_wall".routes_id = "routes".id
         LEFT JOIN "wall" ON "routes_wall".wall_id = "wall".id
-        WHERE "grades".type = 'ysd'AND "routes".user_id = $1
+        WHERE "grades".type = 'ysd'
         GROUP BY "grades".id
         ORDER BY "grades"
         ;`

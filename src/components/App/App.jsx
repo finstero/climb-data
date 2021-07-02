@@ -23,7 +23,7 @@ import ClimbHome from '../ClimbHome/ClimbHome';
 import RoutesHome from '../RoutesHome/RoutesHome';
 import AddRoute from '../AddRoute/AddRoute';
 import GradeScheme from '../GradeScheme/GradeScheme';
-import IndividualRoute from '../IndividualRoute/IndividualRoute';
+import LatestRoute from '../LatestRoute/LatestRoute';
 import RoutesList from '../RoutesList/RoutesList';
 import RouteDetails from '../RouteDetails/RouteDetails';
 import Graph from '../Graph/Graph';
@@ -100,7 +100,7 @@ function App() {
           exact
           path="/routes/latest"
           >
-            <IndividualRoute />
+            <LatestRoute />
           </ProtectedRoute>
 
           <ProtectedRoute
