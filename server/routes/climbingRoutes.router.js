@@ -7,7 +7,7 @@ const {
 
 
 // api/routes/latest
-// gets latest route posted by user
+// gets most recent route posted by user
 router.get('/latest', rejectUnauthenticated, (req, res) => {
     const query = `SELECT "routes".id, "routes".notes, "routes".image, "routes".flash, "routes".sent, 
                     "routes".date, "grades".grade, "grades".type, "rope".type AS "rope_type", "wall".angle, 
@@ -38,12 +38,12 @@ router.get('/latest', rejectUnauthenticated, (req, res) => {
 
 // gets route details for route clicked on by user
 router.get('/details/:id', rejectUnauthenticated, (req, res) => {
-    console.log('hopefully id', req.params);
+    // console.log('hopefully id', req.params);
 
     const query = 
                 `SELECT "routes".id, "routes".notes, "routes".image, "routes".flash, "routes".sent, 
-                "routes".date, "grades".grade, "grades".type, "rope".type AS "rope_type", "wall".angle, 
-                "holds".type FROM "routes"
+                "routes".date, "routes".rope_type_id, "routes".grades_id, "grades".grade, "grades".type, "rope".type AS "rope_type", "wall".angle, 
+                "holds".type, "routes_wall".wall_id, "routes_holds".holds_id FROM "routes"
                 JOIN "user" ON "user".id = "routes".user_id
                 JOIN "grades" ON "grades".id = "routes".grades_id
                 JOIN "rope" ON "rope".id = "routes".rope_type_id
@@ -55,7 +55,7 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
                 ;`
         pool.query(query, [req.user.id, req.params.id])
         .then(result => {
-            console.log('one route', result.rows);
+            // console.log('one route', result.rows);
             res.send(result.rows);
         })
         .catch(error => {
@@ -69,7 +69,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
     const getAllRoutesQuery = 
                 `SELECT "routes".id, "routes".notes, "routes".image, "routes".flash, "routes".sent, 
-                "routes".date, "grades".grade, "grades".type, "grades".id AS "grades_id", "rope".type AS "rope_type", "wall".angle, 
+                "routes".date, "routes".rope_type_id, "grades".grade, "grades".type, "grades".id AS "grades_id", "rope".type AS "rope_type", "wall".angle, 
                 "holds".type FROM "routes"
                 JOIN "user" ON "user".id = "routes".user_id
                 JOIN "grades" ON "grades".id = "routes".grades_id
@@ -84,7 +84,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
     pool.query(getAllRoutesQuery, [req.user.id])
     .then(result => {
-        console.log('all routes', result.rows);
+        // console.log('all routes', result.rows);
         res.send(result.rows);
     })
     .catch(error => {
@@ -140,7 +140,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     });
 });
 
-// deletes single route
+// deletes one route
 router.delete(`/details/:id`, rejectUnauthenticated, (req, res) => {
     console.log('in delete route router');
 
@@ -156,6 +156,54 @@ router.delete(`/details/:id`, rejectUnauthenticated, (req, res) => {
         console.log('error in details router delete');
         res.sendStatus(500);
     })
+})
+
+// edits one route
+router.put(`/edit/:id`, rejectUnauthenticated, (req, res) => {
+    console.log('in router put for routes', req.body);
+
+    const query = 
+    `UPDATE "routes"
+    SET "notes" = $1, "image" = $2, "flash" = $3, "sent" = $4, "date" = $5, "grades_id" = $6, "rope_type_id" = $7
+    WHERE "id" = $8 AND "user_id" = $9
+    ;`
+    pool.query(query, 
+        [req.body.notes, req.body.image, req.body.flash, req.body.sent, req.body.date, req.body.grades_id, req.body.rope_type_id, req.params.id, req.user.id])
+        .then(result => {
+
+            const wallQuery = 
+            `UPDATE "routes_wall"
+            SET "wall_id" = $1
+            WHERE "routes_id" = $2
+            ;`
+            
+            pool.query(wallQuery, [req.body.wall_id, req.params.id])
+            .then( result => {
+
+                const holdsQuery = 
+                `UPDATE "routes_holds"
+                SET "holds_id" = $1
+                WHERE "routes_id" = $2
+                ;`
+
+                pool.query(holdsQuery, [req.body.holds_id, req.params.id])
+                .then( result => {
+                    res.sendStatus(201);
+                })
+                .catch(error => {
+                    console.log('error in wallQuery put', error);
+                    res.sendStatus(500);
+                })
+            })
+            .catch(error => {
+                console.log('error in wallQuery put', error);
+                res.sendStatus(500);
+            })
+        })
+        .catch(error => {
+            console.log('error in router.put for routes', error);
+            res.sendStatus(500);
+        })
 })
 
 module.exports = router;

@@ -13,10 +13,10 @@ function RoutesList() {
 
     const handleRouteClick = (route) => {
         console.log('clicked');
-        dispatch({
-            type: 'FETCH_ONE_ROUTE',
-            payload: {id: route.id}
-        })
+        // dispatch({
+        //     type: 'FETCH_ONE_ROUTE',
+        //     payload: {id: route.id}
+        // })
         history.push(`/routes/details/${route.id}`)
     }
 
