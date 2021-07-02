@@ -11,6 +11,7 @@ const passport = require('./strategies/user.strategy');
 const userRouter = require('./routes/user.router');
 const gradesRouter = require('./routes/grades.router');
 const climbingRoutesRouter = require('./routes/climbingRoutes.router');
+const routesGraphRouter = require('./routes/routesGraph.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -27,6 +28,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/grades', gradesRouter)
 app.use('/api/routes', climbingRoutesRouter);
+app.use('/api/routes/graph', routesGraphRouter);
 
 // Serve static files
 app.use(express.static('build'));

@@ -26,6 +26,7 @@ import GradeScheme from '../GradeScheme/GradeScheme';
 import IndividualRoute from '../IndividualRoute/IndividualRoute';
 import RoutesList from '../RoutesList/RoutesList';
 import RouteDetails from '../RouteDetails/RouteDetails';
+import Graph from '../Graph/Graph';
 
 import './App.css';
 
@@ -115,6 +116,13 @@ function App() {
           children={<RouteDetails />}
           >
             <RouteDetails />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+          exact
+          path="/routes/graph"
+          >
+            <Graph />
           </ProtectedRoute>
 
           <ProtectedRoute

@@ -37,6 +37,9 @@ function RoutesList() {
 
     // moves user to graph 
     const handleViewGraph = () => {
+        dispatch({
+            type: 'FETCH_GRAPH_DATA'
+        })
         history.push('/routes/graph');
     }
 
