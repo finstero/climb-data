@@ -63,7 +63,7 @@ function AddRoute() {
     };
 
     const handleCancel = () => {
-        history.goBack();
+        history.push('/routes/home');
     }
 
     const grades = useSelector(store => store.addRouteOptions.gradesReducer)
