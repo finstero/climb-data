@@ -20,6 +20,8 @@ function AddRoute() {
     const dispatch = useDispatch();
     // const [gradeScheme, setGradeScheme] = useState('ysd');
 
+    // const createdRouteId = useSelector(store => store.id);
+
     // local states for all inputs
     const [grade, setGrade] = useState('1');
     const [selectedDate, setSelectedDate] = useState(new Date('2021-06-18T11:11:54'));
@@ -57,7 +59,8 @@ function AddRoute() {
         setGrade('1');
         setNotes('');
         setImage('');
-        history.push('/routes/individual');
+        // console.log('in add route file');
+        history.push(`/routes/latest`);
     }
 
     const handleDateChange = (date) => {

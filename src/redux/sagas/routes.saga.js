@@ -7,6 +7,7 @@ function* postRoute(action) {
 
     try {
         yield axios.post('/api/routes', action.payload);
+        // yield put({type: 'SET_ID', payload: createdRouteId.id})
         yield put({ type: 'FETCH_LATEST_ROUTE'});
         // console.log('createdRouteId', createdRouteId.data);
     } catch {
@@ -30,7 +31,7 @@ function* getLatestRoute() {
 
 // handles one route - clicked on in RouteList - stores in reducer
 function* getOneRoute(action) {
-    console.log('in getOneRoute saga');
+    console.log('in getOneRoute saga', action.payload.id);
 
     try {
         const oneRoute = yield axios.get(`/api/routes/details/${action.payload.id}`); // want :id to be {actual id}

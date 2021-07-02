@@ -4,6 +4,7 @@ import user from './user.reducer';
 import addRouteOptions from './addOptions.reducer';
 import routes from './routes.reducer';
 import graphs from './graphs.reducer';
+// import id from './id.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   addRouteOptions,
   routes,
   graphs,
+  // id,
 });
 
 export default rootReducer;

@@ -98,7 +98,7 @@ function App() {
 
           <ProtectedRoute
           exact
-          path="/routes/individual"
+          path="/routes/latest"
           >
             <IndividualRoute />
           </ProtectedRoute>
