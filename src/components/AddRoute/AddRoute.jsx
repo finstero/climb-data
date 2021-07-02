@@ -20,6 +20,7 @@ function AddRoute() {
     const dispatch = useDispatch();
     const { grading } = useParams();
     // const [gradeScheme, setGradeScheme] = useState('ysd');
+    const grades = useSelector(store => store.addRouteOptions.gradesReducer)
 
     // const createdRouteId = useSelector(store => store.id);
 
@@ -79,7 +80,6 @@ function AddRoute() {
         history.push('/routes/grades');
     }
 
-    const grades = useSelector(store => store.addRouteOptions.gradesReducer)
 
     return (
         <>
