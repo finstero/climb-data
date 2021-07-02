@@ -1,20 +1,26 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const {
+    rejectUnauthenticated,
+} = require('../modules/authentication-middleware');
 
-
-router.get('/', (req, res) => {
+router.get('/', rejectUnauthenticated, (req, res) => {
     console.log('in graph router get');
     const query = 
         `SELECT "grades".grade, count("routes") FROM "grades"
         LEFT JOIN "routes" ON "grades".id = "routes".grades_id
-        LEFT Join "user" ON "user".id = "routes".user_id
-        WHERE "grades".type='ysd'
+        LEFT JOIN "rope" ON "rope".id = "routes".rope_type_id
+        LEFT JOIN "routes_holds" ON "routes_holds".routes_id = "routes".id
+        LEFT JOIN "holds" ON "routes_holds".holds_id = "holds".id
+        LEFT JOIN "routes_wall" ON "routes_wall".routes_id = "routes".id
+        LEFT JOIN "wall" ON "routes_wall".wall_id = "wall".id
+        WHERE "grades".type = 'ysd'AND "routes".user_id = $1
         GROUP BY "grades".id
         ORDER BY "grades"
         ;`
 
-    pool.query(query)
+    pool.query(query, [req.user.id])
     .then(result => {
         res.send(result.rows);
     })

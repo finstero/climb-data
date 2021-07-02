@@ -8,11 +8,11 @@ function Graph() {
     const allGraph = useSelector(store => store.graphs.allGraph);
 
     const data = {
-        labels: ['1', '2', '3', '4', '5', '6'],
+        // labels: ['1', '2', '3', '4', '5', '6'],
         datasets: [
             {
                 label: '# of routes (project and sent)',
-                data: [12, 19, 3, 5, 2, 3],
+                data: allGraph,
                 fill: false,
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgba(255, 99, 132, 0.2)',
@@ -22,17 +22,17 @@ function Graph() {
 
     const options = {
         parsing: {
-            xAxisKey: 'ysd',
+            xAxisKey: 'grade',
             yAxisKey: 'count'
         },
         scales: {
-            yAxes: [
-                {
+            yAxis: {   
+                    min: 0,
                     ticks: {
                         beginAtZero: true,
+                        stepSize: 1,
                     },
                 },
-            ],
         },
     };
 
