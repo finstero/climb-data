@@ -7,8 +7,8 @@ function* postRoute(action) {
 
     try {
         yield axios.post('/api/routes', action.payload);
-        yield put({ type: 'FETCH_LATEST_ROUTE' });
-
+        yield put({ type: 'FETCH_LATEST_ROUTE'});
+        // console.log('createdRouteId', createdRouteId.data);
     } catch {
         console.log('error in postRoute saga');
     }

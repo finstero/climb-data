@@ -53,10 +53,11 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
                 JOIN "wall" ON "routes_wall".wall_id = "wall".id
                 WHERE "user".id = $1 AND "routes".id = $2
                 ;`
+        console.log('logging req.params.id', req.params.id);
         pool.query(query, [req.user.id, req.params.id])
         .then(result => {
             // console.log('one route', result.rows);
-            res.send(result.rows);
+            res.send(result.rows); 
         })
         .catch(error => {
             console.log('error in get oneRoute', error);
@@ -122,6 +123,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
             pool.query(insertHoldsQuery, [createdRouteId, req.body.holds_id])
             .then(result => {
                 console.log('all add route queries worked!');
+                // res.send({id: createdRouteId});
                 res.sendStatus(201)
             })
             .catch(error => {
