@@ -45,6 +45,10 @@ function AddRoute() {
                 gradeScheme: grading,
             }
         })
+        if (grading == 'french'){
+            setGrade('39');
+            console.log('in if statement log grading', grading);
+        }
     }, []);
 
     // sends added route info as post
