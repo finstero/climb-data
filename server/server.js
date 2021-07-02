@@ -11,7 +11,7 @@ const passport = require('./strategies/user.strategy');
 const userRouter = require('./routes/user.router');
 const gradesRouter = require('./routes/grades.router');
 const climbingRoutesRouter = require('./routes/climbingRoutes.router');
-const routesGraphRouter = require('./routes/routesGraphRouter.router');
+const routesGraphRouter = require('./routes/routesGraph.router');
 
 // Body parser middleware
 app.use(bodyParser.json());

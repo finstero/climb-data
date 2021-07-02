@@ -1,7 +1,11 @@
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { Line } from 'react-chartjs-2';
 
 function Graph() {
 
+    const allGraph = useSelector(store => store.graphs.allGraph);
 
     const data = {
         labels: ['1', '2', '3', '4', '5', '6'],
