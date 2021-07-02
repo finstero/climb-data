@@ -13,13 +13,13 @@ function Nav() {
   };
 
   if (user.id != null) {
-    loginLinkData.path = '/user';
+    loginLinkData.path = '/climbhome';
     loginLinkData.text = 'Home';
   }
 
   return (
     <div className="nav">
-      <Link to="/home">
+      <Link to="/climbhome">
         <h2 className="nav-title">Climb Data</h2>
       </Link>
       <div>
