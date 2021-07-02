@@ -19,6 +19,8 @@ function AddRoute() {
     const history = useHistory();
     const dispatch = useDispatch();
     // const [gradeScheme, setGradeScheme] = useState('ysd');
+
+    // local states for all inputs
     const [grade, setGrade] = useState('1');
     const [selectedDate, setSelectedDate] = useState(new Date('2021-06-18T11:11:54'));
     const [sendStatus, setSendStatus] = useState('true');
@@ -35,6 +37,7 @@ function AddRoute() {
         })
     }, []);
 
+    // sends added route info as post
     const handleSubmit = (event) => {
         event.preventDefault();
         dispatch({
@@ -58,12 +61,12 @@ function AddRoute() {
     }
 
     const handleDateChange = (date) => {
-
         setSelectedDate(date);
     };
 
+    // moves user back to grade scheme selection
     const handleCancel = () => {
-        history.push('/routes/home');
+        history.push('/routes/grades');
     }
 
     const grades = useSelector(store => store.addRouteOptions.gradesReducer)

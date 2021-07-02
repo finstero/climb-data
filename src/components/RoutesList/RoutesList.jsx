@@ -13,6 +13,7 @@ function RoutesList() {
 
     const allRoutes = useSelector(store => store.routes.allRoutes);
 
+    // moves user to details page for route on click
     const handleRouteClick = (route) => {
         console.log('clicked');
         // dispatch({
@@ -22,16 +23,19 @@ function RoutesList() {
         history.push(`/routes/details/${route.id}`)
     }
 
+    // grabs all routes on page load
     useEffect(() => {
         dispatch({
             type: 'FETCH_ALL_ROUTES'
         })
     }, []);
 
+    // moves user to add route
     const handleAdd = () => {
         history.push('/routes/grades');
     }
 
+    // moves user to graph 
     const handleViewGraph = () => {
         history.push('/routes/graph');
     }

@@ -79,10 +79,7 @@ function RouteDetails() {
                 image: image
             }
         })
-        // setGrade('1');
-        // setNotes('');
-        // setImage('');
-        history.goBack();
+        history.push('/routes/list');
     }
 
     // moves user into edit mode via conditional render
@@ -113,7 +110,6 @@ function RouteDetails() {
     const handleDateChange = (date) => {
         setSelectedDate(date);
     };
-
 
     return (
         <> {editMode ? <div><h2>EDIT MODE</h2>

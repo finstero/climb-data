@@ -10,8 +10,10 @@ function GradeScheme () {
     const history = useHistory();
     const dispatch = useDispatch();
 
+    // local state for selected grade scheme
     const [gradeScheme, setGradeScheme] = useState('ysd');
 
+    // sends selected grade scheme to saga/reducer
     const handleContinue = (event) => {
         event.preventDefault();
         dispatch({
