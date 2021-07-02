@@ -18,8 +18,9 @@ function AddRoute() {
 
     const history = useHistory();
     const dispatch = useDispatch();
-    const { id } = useParams();
+    const { grading } = useParams();
     // const [gradeScheme, setGradeScheme] = useState('ysd');
+    const grades = useSelector(store => store.addRouteOptions.gradesReducer)
 
     // const createdRouteId = useSelector(store => store.id);
 
@@ -37,7 +38,17 @@ function AddRoute() {
     useEffect(() => {
         dispatch({
             type: 'FETCH_ADD_OPTIONS',
+        });
+        dispatch({
+            type: 'FETCH_GRADE_SCHEME',
+            payload: {
+                gradeScheme: grading,
+            }
         })
+        if (grading == 'french'){
+            setGrade('39');
+            console.log('in if statement log grading', grading);
+        }
     }, []);
 
     // sends added route info as post
@@ -73,7 +84,6 @@ function AddRoute() {
         history.push('/routes/grades');
     }
 
-    const grades = useSelector(store => store.addRouteOptions.gradesReducer)
 
     return (
         <>

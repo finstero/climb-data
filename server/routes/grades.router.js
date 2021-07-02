@@ -18,7 +18,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
     pool.query(query, [req.query.gradeScheme])
         .then(result => {
-            console.log('result.rows in grades get router', result.rows);
+            // console.log('result.rows in grades get router', result.rows);
             res.send(result.rows);
         })
         .catch(error => {

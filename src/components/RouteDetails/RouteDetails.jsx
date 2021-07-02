@@ -39,18 +39,19 @@ function RouteDetails() {
 
     const { id } = useParams();
 
-    // loads selected route on page refresh
+    // loads selected route and grade scheme of route on page load
     useEffect(() => {
         dispatch({
             type: 'FETCH_ONE_ROUTE',
             payload: { id: id }
         });
-        dispatch({
-            type: 'FETCH_GRADE_SCHEME',
-            payload: {
-                gradeScheme: "ysd",
-            }
-        })
+        // dispatch({
+        //     type: 'FETCH_GRADE_SCHEME',
+        //     payload: {
+        //         gradeScheme: route.grades_type,
+        //     }
+        // })
+        // console.log('logging grade type maybe?', route);
     }, []);
 
     // deletes single route
@@ -86,6 +87,12 @@ function RouteDetails() {
     // moves user into edit mode via conditional render
     // sets local state of all inputs to same as route about to edit
     const handleEdit = () => {
+        dispatch({
+            type: 'FETCH_GRADE_SCHEME',
+            payload: {
+                gradeScheme: route.grades_type,
+            }
+        })
         setEditMode(true);
         setGrade(route.grades_id);
         setSelectedDate(route.date);

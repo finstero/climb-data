@@ -42,7 +42,7 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
 
     const query = 
                 `SELECT "routes".id, "routes".notes, "routes".image, "routes".flash, "routes".sent, 
-                "routes".date, "routes".rope_type_id, "routes".grades_id, "grades".grade, "grades".type, "rope".type AS "rope_type", "wall".angle, 
+                "routes".date, "routes".rope_type_id, "routes".grades_id, "grades".grade, "grades".type AS "grades_type", "rope".type AS "rope_type", "wall".angle, 
                 "holds".type, "routes_wall".wall_id, "routes_holds".holds_id FROM "routes"
                 JOIN "user" ON "user".id = "routes".user_id
                 JOIN "grades" ON "grades".id = "routes".grades_id
@@ -56,7 +56,7 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
         console.log('logging req.params.id', req.params.id);
         pool.query(query, [req.user.id, req.params.id])
         .then(result => {
-            // console.log('one route', result.rows);
+            console.log('one route', result.rows);
             res.send(result.rows); 
         })
         .catch(error => {
