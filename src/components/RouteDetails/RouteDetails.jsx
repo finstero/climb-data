@@ -44,6 +44,12 @@ function RouteDetails() {
         dispatch({
             type: 'FETCH_ONE_ROUTE',
             payload: { id: id }
+        });
+        dispatch({
+            type: 'FETCH_GRADE_SCHEME',
+            payload: {
+                gradeScheme: "ysd",
+            }
         })
     }, []);
 
@@ -55,11 +61,35 @@ function RouteDetails() {
         })
     }
 
+    // put request to update route with changes
+    const handleSave = (event) => {
+        event.preventDefault();
+        dispatch({
+            type: 'EDIT_ROUTE',
+            payload: {
+                id: id,
+                grades_id: grade,
+                date: selectedDate,
+                sent: sendStatus,
+                rope_type_id: rope,
+                wall_id: wall,
+                holds_id: hold,
+                flash: flash,
+                notes: notes,
+                image: image
+            }
+        })
+        // setGrade('1');
+        // setNotes('');
+        // setImage('');
+        history.goBack();
+    }
+
     // moves user into edit mode via conditional render
     // sets local state of all inputs to same as route about to edit
     const handleEdit = () => {
         setEditMode(true);
-        setGrade(route.grade);
+        setGrade(route.grades_id);
         setSelectedDate(route.date);
         setSendStatus(route.sent);
         setRope(route.rope_type_id);
@@ -81,32 +111,9 @@ function RouteDetails() {
 
     // for edit mode
     const handleDateChange = (date) => {
-
         setSelectedDate(date);
     };
 
-    // put request to update route with changes
-    const handleSave = (event) => {
-        event.preventDefault();
-        dispatch({
-            type: 'EDIT_ROUTE',
-            payload: {
-                grades_id: grade,
-                date: selectedDate,
-                sent: sendStatus,
-                rope_type_id: rope,
-                wall_id: wall,
-                holds_id: hold,
-                flash: flash,
-                notes: notes,
-                image: image
-            }
-        })
-        setGrade('1');
-        setNotes('');
-        setImage('');
-        history.goBack();
-    }
 
     return (
         <> {editMode ? <div><h2>EDIT MODE</h2>
@@ -166,9 +173,10 @@ function RouteDetails() {
                 <TextField onChange={(event) => { setNotes(event.target.value) }} value={notes} id="outlined-basic" label="notes" variant="outlined" />
                 <TextField onChange={(event) => { setImage(event.target.value) }} value={image} id="outlined-basic" label="image url" variant="outlined" />
                 <Button type="submit">Save</Button>
-                </form>
-                <Button onClick={handleCancel}>Cancel</Button>
+            </form>
+            <Button onClick={handleCancel}>Cancel</Button>
         </div>
+        // not edit mode below
             : <div>
                 <h1>{route?.date?.slice(0, 10)}</h1>
                 <p>Grade: {route.grade}</p>
@@ -190,4 +198,4 @@ function RouteDetails() {
     )
 }
 
-            export default RouteDetails;
+export default RouteDetails;

@@ -1,7 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
-// handles posting route - at same time calls getLatestRoute
+// handles posting one route - at same time calls getLatestRoute
 function* postRoute(action) {
     console.log('action.payload in postRoute saga function', action.payload);
 
@@ -67,12 +67,26 @@ function* deleteRoute (action) {
     }
 }
 
+// edits single route
+function* editRoute (action) {
+    console.log('in editRoute saga', action.payload);
+
+    try{
+        yield axios.put(`api/routes/edit/${action.payload.id}`, action.payload);
+        // yield put({type: 'SET_ONE_ROUTE', payload: ''})
+        yield put({ type: 'FETCH_ALL_ROUTES'});
+    } catch{
+        console.log('error in editRoute saga');
+    }
+}
+
 function* routesSaga() {
     yield takeLatest('ADD_ROUTE', postRoute);
     yield takeLatest('FETCH_LATEST_ROUTE', getLatestRoute);
     yield takeLatest('FETCH_ALL_ROUTES', getAllRoutes);
     yield takeLatest('FETCH_ONE_ROUTE', getOneRoute);
     yield takeLatest('DELETE_ROUTE', deleteRoute);
+    yield takeLatest('EDIT_ROUTE', editRoute);
 }
 
 export default routesSaga;

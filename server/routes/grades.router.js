@@ -9,7 +9,7 @@ const {
 // /api/grades
 router.get('/', rejectUnauthenticated, (req, res) => {
 
-    console.log('grades router get query', req.query.gradeScheme);
+    // console.log('grades router get query', req.query.gradeScheme);
 
     const query = `SELECT * FROM "grades"
                     WHERE "grades".type=$1;`;
