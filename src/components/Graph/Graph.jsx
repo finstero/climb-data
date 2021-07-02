@@ -3,8 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Line } from 'react-chartjs-2';
 
+// material ui
+import Button from '@material-ui/core/Button';
+
 function Graph() {
 
+    const history = useHistory();
     const allGraph = useSelector(store => store.graphs.allGraph);
 
     const data = {
@@ -36,11 +40,16 @@ function Graph() {
         },
     };
 
+    const handleBack = () => {
+        history.push('/routes/list')
+    }
+
 
     return (
         <>
             <h1>Graph</h1>
             <Line data={data} options={options} />
+            <Button onClick={handleBack}>Back</Button>
         </>
     )
 }

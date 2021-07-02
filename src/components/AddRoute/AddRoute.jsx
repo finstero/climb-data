@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
@@ -18,6 +18,7 @@ function AddRoute() {
 
     const history = useHistory();
     const dispatch = useDispatch();
+    const { id } = useParams();
     // const [gradeScheme, setGradeScheme] = useState('ysd');
 
     // const createdRouteId = useSelector(store => store.id);
