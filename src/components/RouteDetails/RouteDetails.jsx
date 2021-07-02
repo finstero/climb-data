@@ -59,6 +59,7 @@ function RouteDetails() {
             type: 'DELETE_ROUTE',
             payload: { id: id }
         })
+        history.push('/routes/list')
     }
 
     // put request to update route with changes
