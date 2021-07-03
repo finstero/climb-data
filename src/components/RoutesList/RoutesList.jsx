@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 // import RouteListItem from '../RouteListItem/RouteListItem';
 
 // material ui
+import { DataGrid } from '@material-ui/data-grid';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -50,12 +51,15 @@ function RoutesList() {
         })
         history.push('/routes/graph');
     }
+    
+
+
 
     return (
         <>
         <h2>All Routes</h2>
-        <TableContainer>
-            <Table>
+        <TableContainer component={Paper}>
+            <Table aria-label="routes table">
                 <TableHead>
                     <TableRow>
                         <TableCell>Grade</TableCell>
@@ -66,9 +70,9 @@ function RoutesList() {
                 <TableBody>
                 {allRoutes.map(route => (
                     <TableRow key={route.id} onClick={() => handleRouteClick(route)}>
-                        <TableCell>{route.grade}</TableCell>
+                        <TableCell component="th" scope="row">{route.grade}</TableCell>
                         <TableCell>{route.date.slice(0, 10)}</TableCell>
-                        <TableCell>{route.type}</TableCell>
+                        <TableCell>{route.rope_type}</TableCell>
                     </TableRow>
                 ))}
                 </TableBody>
@@ -76,6 +80,7 @@ function RoutesList() {
         </TableContainer>
         <Button onClick={handleAdd}>Add Route</Button>
         <Button onClick={handleViewGraph}>View Routes Graph</Button>
+        <h2>Data Grid</h2>
         </>
     )
 }
