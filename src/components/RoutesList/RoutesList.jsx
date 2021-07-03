@@ -51,9 +51,24 @@ function RoutesList() {
         })
         history.push('/routes/graph');
     }
-    
 
+// for data grid
 
+const columns = [
+    { field: 'id', headerName: 'ID', width: 50 },
+    { field: 'grade', headerName: 'Grade', width: 120, sortable: false },
+    { field: 'date', headerName: 'Date', width: 110 },
+    { field: 'rope_type', headerName: 'Type', width: 110 }
+]
+
+// const rows = [
+//     {id: 1, grade: '5.10a', date: '2021-06-30', rope_type: 'lead'},
+//     {id: 2, grade: '5.11b', date: '2021-06-13', rope_type: 'top rope'},
+//     {id: 3, grade: '5.11c', date: '2020-05-30', rope_type: 'top rope'},
+//     {id: 4, grade: '5.10b', date: '2021-05-30', rope_type: 'lead'}
+// ]
+
+    // const rows = route;
 
     return (
         <>
@@ -81,6 +96,9 @@ function RoutesList() {
         <Button onClick={handleAdd}>Add Route</Button>
         <Button onClick={handleViewGraph}>View Routes Graph</Button>
         <h2>Data Grid</h2>
+        <div style={{ height: 700, width: '100%' }}>
+            <DataGrid rows={allRoutes} columns={columns} pageSize={15} />
+        </div>
         </>
     )
 }
