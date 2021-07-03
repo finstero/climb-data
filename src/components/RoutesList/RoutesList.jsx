@@ -5,6 +5,14 @@ import { useEffect, useState } from 'react';
 
 // material ui
 import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 function RoutesList() {
 
@@ -46,11 +54,26 @@ function RoutesList() {
     return (
         <>
         <h2>All Routes</h2>
-            <ul>
+        <TableContainer>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Grade</TableCell>
+                        <TableCell>Date</TableCell>
+                        <TableCell>Type</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
                 {allRoutes.map(route => (
-                    <li key={route.id} onClick={() => handleRouteClick(route)}>{route.grade}, {route.date.slice(0, 10)}, {route.type}</li>
+                    <TableRow key={route.id} onClick={() => handleRouteClick(route)}>
+                        <TableCell>{route.grade}</TableCell>
+                        <TableCell>{route.date.slice(0, 10)}</TableCell>
+                        <TableCell>{route.type}</TableCell>
+                    </TableRow>
                 ))}
-            </ul>
+                </TableBody>
+            </Table>
+        </TableContainer>
         <Button onClick={handleAdd}>Add Route</Button>
         <Button onClick={handleViewGraph}>View Routes Graph</Button>
         </>
