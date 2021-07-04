@@ -100,7 +100,7 @@ const columns = [
         <Button onClick={handleAdd}>Add Route</Button>
         <Button onClick={handleViewGraph}>View Routes Graph</Button>
         <h2>Data Grid</h2>
-        <div style={{ height: 700, width: '100%' }}>
+        <div style={{width: '100%'}}>
             <DataGrid rows={allRoutes} columns={columns} autoHeight='true' hideFooterPagination='true' />
         </div>
         </>
