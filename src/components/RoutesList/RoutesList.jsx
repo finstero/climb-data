@@ -1,6 +1,7 @@
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import {format} from 'date-fns';
 // import RouteListItem from '../RouteListItem/RouteListItem';
 
 // material ui
@@ -29,6 +30,7 @@ function RoutesList() {
         //     type: 'FETCH_ONE_ROUTE',
         //     payload: {id: route.id}
         // })
+        console.log('date format attempt', format(new Date(2017, 0, 6), 'dd MMMM yyyy'));
         history.push(`/routes/details/${route.id}`)
     }
 
@@ -70,6 +72,8 @@ const columns = [
 
     // const rows = route;
 
+    // route.date.slice(0, 10)
+
     return (
         <>
         <h2>All Routes</h2>
@@ -86,7 +90,7 @@ const columns = [
                 {allRoutes.map(route => (
                     <TableRow key={route.id} onClick={() => handleRouteClick(route)}>
                         <TableCell component="th" scope="row">{route.grade}</TableCell>
-                        <TableCell>{route.date.slice(0, 10)}</TableCell>
+                        <TableCell>{format(new Date(route.date), 'dd MMMM yyyy')}</TableCell>
                         <TableCell>{route.rope_type}</TableCell>
                     </TableRow>
                 ))}
@@ -97,7 +101,7 @@ const columns = [
         <Button onClick={handleViewGraph}>View Routes Graph</Button>
         <h2>Data Grid</h2>
         <div style={{ height: 700, width: '100%' }}>
-            <DataGrid rows={allRoutes} columns={columns} pageSize={15} />
+            <DataGrid rows={allRoutes} columns={columns} autoHeight='true' hideFooterPagination='true' />
         </div>
         </>
     )

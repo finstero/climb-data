@@ -98,8 +98,13 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
     pool.query(getAllRoutesQuery, [req.user.id])
         .then(result => {
-            // console.log('all routes', result.rows);
+            console.log('all routes', result.rows);
             res.send(result.rows);
+            // console.log('log mapping result.rows', 
+            // for(let i=0; i<) {
+
+            // } 
+            // } ));
         })
         .catch(error => {
             console.log('error in get all routes', error);
