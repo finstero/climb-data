@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 // material ui
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
+import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
 function GradeScheme() {
@@ -55,13 +56,8 @@ function GradeScheme() {
     const handleClick = (chipToChoose) => () => {
         setChipData((chips) => chips.filter((chip) => chip.key == chipToChoose.key));
         console.log('log chipToChoose', chipToChoose.key);
-        console.log('chipData.key', chipData.key );
         setGradeScheme(chipToChoose.key);
-
-        // if (chipToChoose.key == 'french'){
-        //     setGradeScheme('french');
-        // }
-      }
+    }
 
     return (
         <>
@@ -74,21 +70,24 @@ function GradeScheme() {
                 </select>
                 <Button type="submit">Continue</Button>
             </form> */}
-            <form onSubmit={handleContinue}>
-                {chipData.map((data) => {
-
-                    return (
-                        <li key={data.key}>
-                            <Chip
-                                label={data.label}
-                                onClick={handleClick(data)}
-                                className={classes.chip}
-                            />
-                        </li>
-                    );
-                })}
-                <Button type="submit">Continue</Button>
-            </form>
+            <Grid container justify="center">
+                <Grid item>
+                    <form onSubmit={handleContinue}>
+                        {chipData.map((data) => {
+                            return (
+                                <div key={data.key}>
+                                    <Chip
+                                        label={data.label}
+                                        onClick={handleClick(data)}
+                                        className={classes.chip}
+                                    />
+                                </div>
+                            );
+                        })}
+                        <Button type="submit">Continue</Button>
+                    </form>
+                </Grid>
+            </Grid>
         </>
     )
 }
