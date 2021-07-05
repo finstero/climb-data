@@ -36,9 +36,9 @@ function AddRoute() {
     const [image, setImage] = useState('');
 
     useEffect(() => {
-        dispatch({
-            type: 'FETCH_ADD_OPTIONS',
-        });
+        // dispatch({
+        //     type: 'FETCH_ADD_OPTIONS',
+        // });
         dispatch({
             type: 'FETCH_GRADE_SCHEME',
             payload: {
@@ -49,6 +49,7 @@ function AddRoute() {
             setGrade('39');
             console.log('in if statement log grading', grading);
         }
+        console.log('logging grades', grades);
     }, []);
 
     // sends added route info as post
