@@ -1,7 +1,7 @@
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import {format} from 'date-fns';
+import { format } from 'date-fns';
 // import RouteListItem from '../RouteListItem/RouteListItem';
 
 // material ui
@@ -55,48 +55,45 @@ function RoutesList() {
         history.push('/routes/grades');
     }
 
-    // moves user to graph 
+    // moves user to graph. dispatch to grab data for graph
     const goViewGraph = () => {
-        dispatch({
-            type: 'FETCH_GRAPH_DATA',
-            payload: {
-                gradeScheme: gradeScheme
-            }
-        })
-        history.push('/routes/graph');
+        if (gradeScheme == 'error') {
+            alert('please select a grade scheme!')
+
+        } else {
+            dispatch({
+                type: 'FETCH_GRAPH_DATA',
+                payload: {
+                    gradeScheme: gradeScheme
+                }
+            })
+            history.push('/routes/graph');
+        }
     }
 
-// for data grid
-
-const columns = [
-    { field: 'id', headerName: 'ID', width: 50 },
-    { field: 'grade', headerName: 'Grade', width: 120, sortable: false },
-    { field: 'date', headerName: 'Date', width: 110 },
-    { field: 'rope_type', headerName: 'Type', width: 110 }
-]
-
-// const rows = [
-//     {id: 1, grade: '5.10a', date: '2021-06-30', rope_type: 'lead'},
-//     {id: 2, grade: '5.11b', date: '2021-06-13', rope_type: 'top rope'},
-//     {id: 3, grade: '5.11c', date: '2020-05-30', rope_type: 'top rope'},
-//     {id: 4, grade: '5.10b', date: '2021-05-30', rope_type: 'lead'}
-// ]
-
-    // const rows = route;
+    // for data grid
+    const columns = [
+        { field: 'id', headerName: 'ID', width: 50 },
+        { field: 'grade', headerName: 'Grade', width: 120, sortable: false },
+        { field: 'date', headerName: 'Date', width: 110 },
+        { field: 'rope_type', headerName: 'Type', width: 110 }
+    ]
 
     // route.date.slice(0, 10)
 
+    // opens form dialog for selecting grade scheme to view
     const handleViewGraph = () => {
         setOpen(true);
     }
 
+    // moves user out of form dialog and resets chips
     const handleCancel = () => {
         setOpen(false);
         setChipData([
             { key: 'ysd', label: 'Yosemite Decimal System' },
             { key: 'ysd_simple', label: 'Yosemite Decimal System - Simple' },
             { key: 'french', label: 'French' },
-        ])
+        ]);
     }
 
     const useStyles = makeStyles((theme) => ({
@@ -115,12 +112,14 @@ const columns = [
 
     const classes = useStyles();
 
+    // array of grade scheme objects for chips
     const [chipData, setChipData] = useState([
         { key: 'ysd', label: 'Yosemite Decimal System' },
         { key: 'ysd_simple', label: 'Yosemite Decimal System - Simple' },
         { key: 'french', label: 'French' },
     ]);
 
+    // on click of grade scheme chip, disappears un selected chips and sets grade scheme to chosen grade scheme for dispatch
     const handleChipClick = (chipToChoose) => () => {
         setChipData((chips) => chips.filter((chip) => chip.key == chipToChoose.key));
         console.log('log chipToChoose', chipToChoose.key);
@@ -129,39 +128,39 @@ const columns = [
 
     return (
         <>
-        <h2>All Routes</h2>
-        <TableContainer component={Paper}>
-            <Table aria-label="routes table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Grade</TableCell>
-                        <TableCell>Date</TableCell>
-                        <TableCell>Type</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                {allRoutes.map(route => (
-                    <TableRow key={route.id} onClick={() => handleRouteClick(route)}>
-                        <TableCell component="th" scope="row">{route.grade}</TableCell>
-                        <TableCell>{format(new Date(route.date), 'dd MMMM yyyy')}</TableCell>
-                        <TableCell>{route.rope_type}</TableCell>
-                    </TableRow>
-                ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
-        <Button onClick={handleAdd}>Add Route</Button>
-        <Button onClick={handleViewGraph}>View Routes Graph</Button>
-        <h2>Data Grid</h2>
-        <div style={{width: '100%'}}>
-            <DataGrid rows={allRoutes} columns={columns} autoHeight='true' hideFooterPagination='true' />
-        </div>
-        <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
+            <h2>All Routes</h2>
+            <TableContainer component={Paper}>
+                <Table aria-label="routes table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Grade</TableCell>
+                            <TableCell>Date</TableCell>
+                            <TableCell>Type</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {allRoutes.map(route => (
+                            <TableRow key={route.id} onClick={() => handleRouteClick(route)}>
+                                <TableCell component="th" scope="row">{route.grade}</TableCell>
+                                <TableCell>{format(new Date(route.date), 'dd MMMM yyyy')}</TableCell>
+                                <TableCell>{route.rope_type}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <Button onClick={handleAdd}>Add Route</Button>
+            <Button onClick={handleViewGraph}>View Routes Graph</Button>
+            <h2>Data Grid</h2>
+            <div style={{ width: '100%' }}>
+                <DataGrid rows={allRoutes} columns={columns} autoHeight='true' hideFooterPagination='true' />
+            </div>
+            <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
                 <DialogContent>
                     <DialogContentText>
                         Choose what type of routes to see.
                     </DialogContentText>
-                    <div>
+                    <div className={classes.root}>
                         {chipData.map((data) => {
                             return (
                                 <span key={data.key}>
