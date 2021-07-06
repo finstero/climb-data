@@ -183,7 +183,7 @@ function RouteDetails() {
         </div>
         // not edit mode below
             : <div>
-                <h2>{format(new Date(route?.date), 'ccc, MMMM dd, yyyy')}</h2>
+                {/* <h2>{format(new Date(route?.date), 'dd MMMM yyyy')}</h2> */}
                 <p>Grade: {route.grade}</p>
                 <p>Climb type: {route.rope_type}</p>
                 <p>Wall angle: {route.angle}</p>

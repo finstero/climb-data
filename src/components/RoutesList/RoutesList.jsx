@@ -25,12 +25,12 @@ function RoutesList() {
 
     // moves user to details page for route on click
     const handleRouteClick = (route) => {
-        console.log('clicked');
+        // console.log('clicked');
         // dispatch({
         //     type: 'FETCH_ONE_ROUTE',
         //     payload: {id: route.id}
         // })
-        console.log('date format attempt', format(new Date(2017, 0, 6), 'dd MMMM yyyy'));
+        // console.log('date format attempt', format(new Date(2017, 0, 6), 'dd MMMM yyyy'));
         history.push(`/routes/details/${route.id}`)
     }
 
