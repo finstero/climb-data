@@ -13,12 +13,23 @@ function* getAllGraph () {
     }
 }
 
+function* getFilteredGraph () {
+    console.log('in getFilteredGraph saga');
 
+    try {
+        const forGraph = yield axios.get('/api/routes/graph/filtered');
+        yield put({ type: 'SET_ALL_GRAPH', payload: forGraph.data })
+
+    } catch {
+        console.log('error in getFilteredGraph saga');
+    }
+}
 
 
 
 function* graphsSaga() {
     yield takeLatest('FETCH_GRAPH_DATA', getAllGraph)
+    yield takeLatest('FETCH_FILTERED_GRAPH', getFilteredGraph)
 }
 
 export default graphsSaga;
