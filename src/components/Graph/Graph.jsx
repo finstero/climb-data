@@ -21,6 +21,8 @@ function Graph() {
     const allGraph = useSelector(store => store.graphs.allGraph);
     const [open, setOpen] = useState(false);
     const [sendStatus, setSendStatus] = useState('true');
+    const [filterOptions, setFilterOptions] = useState('');
+
 
     const data = {
         // labels: ['1', '2', '3', '4', '5', '6'],
@@ -96,17 +98,28 @@ function Graph() {
 
     const classes = useStyles();
 
-    const [sendStatusChip, setSendStatusChip] = useState([
-        { key: true, label: 'sent', disabled: false },
-        { key: false, label: 'project', disabled: false },
+    const [filterChip, setFilterChip] = useState([
+        { key: 'sendStatus', label: 'send status' },
+        { key: 'rope', label: 'rope type' },
+        { key: 'wall', label: 'wall angle' },
+        { key: 'hold', label: 'main hold type' },
+        { key: 'flash', label: 'if flashed' },
+        { key: 'date', label: 'date' },
     ]);
 
-    const handleChipClick = (chipToChoose) => () => {  
-        setSendStatusChip((chips) => chips.filter((chip) => chip.label === chipToChoose.label));
-        console.log('log sendStatusChip', sendStatusChip);
-        setSendStatus(chipToChoose.key);
-        console.log('log chipToChoose', chipToChoose);
+    const handleChipClick = (filter) => () => {
+        console.log('clicked chip');
+        setFilterOptions(filter.key);
+        console.log('log filterview', firstFilterView);
+        // console.log('log chipToChoose', filter);
     }
+
+    // const handleChipClick = (chipToChoose) => () => {  
+    //     setFilterChip((chips) => chips.filter((chip) => chip.label === chipToChoose.label));
+    //     console.log('log sendStatusChip', sendStatusChip);
+    //     setSendStatus(chipToChoose.key);
+    //     console.log('log chipToChoose', chipToChoose);
+    // }
 
     return (
         <>
@@ -115,26 +128,24 @@ function Graph() {
             <Button onClick={handleBack}>Back</Button>
             <Button onClick={handleFilter}>Filter Routes</Button>
             <Dialog open={open} onClose={handleFilterCancel} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Filter</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Choose what type of routes to see.
-                    </DialogContentText>
-                    <div>
-                        {sendStatusChip.map((data) => {
-                            return (
-                                <span key={data.key}>
-                                    <Chip
-                                        label={data.label}
-                                        onClick={handleChipClick(data)}
-                                        className={classes.chip}
-                                        disabled={data.disabled}
-                                    />
-                                </span>
-                            );
-                        })}
-                    </div>
-                </DialogContent>
+                    <DialogContent>
+                        <DialogContentText>
+                            Choose what type of routes to see.
+                        </DialogContentText>
+                        <div>
+                            {filterChip.map((data) => {
+                                return (
+                                    <span key={data.key}>
+                                        <Chip
+                                            label={data.label}
+                                            onClick={handleChipClick(data)}
+                                            className={classes.chip}
+                                        />
+                                    </span>
+                                );
+                            })}
+                        </div>
+                    </DialogContent>
                 <DialogActions>
                     <Button onClick={handleFilterCancel} color="primary">
                         Cancel

@@ -13,11 +13,11 @@ function* getAllGraph () {
     }
 }
 
-function* getFilteredGraph () {
-    console.log('in getFilteredGraph saga');
+function* getFilteredGraph (action) {
+    console.log('in getFilteredGraph saga', action.payload);
 
     try {
-        const forGraph = yield axios.get('/api/routes/graph/filtered');
+        const forGraph = yield axios.get(`/api/routes/graph/filtered/?filtered=${action.payload}`);
         yield put({ type: 'SET_ALL_GRAPH', payload: forGraph.data })
 
     } catch {
