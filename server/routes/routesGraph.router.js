@@ -30,11 +30,11 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     });
 });
 
-router.get('/filtered', rejectUnauthenticated, (req, res) => {
-    console.log('in filtered graph router get req.query', req.query);
+router.put('/filtered', rejectUnauthenticated, (req, res) => {
+    console.log('in filtered graph router get req.query', req.body);
     const query = 
         `SELECT "grades".grade, count("routes") FROM "grades"
-        LEFT JOIN "routes" ON "grades".id = "routes".grades_id AND "routes".user_id = $1 AND "routes".sent = 'false'
+        LEFT JOIN "routes" ON "grades".id = "routes".grades_id AND "routes".user_id = $1 AND "routes".sent = $2
         LEFT JOIN "rope" ON "rope".id = "routes".rope_type_id
         LEFT JOIN "routes_holds" ON "routes_holds".routes_id = "routes".id
         LEFT JOIN "holds" ON "routes_holds".holds_id = "holds".id
@@ -47,7 +47,7 @@ router.get('/filtered', rejectUnauthenticated, (req, res) => {
 
 
 
-    pool.query(query, [req.user.id])
+    pool.query(query, [req.user.id, req.body.sent])
     .then(result => {
         res.send(result.rows);
     })
