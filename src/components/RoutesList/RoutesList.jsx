@@ -15,6 +15,12 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Chip from '@material-ui/core/Chip';
 
 function RoutesList() {
 
@@ -22,6 +28,9 @@ function RoutesList() {
     const history = useHistory();
 
     const allRoutes = useSelector(store => store.routes.allRoutes);
+
+    const [open, setOpen] = useState(false);
+    const [gradeScheme, setGradeScheme] = useState('error');
 
     // moves user to details page for route on click
     const handleRouteClick = (route) => {
@@ -47,9 +56,12 @@ function RoutesList() {
     }
 
     // moves user to graph 
-    const handleViewGraph = () => {
+    const goViewGraph = () => {
         dispatch({
-            type: 'FETCH_GRAPH_DATA'
+            type: 'FETCH_GRAPH_DATA',
+            payload: {
+                gradeScheme: gradeScheme
+            }
         })
         history.push('/routes/graph');
     }
@@ -73,6 +85,47 @@ const columns = [
     // const rows = route;
 
     // route.date.slice(0, 10)
+
+    const handleViewGraph = () => {
+        setOpen(true);
+    }
+
+    const handleCancel = () => {
+        setOpen(false);
+        setChipData([
+            { key: 'ysd', label: 'Yosemite Decimal System' },
+            { key: 'ysd_simple', label: 'Yosemite Decimal System - Simple' },
+            { key: 'french', label: 'French' },
+        ])
+    }
+
+    const useStyles = makeStyles((theme) => ({
+        root: {
+            display: 'flex',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            listStyle: 'none',
+            padding: theme.spacing(0.5),
+            margin: 0,
+        },
+        chip: {
+            margin: theme.spacing(0.5),
+        },
+    }));
+
+    const classes = useStyles();
+
+    const [chipData, setChipData] = useState([
+        { key: 'ysd', label: 'Yosemite Decimal System' },
+        { key: 'ysd_simple', label: 'Yosemite Decimal System - Simple' },
+        { key: 'french', label: 'French' },
+    ]);
+
+    const handleChipClick = (chipToChoose) => () => {
+        setChipData((chips) => chips.filter((chip) => chip.key == chipToChoose.key));
+        console.log('log chipToChoose', chipToChoose.key);
+        setGradeScheme(chipToChoose.key);
+    }
 
     return (
         <>
@@ -103,6 +156,34 @@ const columns = [
         <div style={{width: '100%'}}>
             <DataGrid rows={allRoutes} columns={columns} autoHeight='true' hideFooterPagination='true' />
         </div>
+        <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
+                <DialogContent>
+                    <DialogContentText>
+                        Choose what type of routes to see.
+                    </DialogContentText>
+                    <div>
+                        {chipData.map((data) => {
+                            return (
+                                <span key={data.key}>
+                                    <Chip
+                                        label={data.label}
+                                        onClick={handleChipClick(data)}
+                                        className={classes.chip}
+                                    />
+                                </span>
+                            );
+                        })}
+                    </div>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCancel} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={goViewGraph} color="primary">
+                        View Graph
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </>
     )
 }
