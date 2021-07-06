@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
+import {format} from 'date-fns';
 
 // material ui
 import Button from '@material-ui/core/Button';
@@ -182,7 +183,7 @@ function RouteDetails() {
         </div>
         // not edit mode below
             : <div>
-                <h1>{route?.date?.slice(0, 10)}</h1>
+                {/* <h2>{format(new Date(route?.date), 'dd MMMM yyyy')}</h2> */}
                 <p>Grade: {route.grade}</p>
                 <p>Climb type: {route.rope_type}</p>
                 <p>Wall angle: {route.angle}</p>

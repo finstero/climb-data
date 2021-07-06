@@ -5,9 +5,9 @@ const {
     rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
 
-
+// make this based on useParams!!!
 // /api/grades
-router.get('/', rejectUnauthenticated, (req, res) => {
+router.get('/:gradeScheme', rejectUnauthenticated, (req, res) => {
 
     // console.log('grades router get query', req.query.gradeScheme);
 
@@ -16,7 +16,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
     console.log('in get in grades router');
 
-    pool.query(query, [req.query.gradeScheme])
+    pool.query(query, [req.params.gradeScheme])
         .then(result => {
             // console.log('result.rows in grades get router', result.rows);
             res.send(result.rows);

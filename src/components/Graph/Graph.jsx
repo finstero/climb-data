@@ -47,7 +47,7 @@ function Graph() {
 
     return (
         <>
-            <h1>Graph</h1>
+            <h2>All Routes</h2>
             <Line data={data} options={options} />
             <Button onClick={handleBack}>Back</Button>
         </>
