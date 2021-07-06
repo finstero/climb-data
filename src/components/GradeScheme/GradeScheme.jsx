@@ -14,7 +14,7 @@ function GradeScheme() {
     const dispatch = useDispatch();
 
     // local state for selected grade scheme
-    const [gradeScheme, setGradeScheme] = useState('ysd');
+    const [gradeScheme, setGradeScheme] = useState('error');
 
     // sends selected grade scheme to saga/reducer
     const handleContinue = (event) => {
@@ -25,11 +25,13 @@ function GradeScheme() {
         //         gradeScheme: gradeScheme,
         //     }
         // })
-
-        // setGradeScheme(chipData[0].key)
-        history.push(`/routes/add/${gradeScheme}`);
+        if (gradeScheme == 'error') {
+            alert('please select a grade scheme!')
+        }
+        else {
+            history.push(`/routes/add/${gradeScheme}`);
+        }
         console.log('log gradescheme', gradeScheme);
-        console.log('log chip data', chipData[0].key);
     }
 
     const useStyles = makeStyles((theme) => ({
@@ -59,6 +61,10 @@ function GradeScheme() {
         setGradeScheme(chipToChoose.key);
     }
 
+    const handleCancel = () => {
+        history.push('/routes/home');
+    }
+
     return (
         <>
             {/* <form onSubmit={handleContinue}>
@@ -84,6 +90,7 @@ function GradeScheme() {
                                 </div>
                             );
                         })}
+                        <Button onClick={handleCancel}>Cancel</Button>
                         <Button type="submit">Continue</Button>
                     </form>
                 </Grid>
