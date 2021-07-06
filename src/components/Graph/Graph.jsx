@@ -20,10 +20,11 @@ function Graph() {
     const dispatch = useDispatch();
     const allGraph = useSelector(store => store.graphs.allGraph);
     const [open, setOpen] = useState(false);
-    const [sendStatus, setSendStatus] = useState('true');
+    const [sendStatus, setSendStatus] = useState('error');
     const [filterOptions, setFilterOptions] = useState('');
 
 
+    // data for line graph. grabbed from reducer
     const data = {
         // labels: ['1', '2', '3', '4', '5', '6'],
         datasets: [
@@ -37,6 +38,7 @@ function Graph() {
         ],
     };
 
+    // options for line graph
     const options = {
         parsing: {
             xAxisKey: 'grade',
@@ -53,30 +55,38 @@ function Graph() {
         },
     };
 
+    // moves user back to routes list
     const handleBack = () => {
         history.push('/routes/list')
     }
 
+    // opens dialog form for sent/project selection
     const handleFilter = () => {
         setOpen(true);
     }
 
+    // close dialog form without action
     const handleFilterCancel = () => {
         setOpen(false);
     }
 
+    // on click of Filter button inside of form dialog, send info to server/db to grab selected routes
     const handleFilterChoices = () => {
-        dispatch({
-            type: 'FETCH_FILTERED_GRAPH',
-            payload: {
-                sent: sendStatus,
-            }
-        })
-        setOpen(false);
-        setFilterChip([
-            { key: 'true', label: 'sent' },
-            { key: 'false', label: 'project' },
-        ])
+        if (sendStatus == 'error') {
+            alert('Please choose what type of routes to see!');
+        } else {
+            dispatch({
+                type: 'FETCH_FILTERED_GRAPH',
+                payload: {
+                    sent: sendStatus,
+                }
+            })
+            setOpen(false);
+            setFilterChip([
+                { key: 'true', label: 'sent' },
+                { key: 'false', label: 'project' },
+            ])
+        }
     }
 
     const useStyles = makeStyles((theme) => ({

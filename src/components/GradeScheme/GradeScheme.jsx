@@ -19,12 +19,6 @@ function GradeScheme() {
     // sends selected grade scheme to saga/reducer
     const handleContinue = (event) => {
         event.preventDefault();
-        // dispatch({
-        //     type: 'FETCH_GRADE_SCHEME',
-        //     payload: {
-        //         gradeScheme: gradeScheme,
-        //     }
-        // })
         if (gradeScheme == 'error') {
             alert('please select a grade scheme!')
         }
@@ -49,18 +43,22 @@ function GradeScheme() {
     }));
 
     const classes = useStyles();
+
+    // setting up grade scheme chips
     const [chipData, setChipData] = useState([
         { key: 'ysd', label: 'Yosemite Decimal System' },
         { key: 'ysd_simple', label: 'Yosemite Decimal System - Simple' },
         { key: 'french', label: 'French' },
     ]);
 
+    // on click of grade scheme chip, disappears un selected chips and sets grade scheme to chosen grade scheme for dispatch
     const handleClick = (chipToChoose) => () => {
         setChipData((chips) => chips.filter((chip) => chip.key == chipToChoose.key));
         console.log('log chipToChoose', chipToChoose.key);
         setGradeScheme(chipToChoose.key);
     }
 
+    // moves user back to routes home
     const handleCancel = () => {
         history.push('/routes/home');
     }
@@ -78,10 +76,11 @@ function GradeScheme() {
             </form> */}
             <Grid container justify="center">
                 <Grid item>
-                    <form onSubmit={handleContinue}>
+                    <form onSubmit={handleContinue} className={classes.root}>
+                        <ul className={classes.root}>
                         {chipData.map((data) => {
                             return (
-                                <div key={data.key}>
+                                <div key={data.key} className={classes.root}>
                                     <Chip
                                         label={data.label}
                                         onClick={handleClick(data)}
@@ -90,6 +89,7 @@ function GradeScheme() {
                                 </div>
                             );
                         })}
+                        </ul>
                         <Button onClick={handleCancel}>Cancel</Button>
                         <Button type="submit">Continue</Button>
                     </form>
