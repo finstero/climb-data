@@ -44,10 +44,10 @@ function App() {
   const theme = createMuiTheme({
     palette: {
       primary: {
-        main: '#ffa4a2'
+        main: '#0C163D'
       },
       secondary: {
-        main: '#af4448'
+        main: '#E26B00'
       }
     }
   })
