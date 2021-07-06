@@ -29,10 +29,10 @@ function Graph() {
         // labels: ['1', '2', '3', '4', '5', '6'],
         datasets: [
             {
-                label: '# of routes (project and sent)',
+                label: '# of routes',
                 data: allGraph,
                 fill: false,
-                backgroundColor: 'rgb(255, 99, 132)',
+                backgroundColor: '#0C163D',
                 borderColor: 'rgba(255, 99, 132, 0.2)',
             },
         ],

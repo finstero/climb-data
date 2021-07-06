@@ -62,13 +62,13 @@ function App() {
             <Redirect exact from="/" to="/climbhome" />
 
             {/* Visiting localhost:3000/about will show the about page. */}
-            <Route
+            {/* <Route
               // shows AboutPage at all times (logged in or not)
               exact
               path="/about"
             >
               <AboutPage />
-            </Route>
+            </Route> */}
 
             {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
