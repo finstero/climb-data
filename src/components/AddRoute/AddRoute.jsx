@@ -27,6 +27,7 @@ function AddRoute() {
     const { grading } = useParams();
     // const [gradeScheme, setGradeScheme] = useState('ysd');
     const grades = useSelector(store => store.formOptions.gradesReducer)
+    const ropes = useSelector(store => store.formOptions.ropeReducer)
 
     // const createdRouteId = useSelector(store => store.id);
 
@@ -181,12 +182,14 @@ function AddRoute() {
                             </div>
                         </Grid>
                         <Grid item xs={12} className={classes.root}>
-                            <label htmlFor="rope">Type of climb:</label>
-                            <select onChange={(event) => { setRope(event.target.value) }} value={rope} name="rope" id="rope">
-                                <option value="1">top rope</option>
-                                <option value="2">lead</option>
-                                <option value="3">autobelay</option>
-                            </select>
+                            <FormControl className={classes.formControl}>
+                                <InputLabel id="ropes">Climb Type</InputLabel>
+                                <Select onChange={(event) => { setRope(event.target.value) }} defaultValue="choose type" value={rope} labelId="ropes" id="ropes">
+                                    {ropes.map(rope => (
+                                        <MenuItem key={rope.id} value={rope.id}>{rope.type}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
                         </Grid>
                         <Grid item xs={12} className={classes.root}>
                             <label htmlFor="wall">Wall angle:</label>
