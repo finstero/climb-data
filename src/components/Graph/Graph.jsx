@@ -76,7 +76,7 @@ function Graph() {
             alert('Please choose what type of routes to see!');
         } else {
             dispatch({
-                type: 'FETCH_FILTERED_GRAPH',
+                type: 'SET_FILTERED_GRAPH',
                 payload: {
                     sent: sendStatus,
                 }

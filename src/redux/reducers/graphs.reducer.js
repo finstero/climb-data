@@ -5,6 +5,16 @@ const allGraph = (state = [], action) => {
         case 'SET_ALL_GRAPH':
             console.log('action.payload in all graph reducer', action.payload);
             return action.payload;
+        case 'SET_FILTERED_GRAPH':
+            console.log('filter reducer', action.payload);
+            const filteredArray = action.payload.filter(route => route.id != 1)
+            console.log('filtered array', filteredArray);
+            return filteredArray;
+        // case 'SET_SEND_FILTER':
+        //     console.log('SET SEND FILTER', state);
+        //     const filteredArray = state.filter(route => route.id != 1)
+        //     console.log('filtered array', filteredArray);
+        //     return filteredArray;
         case 'CLEAR_ALL_GRAPH':
             return [];
         default:

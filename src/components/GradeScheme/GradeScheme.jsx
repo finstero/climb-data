@@ -86,6 +86,7 @@ function GradeScheme() {
                                         onClick={handleClick(data)}
                                         className={classes.chip}
                                         color="primary"
+                                        disabled={false}
                                     />
                                 </div>
                             );
