@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import errors from './errors.reducer';
 import user from './user.reducer';
-import addRouteOptions from './addOptions.reducer';
+import formOptions from './formOptions.reducer';
 import routes from './routes.reducer';
 import graphs from './graphs.reducer';
 // import id from './id.reducer';
@@ -15,7 +15,7 @@ import graphs from './graphs.reducer';
 const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
   user, // will have an id and username if someone is logged in
-  addRouteOptions,
+  formOptions,
   routes,
   graphs,
   // id,

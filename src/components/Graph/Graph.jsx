@@ -1,6 +1,6 @@
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Line } from 'react-chartjs-2';
 
@@ -18,21 +18,33 @@ function Graph() {
 
     const history = useHistory();
     const dispatch = useDispatch();
+    const { grading } = useParams();
+
     const allGraph = useSelector(store => store.graphs.allGraph);
+
     const [open, setOpen] = useState(false);
     const [sendStatus, setSendStatus] = useState('error');
     const [filterOptions, setFilterOptions] = useState('');
 
+    // grabs all routes on page load
+    useEffect(() => {
+        dispatch({
+            type: 'FETCH_GRAPH_DATA',
+            payload: {
+                gradeScheme: grading
+            }
+        })
+    }, []);
 
     // data for line graph. grabbed from reducer
     const data = {
         // labels: ['1', '2', '3', '4', '5', '6'],
         datasets: [
             {
-                label: '# of routes (project and sent)',
+                label: '# of routes',
                 data: allGraph,
                 fill: false,
-                backgroundColor: 'rgb(255, 99, 132)',
+                backgroundColor: '#0C163D',
                 borderColor: 'rgba(255, 99, 132, 0.2)',
             },
         ],
@@ -76,7 +88,7 @@ function Graph() {
             alert('Please choose what type of routes to see!');
         } else {
             dispatch({
-                type: 'FETCH_FILTERED_GRAPH',
+                type: 'SET_FILTERED_GRAPH',
                 payload: {
                     sent: sendStatus,
                 }
