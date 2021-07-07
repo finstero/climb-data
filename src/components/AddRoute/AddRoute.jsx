@@ -26,7 +26,7 @@ function AddRoute() {
     const dispatch = useDispatch();
     const { grading } = useParams();
     // const [gradeScheme, setGradeScheme] = useState('ysd');
-    const grades = useSelector(store => store.addRouteOptions.gradesReducer)
+    const grades = useSelector(store => store.formOptions.gradesReducer)
 
     // const createdRouteId = useSelector(store => store.id);
 

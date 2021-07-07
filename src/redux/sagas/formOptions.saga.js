@@ -5,15 +5,12 @@ function* getRopeOptions () {
     console.log('in getRopeOptions');
     try {
 
-    const ropeOptions = yield axios.get(`/api/grades`);
+    const ropeOptions = yield axios.get(`/api/routes/options/rope`);
     yield put({type: 'SET_ROPES', payload: ropeOptions.data});
 
     } catch {
-
         console.log('error in getRopeOptions saga');
-
     }
-
 }
 
 // handles grabbing all grades for one grade type
@@ -26,9 +23,7 @@ function* getGradeScheme (action) {
     yield put({type: 'SET_GRADES', payload: grades.data});
 
     } catch {
-
         console.log('error in getAddOptions saga');
-
     }
 
 }

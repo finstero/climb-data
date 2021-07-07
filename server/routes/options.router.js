@@ -1,10 +1,22 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const {
+    rejectUnauthenticated,
+} = require('../modules/authentication-middleware');
 
-// /api/routes/options
-router.get('/', (req, res) => {
-  // GET route code here
+// api/routes/options/rope
+router.get('/rope', rejectUnauthenticated, (req, res) => {
+
+    const query = `SELECT * FROM "rope";`;
+
+    pool.query(query)
+    .then(result => {
+        res.send(result.rows);
+    })
+    .catch(error => {
+        console.log('error in options router rope get');
+    })
 });
 
 

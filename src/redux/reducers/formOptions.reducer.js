@@ -4,7 +4,7 @@ import { combineReducers } from 'redux';
 const ropesReducer = (state = [], action) => {
     switch(action.type) {
         case 'SET_ROPES':
-            return [...state, action.payload];
+            return action.payload;
         default:
             return state;
     }
