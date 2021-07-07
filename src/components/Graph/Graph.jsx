@@ -21,6 +21,9 @@ function Graph() {
     const { grading } = useParams();
 
     const allGraph = useSelector(store => store.graphs.allGraph);
+    const ropes = useSelector(store => store.formOptions.ropeReducer)
+	const walls = useSelector(store => store.formOptions.wallReducer)
+	const holds = useSelector(store => store.formOptions.holdReducer)
 
     const [open, setOpen] = useState(false);
     const [sendStatus, setSendStatus] = useState('error');
@@ -32,7 +35,10 @@ function Graph() {
             type: 'FETCH_GRAPH_DATA',
             payload: {
                 gradeScheme: grading
-            }
+            },
+        },
+        {
+            type: 'FETCH_FORM_OPTIONS'
         })
     }, []);
 
@@ -67,8 +73,11 @@ function Graph() {
         },
     };
 
-    // moves user back to routes list
+    // moves user back to routes list. Clears reducer holding graph info.
     const handleBack = () => {
+        dispatch({
+            type: 'CLEAR_ALL_GRAPH',
+        })
         history.push('/routes/list')
     }
 
@@ -88,7 +97,7 @@ function Graph() {
             alert('Please choose what type of routes to see!');
         } else {
             dispatch({
-                type: 'SET_FILTERED_GRAPH',
+                type: 'FETCH_FILTERED_GRAPH',
                 payload: {
                     sent: sendStatus,
                 }

@@ -10,11 +10,6 @@ router.get('/:gradeScheme', rejectUnauthenticated, (req, res) => {
     const query =
         `SELECT "grades".grade, count("routes") FROM "grades"
         LEFT JOIN "routes" ON "grades".id = "routes".grades_id AND "routes".user_id = $1
-        LEFT JOIN "rope" ON "rope".id = "routes".rope_type_id
-        LEFT JOIN "routes_holds" ON "routes_holds".routes_id = "routes".id
-        LEFT JOIN "holds" ON "routes_holds".holds_id = "holds".id
-        LEFT JOIN "routes_wall" ON "routes_wall".routes_id = "routes".id
-        LEFT JOIN "wall" ON "routes_wall".wall_id = "wall".id
         WHERE "grades".type = $2
         GROUP BY "grades".id
         ORDER BY "grades"
@@ -30,19 +25,14 @@ router.get('/:gradeScheme', rejectUnauthenticated, (req, res) => {
         });
 });
 
-router.get('/filtered', rejectUnauthenticated, (req, res) => {
-    // console.log('in filtered graph router get req.query', req.body);
+router.get('/', rejectUnauthenticated, (req, res) => {
+    console.log('in filtered graph router get req.query', req.query);
 
-    const query = 
-        `SELECT "grades".grade, "rope".id, count("routes") FROM "grades"
+    const query =
+        `SELECT "grades".grade, count("routes") FROM "grades"
         LEFT JOIN "routes" ON "grades".id = "routes".grades_id AND "routes".user_id = $1
-        LEFT JOIN "rope" ON "rope".id = "routes".rope_type_id 
-        LEFT JOIN "routes_holds" ON "routes_holds".routes_id = "routes".id 
-        LEFT JOIN "holds" ON "routes_holds".holds_id = "holds".id
-        LEFT JOIN "routes_wall" ON "routes_wall".routes_id = "routes".id
-        LEFT JOIN "wall" ON "routes_wall".wall_id = "wall".id
         WHERE "grades".type = 'ysd'
-        GROUP BY "grades".id, "rope".id
+        GROUP BY "grades".id,
         ORDER BY "grades"
         ;`
 
@@ -50,37 +40,26 @@ router.get('/filtered', rejectUnauthenticated, (req, res) => {
     //     `SELECT "grades".grade, count("routes") FROM "grades"
     //     LEFT JOIN "routes" ON "grades".id = "routes".grades_id AND "routes".user_id = $1`;
 
-    // let queryB = '';
-    // let queryC = '';
-    // if (req.body.sent) {
-    //     queryB = `AND "routes".sent = $2
-    //     LEFT JOIN "rope" ON "rope".id = "routes".rope_type_id`;
-    //     } else {
-    //         queryB = `LEFT JOIN "rope" ON "rope".id = "routes".rope_type_id`;
-    //     }
-    // if (req.body.rope) {
-    //     queryC = `AND "rope".id = $3
-    //     LEFT JOIN "routes_holds" ON "routes_holds".routes_id = "routes".id
-    //     LEFT JOIN "holds" ON "routes_holds".holds_id = "holds".id
-    //     LEFT JOIN "routes_wall" ON "routes_wall".routes_id = "routes".id
-    //     LEFT JOIN "wall" ON "routes_wall".wall_id = "wall".id
-    //     WHERE "grades".type = 'ysd'
-    //     GROUP BY "grades".id
-    //     ORDER BY "grades"
-    //     ;`;
-    // } else {
-    //     queryC = 
-    //     `LEFT JOIN "routes_holds" ON "routes_holds".routes_id = "routes".id
-    //     LEFT JOIN "holds" ON "routes_holds".holds_id = "holds".id
-    //     LEFT JOIN "routes_wall" ON "routes_wall".routes_id = "routes".id
-    //     LEFT JOIN "wall" ON "routes_wall".wall_id = "wall".id
-    //     WHERE "grades".type = 'ysd'
-    //     GROUP BY "grades".id
-    //     ORDER BY "grades"
-    //     ;`;
+    // if (req.query.flash !== undefined) {
+    //     queryA += `AND "routes".flash = $2`;
     // }
 
-    // let queryAll = queryA + ' ' + queryB + ' ' + queryC
+    // if (req.query.rope) {
+    //     queryA += `AND "routes".rope_type_id = $3`
+    // }
+    // if (req.query.sent !== undefined) {
+    //     queryA += `AND "routes".sent = $4`
+    // }
+
+    // queryA += `LEFT JOIN "rope" ON "rope".id = "routes".rope_type_id`;
+    // queryA += `LEFT JOIN "routes_holds" ON "routes_holds".routes_id = "routes".id`;
+
+    //     `WHERE "grades".type = 'ysd'
+    //     GROUP BY "grades".id
+    //     ORDER BY "grades"
+    //     ;`;
+    
+
 
     pool.query(query, [req.user.id])
         .then(result => {
