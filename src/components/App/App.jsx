@@ -134,7 +134,8 @@ function App() {
 
             <ProtectedRoute
               exact
-              path="/routes/graph"
+              path="/routes/graph/:grading"
+              children={<Graph />}
             >
               <Graph />
             </ProtectedRoute>

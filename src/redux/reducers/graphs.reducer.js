@@ -7,7 +7,8 @@ const allGraph = (state = [], action) => {
             return action.payload;
         case 'SET_FILTERED_GRAPH':
             console.log('filter reducer', action.payload);
-            const filteredArray = action.payload.filter(route => route.id != 1)
+            console.log('filter reducer state', state);
+            const filteredArray = state.filter(route => route.sent != action.payload.sent)
             console.log('filtered array', filteredArray);
             return filteredArray;
         // case 'SET_SEND_FILTER':
