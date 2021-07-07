@@ -42,9 +42,9 @@ function AddRoute() {
     const [image, setImage] = useState('');
 
     useEffect(() => {
-        // dispatch({
-        //     type: 'FETCH_ADD_OPTIONS',
-        // });
+        dispatch({
+            type: 'FETCH_FORM_OPTIONS',
+        });
         dispatch({
             type: 'FETCH_GRADE_SCHEME',
             payload: {
@@ -117,21 +117,6 @@ function AddRoute() {
         { key: true, label: 'sent', disabled: false },
         { key: false, label: 'project', disabled: false },
     ]);
-
-    // const makeDisabled = (array) => {
-    //     for (chip of array) {
-    //         if (chip.label == 'sent') {
-    //             chip.disable
-    //         }
-    //     }
-    // }
-
-    // setSendStatusChip((chips) => chips.map((chip) => {
-    //     if(chip.label === !chipToChoose.label) {
-    //         chip.disabled = true;
-    //         console.log('in if of map');
-    //     }
-    // }));
 
     const handleClick = (chipToChoose) => () => {
         setSendStatusChip((chips) => chips.filter((chip) => chip.label === chipToChoose.label));

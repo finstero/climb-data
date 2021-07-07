@@ -33,9 +33,9 @@ function* getGradeScheme (action) {
 
 }
 
-function* addOptionsSaga () {
+function* formOptionsSaga () {
     yield takeLatest('FETCH_ADD_OPTIONS', getRopeOptions);
     yield takeLatest('FETCH_GRADE_SCHEME', getGradeScheme);
 }
 
-export default addOptionsSaga;
+export default formOptionsSaga;
