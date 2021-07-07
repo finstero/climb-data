@@ -1,15 +1,6 @@
 import { combineReducers } from 'redux';
 
 // stores grades of one grade type
-const ropeReducer = (state = [], action) => {
-    switch(action.type) {
-        case 'SET_ROPES':
-            return action.payload;
-        default:
-            return state;
-    }
-}
-
 const gradesReducer = (state = [], action) => {
     switch(action.type) {
         case 'SET_GRADES':
@@ -19,7 +10,26 @@ const gradesReducer = (state = [], action) => {
     }
 }
 
+const ropeReducer = (state = [], action) => {
+    switch(action.type) {
+        case 'SET_ROPES':
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
+const wallReducer = (state = [], action) => {
+    switch(action.type) {
+        case 'SET_WALLS':
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 export default combineReducers({
     gradesReducer,
     ropeReducer,
+    wallReducer,
 });

@@ -28,6 +28,7 @@ function AddRoute() {
     // const [gradeScheme, setGradeScheme] = useState('ysd');
     const grades = useSelector(store => store.formOptions.gradesReducer)
     const ropes = useSelector(store => store.formOptions.ropeReducer)
+    const walls = useSelector(store => store.formOptions.wallReducer)
 
     // const createdRouteId = useSelector(store => store.id);
 
@@ -192,12 +193,20 @@ function AddRoute() {
                             </FormControl>
                         </Grid>
                         <Grid item xs={12} className={classes.root}>
-                            <label htmlFor="wall">Wall angle:</label>
+                            {/* <label htmlFor="wall">Wall angle:</label>
                             <select onChange={(event) => { setWall(event.target.value) }} value={wall} name="wall" id="wall">
                                 <option value="1">slab</option>
                                 <option value="2">vertical</option>
                                 <option value="3">overhang</option>
-                            </select>
+                            </select> */}
+                            <FormControl className={classes.formControl}>
+                                <InputLabel id="walls">Wall Angle</InputLabel>
+                                <Select onChange={(event) => { setWall(event.target.value) }} defaultValue="choose angle" value={wall} labelId="walls" id="walls">
+                                    {walls.map(wall => (
+                                        <MenuItem key={wall.id} value={wall.id}>{wall.angle}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
                         </Grid>
                         <Grid item xs={12} className={classes.root}>
                             <label htmlFor="hold">Main hold type:</label>

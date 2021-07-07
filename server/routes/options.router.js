@@ -15,10 +15,22 @@ router.get('/rope', rejectUnauthenticated, (req, res) => {
         res.send(result.rows);
     })
     .catch(error => {
-        console.log('error in options router rope get');
+        console.log('error in options router rope get', error);
     })
 });
 
+router.get('/wall', rejectUnauthenticated, (req, res) => {
+
+    const query = `SELECT * FROM "wall";`;
+
+    pool.query(query)
+    .then(result => {
+        res.send(result.rows);
+    })
+    .catch(error => {
+        console.log('error in options router wall get', error);
+    })
+});
 
 router.post('/', (req, res) => {
   // POST route code here
