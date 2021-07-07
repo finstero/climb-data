@@ -32,6 +32,19 @@ router.get('/wall', rejectUnauthenticated, (req, res) => {
     })
 });
 
+router.get('/holds', rejectUnauthenticated, (req, res) => {
+
+    const query = `SELECT * FROM "holds";`;
+
+    pool.query(query)
+    .then(result => {
+        res.send(result.rows);
+    })
+    .catch(error => {
+        console.log('error in options router holds get', error);
+    })
+});
+
 router.post('/', (req, res) => {
   // POST route code here
 });

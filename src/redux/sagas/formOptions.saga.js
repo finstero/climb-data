@@ -39,11 +39,24 @@ function* getWallOptions () {
     }
 }
 
+function* getHoldOptions () {
+    // console.log('in getHoldOptions');
+    try {
+
+    const holdOptions = yield axios.get(`/api/routes/options/holds`);
+    yield put({type: 'SET_HOLDS', payload: holdOptions.data});
+
+    } catch {
+        console.log('error in getHoldOptions saga');
+    }
+}
+
 function* formOptionsSaga () {
     
     yield takeLatest('FETCH_GRADE_SCHEME', getGradeScheme);
     yield takeLatest('FETCH_FORM_OPTIONS', getRopeOptions);
     yield takeLatest('FETCH_FORM_OPTIONS', getWallOptions);
+    yield takeLatest('FETCH_FORM_OPTIONS', getHoldOptions);
 }
 
 export default formOptionsSaga;

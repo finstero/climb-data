@@ -28,8 +28,18 @@ const wallReducer = (state = [], action) => {
     }
 }
 
+const holdReducer = (state = [], action) => {
+    switch(action.type) {
+        case 'SET_HOLDS':
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 export default combineReducers({
     gradesReducer,
     ropeReducer,
     wallReducer,
+    holdReducer,
 });

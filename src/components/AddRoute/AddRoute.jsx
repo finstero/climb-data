@@ -29,6 +29,7 @@ function AddRoute() {
     const grades = useSelector(store => store.formOptions.gradesReducer)
     const ropes = useSelector(store => store.formOptions.ropeReducer)
     const walls = useSelector(store => store.formOptions.wallReducer)
+    const holds = useSelector(store => store.formOptions.holdReducer)
 
     // const createdRouteId = useSelector(store => store.id);
 
@@ -193,12 +194,6 @@ function AddRoute() {
                             </FormControl>
                         </Grid>
                         <Grid item xs={12} className={classes.root}>
-                            {/* <label htmlFor="wall">Wall angle:</label>
-                            <select onChange={(event) => { setWall(event.target.value) }} value={wall} name="wall" id="wall">
-                                <option value="1">slab</option>
-                                <option value="2">vertical</option>
-                                <option value="3">overhang</option>
-                            </select> */}
                             <FormControl className={classes.formControl}>
                                 <InputLabel id="walls">Wall Angle</InputLabel>
                                 <Select onChange={(event) => { setWall(event.target.value) }} defaultValue="choose angle" value={wall} labelId="walls" id="walls">
@@ -209,13 +204,14 @@ function AddRoute() {
                             </FormControl>
                         </Grid>
                         <Grid item xs={12} className={classes.root}>
-                            <label htmlFor="hold">Main hold type:</label>
-                            <select onChange={(event) => { setHold(event.target.value) }} value={hold} name="hold" id="hold">
-                                <option value="1">crimps</option>
-                                <option value="2">slopers</option>
-                                <option value="3">jugs</option>
-                                <option value="4">pinches</option>
-                            </select>
+                            <FormControl className={classes.formControl}>
+                                <InputLabel id="holds">Main Hold Type</InputLabel>
+                                <Select onChange={(event) => { setHold(event.target.value) }} defaultValue="choose main hold type" value={hold} labelId="holds" id="holds">
+                                    {holds.map(hold => (
+                                        <MenuItem key={hold.id} value={hold.id}>{hold.type}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
                         </Grid>
                         <Grid item xs={12} className={classes.root}>
                             <label htmlFor="flash">Flashed?</label>
