@@ -77,7 +77,7 @@ function AddRoute() {
 				image: image
 			}
 		})
-		setGrade('1');
+		setGrade('');
 		setNotes('');
 		setImage('');
 		// console.log('in add route file');
@@ -107,7 +107,7 @@ function AddRoute() {
 		},
 		formControl: {
 			margin: theme.spacing(1),
-			minWidth: 120,
+			minWidth: 130,
 		},
 		selectEmpty: {
 			marginTop: theme.spacing(2),

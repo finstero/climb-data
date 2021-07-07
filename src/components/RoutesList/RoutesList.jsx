@@ -61,13 +61,13 @@ function RoutesList() {
             alert('please select a grade scheme!')
 
         } else {
-            dispatch({
-                type: 'FETCH_GRAPH_DATA',
-                payload: {
-                    gradeScheme: gradeScheme
-                }
-            })
-            history.push('/routes/graph');
+            // dispatch({
+            //     type: 'FETCH_GRAPH_DATA',
+            //     payload: {
+            //         gradeScheme: gradeScheme
+            //     }
+            // })
+            history.push(`/routes/graph/${gradeScheme}`);
         }
     }
 
