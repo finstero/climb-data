@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 
-import RouteListFilterForm from '../RoutesListFilterForm/RoutesListFilterForm';
+import GraphForm from '../GraphForm/GraphForm';
 
 // material ui
 import { DataGrid } from '@material-ui/data-grid';
@@ -20,7 +20,6 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Chip from '@material-ui/core/Chip';
 
 function RoutesList() {
@@ -109,6 +108,10 @@ function RoutesList() {
         chip: {
             margin: theme.spacing(0.5),
         },
+        formControl: {
+            margin: theme.spacing(1),
+            minWidth: 130,
+        },
     }));
 
     const classes = useStyles();
@@ -127,12 +130,12 @@ function RoutesList() {
         setGradeScheme(chipToChoose.key);
     }
 
-
+    const dispatchType = {type: ``}
 
     return (
         <>
             <h2>All Routes</h2>
-            <RoutesListFilterForm />
+            <GraphForm classes={classes} dispatchType={dispatchType}/>
             <TableContainer component={Paper}>
                 <Table aria-label="routes table">
                     <TableHead>

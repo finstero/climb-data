@@ -16,7 +16,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
 // material ui classes passed down for styling
-function GraphForm({classes}) {
+function GraphForm({ classes, dispatchType }) {
 
     const dispatch = useDispatch();
 
@@ -63,7 +63,7 @@ function GraphForm({classes}) {
             alert('Please choose at least one filter!');
         } else {
             dispatch({
-                type: 'FETCH_FILTERED_GRAPH',
+                type: dispatchType.type,
                 payload: {
                     gradeScheme: grading,
                     sent: sendStatus,
