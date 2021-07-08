@@ -47,6 +47,9 @@ function GraphForm({classes}) {
     // close dialog form without action
     const handleFilterCancel = () => {
         setOpen(false);
+        setRope('');
+        setHold('');
+        setWall('');
     }
 
     const sentFilterChips = [
@@ -72,6 +75,9 @@ function GraphForm({classes}) {
             })
             setOpen(false);
             setFilterChip(sentFilterChips)
+            setRope('');
+            setHold('');
+            setWall('');
         }
     }
 

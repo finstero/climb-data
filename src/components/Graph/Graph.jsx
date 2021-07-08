@@ -25,6 +25,7 @@ function Graph() {
 
     // reducers
     const allGraph = useSelector(store => store.graphs.allGraph);
+    const overlay = useSelector(store => store.graphs.overlay);
     const ropes = useSelector(store => store.formOptions.ropeReducer)
     const walls = useSelector(store => store.formOptions.wallReducer)
     const holds = useSelector(store => store.formOptions.holdReducer)
@@ -56,12 +57,19 @@ function Graph() {
         // labels: ['1', '2', '3', '4', '5', '6'],
         datasets: [
             {
-                label: '# of routes',
+                label: 'main',
                 data: allGraph,
                 fill: false,
                 backgroundColor: '#0C163D',
-                borderColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: '#0C163D',
             },
+            // {
+            //     label: 'overlay',
+            //     data: overlay,
+            //     fill: false,
+            //     backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            //     borderColor: 'rgba(255, 99, 132, 0.2)',
+            // },
         ],
     };
 
