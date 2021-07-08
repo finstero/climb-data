@@ -124,21 +124,25 @@ function Graph() {
     //     }
     // }
 
-    // const useStyles = makeStyles((theme) => ({
-    //     root: {
-    //         display: 'flex',
-    //         justifyContent: 'center',
-    //         flexWrap: 'wrap',
-    //         listStyle: 'none',
-    //         padding: theme.spacing(0.5),
-    //         margin: 0,
-    //     },
-    //     chip: {
-    //         margin: theme.spacing(0.5),
-    //     },
-    // }));
+    const useStyles = makeStyles((theme) => ({
+        root: {
+            display: 'flex',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            listStyle: 'none',
+            padding: theme.spacing(0.5),
+            margin: 0,
+        },
+        chip: {
+            margin: theme.spacing(0.5),
+        },
+        formControl: {
+            margin: theme.spacing(1),
+            minWidth: 130,
+        },
+    }));
 
-    // const classes = useStyles();
+    const classes = useStyles();
 
     // const [filterChip, setFilterChip] = useState([
     //     { key: 'true', label: 'sent' },
@@ -166,8 +170,8 @@ function Graph() {
             <h2>All Routes</h2>
             <Line data={data} options={options} />
             <Button onClick={handleBack}>Back</Button>
-            <GraphOverlay />
-            <GraphForm/>
+            <GraphOverlay classes={classes} />
+            <GraphForm classes={classes} />
         </>
     )
 }

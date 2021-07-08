@@ -9,19 +9,17 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import Chip from '@material-ui/core/Chip';
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
-
-function GraphForm() {
+// material ui classes passed down for styling
+function GraphForm({classes}) {
 
     const dispatch = useDispatch();
 
-    const store = useSelector((store) => store);
     const ropes = useSelector(store => store.formOptions.ropeReducer)
     const walls = useSelector(store => store.formOptions.wallReducer)
     const holds = useSelector(store => store.formOptions.holdReducer)
@@ -34,8 +32,6 @@ function GraphForm() {
     const [open, setOpen] = useState(false);
 
     const { grading } = useParams();
-
-    const [heading, setHeading] = useState('Functional Component');
 
     useEffect(() => {
         dispatch({
@@ -53,10 +49,15 @@ function GraphForm() {
         setOpen(false);
     }
 
+    const sentFilterChips = [
+        { key: 'true', label: 'sent' },
+        { key: 'false', label: 'project' },
+    ];
+
     // on click of Filter button inside of form dialog, send info to server/db to grab selected routes
     const handleFilterChoices = () => {
         if (sendStatus == 'error') {
-            alert('Please choose what type of routes to see!');
+            alert('Please choose at least one filter!');
         } else {
             dispatch({
                 type: 'FETCH_FILTERED_GRAPH',
@@ -70,41 +71,18 @@ function GraphForm() {
                 }
             })
             setOpen(false);
-            setFilterChip([
-                { key: 'true', label: 'sent' },
-                { key: 'false', label: 'project' },
-            ])
+            setFilterChip(sentFilterChips)
         }
     }
 
-    const [filterChip, setFilterChip] = useState([
-        { key: 'true', label: 'sent' },
-        { key: 'false', label: 'project' },
-    ]);
+    const [filterChip, setFilterChip] = useState(sentFilterChips);
 
     const handleChipClick = (chipToChoose) => () => {
         setFilterChip((chips) => chips.filter((chip) => chip.label === chipToChoose.label));
-        // console.log('log sendStatusChip', sendStatus);
         setSendStatus(chipToChoose.key);
         console.log('log chipToChoose', chipToChoose);
     }
 
-    const useStyles = makeStyles((theme) => ({
-        root: {
-            display: 'flex',
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-            listStyle: 'none',
-            padding: theme.spacing(0.5),
-            margin: 0,
-        },
-        formControl: {
-            margin: theme.spacing(1),
-            minWidth: 130,
-        },
-    }));
-
-    const classes = useStyles();
 
     return (
         <div>
