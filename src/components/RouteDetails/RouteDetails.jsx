@@ -22,7 +22,7 @@ function RouteDetails() {
     const route = useSelector(store => store.routes.oneRoute);
 
     // in edit mode only
-    const grades = useSelector(store => store.addRouteOptions.gradesReducer)
+    const grades = useSelector(store => store.formOptions.gradesReducer)
 
     // state for edit mode
     const [editMode, setEditMode] = useState(false);
