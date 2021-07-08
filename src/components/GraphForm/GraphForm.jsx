@@ -30,17 +30,22 @@ function GraphForm({ classes, dispatchType }) {
     const [hold, setHold] = useState('');
     const [flash, setFlash] = useState('');
     const [open, setOpen] = useState(false);
+    const [gradeScheme, setGradeScheme] = useState('');
+    const [gradeInput, setGradeInput] = useState(false);
 
     const { grading } = useParams();
 
     useEffect(() => {
         dispatch({
-                type: 'FETCH_FORM_OPTIONS'
-            })
+            type: 'FETCH_FORM_OPTIONS'
+        })
     }, []);
 
     // opens dialog form for sent/project selection
     const handleFilter = () => {
+        if (grading == undefined) {
+            setGradeInput(true);
+        }
         setOpen(true);
     }
 
@@ -62,17 +67,32 @@ function GraphForm({ classes, dispatchType }) {
         if (sendStatus == 'error') {
             alert('Please choose at least one filter!');
         } else {
-            dispatch({
-                type: dispatchType.type,
-                payload: {
-                    gradeScheme: grading,
-                    sent: sendStatus,
-                    rope_type_id: rope,
-                    wall_id: wall,
-                    holds_id: hold,
-                    flash: flash,
-                }
-            })
+            if (grading == undefined) {
+                dispatch({
+                    type: dispatchType.type,
+                    payload: {
+                        gradeScheme: gradeScheme,
+                        sent: sendStatus,
+                        rope_type_id: rope,
+                        wall_id: wall,
+                        holds_id: hold,
+                        flash: flash,
+                    }
+                })
+            } else {
+                console.log('grading for filter form', grading);
+                dispatch({
+                    type: dispatchType.type,
+                    payload: {
+                        gradeScheme: grading,
+                        sent: sendStatus,
+                        rope_type_id: rope,
+                        wall_id: wall,
+                        holds_id: hold,
+                        flash: flash,
+                    }
+                })
+            }
             setOpen(false);
             setFilterChip(sentFilterChips)
             setRope('');
@@ -89,6 +109,19 @@ function GraphForm({ classes, dispatchType }) {
         console.log('log chipToChoose', chipToChoose);
     }
 
+    // setting up grade scheme chips
+    const [gradeChip, setGradeChip] = useState([
+        { key: 'ysd', label: 'Yosemite Decimal System' },
+        { key: 'ysd_simple', label: 'Yosemite Decimal System - Simple' },
+        { key: 'french', label: 'French' },
+    ]);
+
+    // on click of grade scheme chip, disappears un selected chips and sets grade scheme to chosen grade scheme for dispatch
+    const handleGradeChip = (chipToChoose) => () => {
+        setGradeChip((chips) => chips.filter((chip) => chip.key == chipToChoose.key));
+        console.log('log chipToChoose', chipToChoose.key);
+        setGradeScheme(chipToChoose.key);
+    }
 
     return (
         <div>
@@ -98,7 +131,23 @@ function GraphForm({ classes, dispatchType }) {
                     <DialogContentText>
                         Choose route filters. You may choose any combination of filters.
                     </DialogContentText>
-                    <div>
+                    {gradeInput &&
+                        <ul className={classes.root}>
+                        {gradeChip.map((data) => {
+                            return (
+                                <li key={data.key}>
+                                    <Chip
+                                        label={data.label}
+                                        onClick={handleGradeChip(data)}
+                                        className={classes.chip}
+                                        disabled={false}
+                                    />
+                                </li>
+                            );
+                        })}
+                        </ul>
+                    }
+                    <div className={classes.root}>
                         {filterChip.map((data) => {
                             return (
                                 <span key={data.key}>
@@ -150,6 +199,7 @@ function GraphForm({ classes, dispatchType }) {
                             </Select>
                         </FormControl>
                     </Grid>
+
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleFilterCancel} color="primary">
