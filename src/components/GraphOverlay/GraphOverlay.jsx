@@ -3,22 +3,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 
 // material ui
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import Chip from '@material-ui/core/Chip';
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
-// material ui classes passed down for styling
-function GraphForm({classes}) {
 
-    const dispatch = useDispatch();
+// material ui classes passed down for styling
+function GraphOverlay({classes}) {
+
+	const dispatch = useDispatch();
 
     const ropes = useSelector(store => store.formOptions.ropeReducer)
     const walls = useSelector(store => store.formOptions.wallReducer)
@@ -31,74 +32,79 @@ function GraphForm({classes}) {
     const [flash, setFlash] = useState('');
     const [open, setOpen] = useState(false);
 
+
     const { grading } = useParams();
 
+	// grabs content for select inputs
     useEffect(() => {
         dispatch({
                 type: 'FETCH_FORM_OPTIONS'
             })
     }, []);
 
-    // opens dialog form for sent/project selection
-    const handleFilter = () => {
+
+    const addOverlay = () => {
         setOpen(true);
     }
 
-    // close dialog form without action
-    const handleFilterCancel = () => {
-        setOpen(false);
-        setRope('');
-        setHold('');
-        setWall('');
-    }
-
-    const sentFilterChips = [
-        { key: 'true', label: 'sent' },
-        { key: 'false', label: 'project' },
-    ];
-
-    // on click of Filter button inside of form dialog, send info to server/db to grab selected routes
-    const handleFilterChoices = () => {
-        if (sendStatus == 'error') {
-            alert('Please choose at least one filter!');
-        } else {
-            dispatch({
-                type: 'FETCH_FILTERED_GRAPH',
-                payload: {
-                    gradeScheme: grading,
-                    sent: sendStatus,
-                    rope_type_id: rope,
-                    wall_id: wall,
-                    holds_id: hold,
-                    flash: flash,
-                }
-            })
-            setOpen(false);
-            setFilterChip(sentFilterChips)
-            setRope('');
+	    // close dialog form without action
+		const handleOverlayCancel = () => {
+			setOpen(false);
+			setRope('');
             setHold('');
             setWall('');
-        }
-    }
+		}
+	
+		const sentFilterChips = [
+			{ key: 'true', label: 'sent' },
+			{ key: 'false', label: 'project' },
+		];
 
-    const [filterChip, setFilterChip] = useState(sentFilterChips);
+		const [filterChip, setFilterChip] = useState(sentFilterChips);
 
-    const handleChipClick = (chipToChoose) => () => {
-        setFilterChip((chips) => chips.filter((chip) => chip.label === chipToChoose.label));
-        setSendStatus(chipToChoose.key);
-        console.log('log chipToChoose', chipToChoose);
-    }
+		const handleChipClick = (chipToChoose) => () => {
+			setFilterChip((chips) => chips.filter((chip) => chip.label === chipToChoose.label));
+			setSendStatus(chipToChoose.key);
+			console.log('log chipToChoose', chipToChoose);
+		}
+	
+		// on click of add button inside of form dialog, send info to server/db to grab selected routes
+		const handleOverlayChoices = () => {
+			if (sendStatus == 'error') {
+				alert('Please choose at least one filter!');
+			} else {
+				dispatch({
+					type: 'FETCH_OVERLAY_GRAPH',
+					payload: {
+						gradeScheme: grading,
+						sent: sendStatus,
+						rope_type_id: rope,
+						wall_id: wall,
+						holds_id: hold,
+						flash: flash,
+					}
+				})
+				setOpen(false);
+				setFilterChip(sentFilterChips)
+				setRope('');
+				setHold('');
+				setWall('');
+				dispatch({
+					type: 'SET_OVERLAY_TRUE',
+				})
+			}
+		}
 
 
-    return (
-        <div>
-            <Button onClick={handleFilter}>Filter Routes</Button>
-            <Dialog open={open} onClose={handleFilterCancel} aria-labelledby="form-dialog-title">
+	return (
+		<div>
+			<Button onClick={addOverlay}>Add Overlay</Button>
+			<Dialog open={open} onClose={handleOverlayCancel} aria-labelledby="form-dialog-title" >
                 <DialogContent>
                     <DialogContentText>
-                        Choose route filters. You may choose any combination of filters.
+                        Choose overlay filters. You may choose any combination of filters.
                     </DialogContentText>
-                    <div>
+                    <div className={classes.root}>
                         {filterChip.map((data) => {
                             return (
                                 <span key={data.key}>
@@ -151,17 +157,17 @@ function GraphForm({classes}) {
                         </FormControl>
                     </Grid>
                 </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleFilterCancel} color="primary">
+                <DialogActions className={classes.root}>
+                    <Button onClick={handleOverlayCancel} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={handleFilterChoices} color="primary">
-                        Filter
+                    <Button onClick={handleOverlayChoices} color="primary">
+                        Add
                     </Button>
                 </DialogActions>
             </Dialog>
-        </div>
-    );
+		</div>
+	);
 }
 
-export default GraphForm;
+export default GraphOverlay;
