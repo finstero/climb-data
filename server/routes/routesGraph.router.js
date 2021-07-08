@@ -44,17 +44,19 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
     let values = [req.user.id, req.query.gradeScheme]
 
-    if (req.query.flash !== undefined) {
+    if (req.query.flash !== '') {
+        console.log('flash is here');
         queryA += `AND "routes".flash = $${count} `;
         count += 1;
         values.push(req.query.flash);
     }
-    if (req.query.rope && count == 1) {
+    if (req.query.rope_type_id !== '') {
         queryA += `AND "routes".rope_type_id = $${count} `
         count += 1;
         values.push(req.query.rope);
     }
-    if (req.query.sent !== undefined) {
+    if (req.query.sent !== '') {
+        console.log('req.query.sent', req.query.sent);
         queryA += `AND "routes".sent = $${count} `
         count += 1;
         values.push(req.query.sent);
@@ -77,7 +79,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
         ;`;
     
     console.log('queryA', queryA);
-
+    console.log('values', values);
     pool.query(queryA, values)
         .then(result => {
             res.send(result.rows);
