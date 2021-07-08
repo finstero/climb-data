@@ -27,23 +27,23 @@ function* getFilteredGraph (action) {
     }
 }
 
-// function* getSentGraph (action) {
-//     console.log('in getSentGraph saga');
+function* getOverlayGraph (action) {
+    console.log('in getOverlayGraph saga');
 
-//     try {
-//         yield put({ type: 'CLEAR_ALL_GRAPH'});
-//         const forGraph = yield axios.get(`/api/routes/graph`, {params: action.payload});
-//         yield put({ type: 'SET_ALL_GRAPH', payload: forGraph.data })
+    try {
+        yield put({ type: 'CLEAR_OVERLAY_GRAPH'});
+        const overlay = yield axios.get(`/api/routes/graph`, {params: action.payload});
+        yield put({ type: 'SET_OVERLAY_GRAPH', payload: overlay.data })
 
-//     } catch {
-//         console.log('error in getAllRoutes saga');
-//     }
-// }
+    } catch {
+        console.log('error in getAllRoutes saga');
+    }
+}
 
 function* graphsSaga() {
     yield takeLatest('FETCH_GRAPH_DATA', getAllGraph)
     yield takeLatest('FETCH_FILTERED_GRAPH', getFilteredGraph)
-    // yield takeLatest('FETCH_SENT_GRAPH', getSentGraph)
+    yield takeLatest('FETCH_OVERLAY_GRAPH', getOverlayGraph)
 }
 
 export default graphsSaga;

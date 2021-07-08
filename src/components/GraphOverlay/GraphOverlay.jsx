@@ -64,7 +64,7 @@ function GraphOverlay({classes}) {
 			console.log('log chipToChoose', chipToChoose);
 		}
 	
-		// on click of Filter button inside of form dialog, send info to server/db to grab selected routes
+		// on click of add button inside of form dialog, send info to server/db to grab selected routes
 		const handleOverlayChoices = () => {
 			if (sendStatus == 'error') {
 				alert('Please choose at least one filter!');
@@ -89,12 +89,12 @@ function GraphOverlay({classes}) {
 	return (
 		<div>
 			<Button onClick={addOverlay}>Add Overlay</Button>
-			<Dialog open={open} onClose={handleOverlayCancel} aria-labelledby="form-dialog-title">
+			<Dialog open={open} onClose={handleOverlayCancel} aria-labelledby="form-dialog-title" >
                 <DialogContent>
                     <DialogContentText>
                         Choose route filters. You may choose any combination of filters.
                     </DialogContentText>
-                    <div>
+                    <div className={classes.root}>
                         {filterChip.map((data) => {
                             return (
                                 <span key={data.key}>
@@ -147,12 +147,12 @@ function GraphOverlay({classes}) {
                         </FormControl>
                     </Grid>
                 </DialogContent>
-                <DialogActions>
+                <DialogActions className={classes.root}>
                     <Button onClick={handleOverlayCancel} color="primary">
                         Cancel
                     </Button>
                     <Button onClick={handleOverlayChoices} color="primary">
-                        Filter
+                        Add
                     </Button>
                 </DialogActions>
             </Dialog>
