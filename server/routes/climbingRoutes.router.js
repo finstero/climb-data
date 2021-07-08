@@ -40,16 +40,14 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
 
     const query =
         `SELECT "routes".id, "routes".notes, "routes".image, "routes".flash, "routes".sent, 
-                "routes".date, "routes".rope_type_id, "routes".grades_id, "grades".grade, "grades".type AS "grades_type", "rope".type AS "rope_type", "wall".angle, 
-                "holds".type, "routes_wall".wall_id, "routes_holds".holds_id FROM "routes"
-                JOIN "grades" ON "grades".id = "routes".grades_id
-                JOIN "rope" ON "rope".id = "routes".rope_type_id
-                JOIN "routes_holds" ON "routes_holds".routes_id = "routes".id
-                JOIN "holds" ON "routes_holds".holds_id = "holds".id
-                JOIN "routes_wall" ON "routes_wall".routes_id = "routes".id
-                JOIN "wall" ON "routes_wall".wall_id = "wall".id
-                WHERE "routes".user_id = $1 AND "routes".id = $2
-                ;`
+        "routes".date, "routes".rope_type_id, "routes".grades_id, "grades".grade, "grades".type AS "grades_type", "rope".type AS "rope_type", "wall".angle, 
+        "holds".type, "routes".wall_id, "routes".holds_id FROM "routes"
+        JOIN "grades" ON "grades".id = "routes".grades_id
+        JOIN "rope" ON "rope".id = "routes".rope_type_id
+        JOIN "holds" ON "routes".holds_id = "holds".id
+        JOIN "wall" ON "routes".wall_id = "wall".id
+        WHERE "routes".user_id = $1 AND "routes".id = $2
+        ;`
     console.log('logging req.params.id', req.params.id);
     pool.query(query, [req.user.id, req.params.id])
         .then(result => {
@@ -159,41 +157,41 @@ router.put(`/edit/:id`, rejectUnauthenticated, (req, res) => {
 
     const query =
         `UPDATE "routes"
-    SET "notes" = $1, "image" = $2, "flash" = $3, "sent" = $4, "date" = $5, "grades_id" = $6, "rope_type_id" = $7
-    WHERE "id" = $8 AND "user_id" = $9
+    SET "notes" = $1, "image" = $2, "flash" = $3, "sent" = $4, "date" = $5, "grades_id" = $6, "rope_type_id" = $7, "holds_id" = $8, "wall_id" = $9
+    WHERE "id" = $10 AND "user_id" = $11
     ;`
     pool.query(query,
-        [req.body.notes, req.body.image, req.body.flash, req.body.sent, req.body.date, req.body.grades_id, req.body.rope_type_id, req.params.id, req.user.id])
+        [req.body.notes, req.body.image, req.body.flash, req.body.sent, req.body.date, req.body.grades_id, req.body.rope_type_id, req.body.holds_id, req.body.wall_id, req.params.id, req.user.id])
         .then(result => {
+            res.sendStatus(201);
+            // const wallQuery =
+            //     `UPDATE "routes_wall"
+            // SET "wall_id" = $1
+            // WHERE "routes_id" = $2
+            // ;`
 
-            const wallQuery =
-                `UPDATE "routes_wall"
-            SET "wall_id" = $1
-            WHERE "routes_id" = $2
-            ;`
+            // pool.query(wallQuery, [req.body.wall_id, req.params.id])
+            //     .then(result => {
 
-            pool.query(wallQuery, [req.body.wall_id, req.params.id])
-                .then(result => {
+            //         const holdsQuery =
+            //             `UPDATE "routes_holds"
+            //     SET "holds_id" = $1
+            //     WHERE "routes_id" = $2
+            //     ;`
 
-                    const holdsQuery =
-                        `UPDATE "routes_holds"
-                SET "holds_id" = $1
-                WHERE "routes_id" = $2
-                ;`
-
-                    pool.query(holdsQuery, [req.body.holds_id, req.params.id])
-                        .then(result => {
-                            res.sendStatus(201);
-                        })
-                        .catch(error => {
-                            console.log('error in wallQuery put', error);
-                            res.sendStatus(500);
-                        })
-                })
-                .catch(error => {
-                    console.log('error in wallQuery put', error);
-                    res.sendStatus(500);
-                })
+            //         pool.query(holdsQuery, [req.body.holds_id, req.params.id])
+            //             .then(result => {
+            //                 res.sendStatus(201);
+            //             })
+            //             .catch(error => {
+            //                 console.log('error in wallQuery put', error);
+            //                 res.sendStatus(500);
+            //             })
+            //     })
+            //     .catch(error => {
+            //         console.log('error in wallQuery put', error);
+            //         res.sendStatus(500);
+            //     })
         })
         .catch(error => {
             console.log('error in router.put for routes', error);
