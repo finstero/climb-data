@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import {format} from 'date-fns';
 
+import EditRouteForm from '../EditRouteForm/EditRouteForm';
+
 // material ui
 import Button from '@material-ui/core/Button';
 import 'date-fns';
@@ -14,6 +16,16 @@ import {
     KeyboardDatePicker,
 } from '@material-ui/pickers';
 import TextField from '@material-ui/core/TextField';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
+import Chip from '@material-ui/core/Chip';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import { makeStyles } from '@material-ui/core/styles';
 
 function RouteDetails() {
 
@@ -26,6 +38,7 @@ function RouteDetails() {
 
     // state for edit mode
     const [editMode, setEditMode] = useState(false);
+    const [open, setOpen] = useState(false);
 
     // in edit mode only
     const [grade, setGrade] = useState('1');
@@ -111,8 +124,8 @@ function RouteDetails() {
     }
 
     // moves user out of edit mode without saving changes
-    const handleCancel = () => {
-        setEditMode(false);
+    const handleEditCancel = () => {
+
     }
 
     // for edit mode
@@ -120,8 +133,30 @@ function RouteDetails() {
         setSelectedDate(date);
     };
 
+    const useStyles = makeStyles((theme) => ({
+        root: {
+            display: 'flex',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            listStyle: 'none',
+            padding: theme.spacing(0.5),
+            margin: 0,
+        },
+        chip: {
+            margin: theme.spacing(0.5),
+        },
+        formControl: {
+            margin: theme.spacing(1),
+            minWidth: 130,
+        },
+    }));
+
+    const classes = useStyles();
+
     return (
-        <> {editMode ? <div><h2>EDIT MODE</h2>
+        <>  
+        {/* <div>
+            <h2>EDIT MODE</h2>
             <form onSubmit={handleSave}>
                 <label htmlFor="grades">Choose a grade:</label>
                 <select onChange={(event) => { setGrade(event.target.value) }} value={grade} name="grades" id="grades">
@@ -180,9 +215,9 @@ function RouteDetails() {
                 <Button type="submit">Save</Button>
             </form>
             <Button onClick={handleCancel}>Cancel</Button>
-        </div>
-        // not edit mode below
-            : <div>
+        </div> */}
+
+             <div>
                 {/* <h2>{format(new Date(route?.date), 'dd MMMM yyyy')}</h2> */}
                 <p>Grade: {route.grade}</p>
                 <p>Climb type: {route.rope_type}</p>
@@ -195,10 +230,9 @@ function RouteDetails() {
                 <p>Notes: {route.notes}</p>
                 <p>Image: {route.image}</p>
                 <Button onClick={handleDelete}>Delete</Button>
-                <Button onClick={handleEdit}>Edit</Button>
                 <Button onClick={handleBack}>Back</Button>
+                <EditRouteForm classes={classes} />
             </div>
-        }
         </>
     )
 }
