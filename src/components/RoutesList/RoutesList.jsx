@@ -2,7 +2,8 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
-// import RouteListItem from '../RouteListItem/RouteListItem';
+
+import RouteListFilterForm from '../RoutesListFilterForm/RoutesListFilterForm';
 
 // material ui
 import { DataGrid } from '@material-ui/data-grid';
@@ -126,9 +127,12 @@ function RoutesList() {
         setGradeScheme(chipToChoose.key);
     }
 
+
+
     return (
         <>
             <h2>All Routes</h2>
+            <RoutesListFilterForm />
             <TableContainer component={Paper}>
                 <Table aria-label="routes table">
                     <TableHead>
