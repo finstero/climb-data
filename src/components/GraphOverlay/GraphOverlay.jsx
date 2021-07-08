@@ -32,6 +32,7 @@ function GraphOverlay({classes}) {
     const [flash, setFlash] = useState('');
     const [open, setOpen] = useState(false);
 
+
     const { grading } = useParams();
 
 	// grabs content for select inputs
@@ -49,6 +50,9 @@ function GraphOverlay({classes}) {
 	    // close dialog form without action
 		const handleOverlayCancel = () => {
 			setOpen(false);
+			setRope('');
+            setHold('');
+            setWall('');
 		}
 	
 		const sentFilterChips = [
@@ -82,6 +86,12 @@ function GraphOverlay({classes}) {
 				})
 				setOpen(false);
 				setFilterChip(sentFilterChips)
+				setRope('');
+				setHold('');
+				setWall('');
+				dispatch({
+					type: 'SET_OVERLAY_TRUE',
+				})
 			}
 		}
 
@@ -92,7 +102,7 @@ function GraphOverlay({classes}) {
 			<Dialog open={open} onClose={handleOverlayCancel} aria-labelledby="form-dialog-title" >
                 <DialogContent>
                     <DialogContentText>
-                        Choose route filters. You may choose any combination of filters.
+                        Choose overlay filters. You may choose any combination of filters.
                     </DialogContentText>
                     <div className={classes.root}>
                         {filterChip.map((data) => {

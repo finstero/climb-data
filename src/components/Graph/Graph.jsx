@@ -26,6 +26,7 @@ function Graph() {
     // reducers
     const allGraph = useSelector(store => store.graphs.allGraph);
     const overlay = useSelector(store => store.graphs.overlay);
+    const overlayExists = useSelector(store => store.graphs.overlayExists);
     const ropes = useSelector(store => store.formOptions.ropeReducer)
     const walls = useSelector(store => store.formOptions.wallReducer)
     const holds = useSelector(store => store.formOptions.holdReducer)
@@ -46,10 +47,8 @@ function Graph() {
             payload: {
                 gradeScheme: grading,
             },
-        })
-            // {
-            //     type: 'FETCH_FORM_OPTIONS'
-            // })
+        },
+        )
     }, []);
 
     // data for line graph. grabbed from reducer
@@ -63,13 +62,27 @@ function Graph() {
                 backgroundColor: '#0C163D',
                 borderColor: '#0C163D',
             },
-            // {
-            //     label: 'overlay',
-            //     data: overlay,
-            //     fill: false,
-            //     backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            //     borderColor: 'rgba(255, 99, 132, 0.2)',
-            // },
+        ],
+    };
+
+    // user views this line graph data if overlay exists
+    const overlayData = {
+        // labels: ['1', '2', '3', '4', '5', '6'],
+        datasets: [
+            {
+                label: 'main',
+                data: allGraph,
+                fill: false,
+                backgroundColor: '#0C163D',
+                borderColor: '#0C163D',
+            },
+            {
+                label: 'overlay',
+                data: overlay,
+                fill: false,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 0.2)',
+            },
         ],
     };
 
@@ -176,7 +189,14 @@ function Graph() {
     return (
         <>
             <h2>All Routes</h2>
-            <Line data={data} options={options} />
+            {overlayExists.status ?
+                <div>
+                    <h2>overlay true</h2>
+                    <Line data={overlayData} options={options} />
+                </div>
+                :
+                <Line data={data} options={options} />
+            }
             <Button onClick={handleBack}>Back</Button>
             <GraphOverlay classes={classes} />
             <GraphForm classes={classes} />

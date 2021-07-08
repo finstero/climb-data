@@ -27,7 +27,17 @@ const overlay = (state = [], action) => {
     }
 }
 
+const overlayExists = (state = {}, action) => {
+    switch(action.type) {
+        case 'SET_OVERLAY_TRUE':
+            return {...state, status: true};
+        default:
+            return state;
+    }
+}
+
 export default combineReducers({
     allGraph,
     overlay,
+    overlayExists,
 });
