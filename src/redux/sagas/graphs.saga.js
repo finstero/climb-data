@@ -36,7 +36,7 @@ function* getOverlayGraph (action) {
         yield put({ type: 'SET_OVERLAY_GRAPH', payload: overlay.data })
 
     } catch {
-        console.log('error in getAllRoutes saga');
+        console.log('error in getOverlayGraph saga');
     }
 }
 

@@ -80,8 +80,8 @@ function Graph() {
                 label: 'overlay',
                 data: overlay,
                 fill: false,
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 0.2)',
+                backgroundColor: '#E26B00',
+                borderColor: '#E26B00',
             },
         ],
     };

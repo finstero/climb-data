@@ -31,6 +31,8 @@ const overlayExists = (state = {}, action) => {
     switch(action.type) {
         case 'SET_OVERLAY_TRUE':
             return {...state, status: true};
+        case 'SET_OVERLAY_FALSE':
+            return {};
         default:
             return state;
     }
