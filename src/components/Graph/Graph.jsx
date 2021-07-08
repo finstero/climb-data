@@ -34,7 +34,7 @@ function Graph() {
         dispatch({
             type: 'FETCH_GRAPH_DATA',
             payload: {
-                gradeScheme: grading
+                gradeScheme: grading,
             },
         },
         {
@@ -99,7 +99,12 @@ function Graph() {
             dispatch({
                 type: 'FETCH_FILTERED_GRAPH',
                 payload: {
+                    gradeScheme: grading,
                     sent: sendStatus,
+                    rope_type_id: 1,
+                    wall_id: 2,
+                    holds_id: 3,
+                    flash: true,
                 }
             })
             setOpen(false);
