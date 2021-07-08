@@ -5,6 +5,7 @@ import { Line } from 'react-chartjs-2';
 
 // components
 import GraphForm from '../GraphForm/GraphForm';
+import GraphOverlay from '../GraphOverlay/GraphOverlay';
 
 // material ui
 import Button from '@material-ui/core/Button';
@@ -158,16 +159,14 @@ function Graph() {
     //     setOpen(false);
     // }
 
-    const addOverlay = () => {
-        
-    }
+
 
     return (
         <>
             <h2>All Routes</h2>
             <Line data={data} options={options} />
             <Button onClick={handleBack}>Back</Button>
-            <Button onClick={addOverlay}>Overlay</Button>
+            <GraphOverlay />
             <GraphForm/>
         </>
     )
