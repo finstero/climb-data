@@ -78,25 +78,25 @@ function RouteDetails() {
     }
 
     // put request to update route with changes
-    const handleSave = (event) => {
-        event.preventDefault();
-        dispatch({
-            type: 'EDIT_ROUTE',
-            payload: {
-                id: id,
-                grades_id: grade,
-                date: selectedDate,
-                sent: sendStatus,
-                rope_type_id: rope,
-                wall_id: wall,
-                holds_id: hold,
-                flash: flash,
-                notes: notes,
-                image: image
-            }
-        })
-        history.push('/routes/list');
-    }
+    // const handleSave = (event) => {
+    //     event.preventDefault();
+    //     dispatch({
+    //         type: 'EDIT_ROUTE',
+    //         payload: {
+    //             id: id,
+    //             grades_id: grade,
+    //             date: selectedDate,
+    //             sent: sendStatus,
+    //             rope_type_id: rope,
+    //             wall_id: wall,
+    //             holds_id: hold,
+    //             flash: flash,
+    //             notes: notes,
+    //             image: image
+    //         }
+    //     })
+    //     history.push('/routes/list');
+    // }
 
     // moves user into edit mode via conditional render
     // sets local state of all inputs to same as route about to edit
@@ -124,14 +124,14 @@ function RouteDetails() {
     }
 
     // moves user out of edit mode without saving changes
-    const handleEditCancel = () => {
+    // const handleEditCancel = () => {
 
-    }
+    // }
 
     // for edit mode
-    const handleDateChange = (date) => {
-        setSelectedDate(date);
-    };
+    // const handleDateChange = (date) => {
+    //     setSelectedDate(date);
+    // };
 
     const useStyles = makeStyles((theme) => ({
         root: {

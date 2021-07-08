@@ -14,6 +14,13 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardTimePicker,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
+import TextField from '@material-ui/core/TextField';
 
 // material ui classes passed down for styling
 function EditRouteForm({ classes }) {
@@ -37,9 +44,9 @@ function EditRouteForm({ classes }) {
     const [gradeScheme, setGradeScheme] = useState('');
     const [notes, setNotes] = useState('');
     const [image, setImage] = useState('');
-    
 
-    const { grading } = useParams();
+
+    const { id } = useParams();
 
     useEffect(() => {
         dispatch({
@@ -75,19 +82,24 @@ function EditRouteForm({ classes }) {
     }
 
     // on click of Filter button inside of form dialog, send info to server/db to grab selected routes
-    const handleSave = () => {
+    const handleSave = (event) => {
+        event.preventDefault();
         if (sendStatus == 'error') {
             alert('Please choose at least one filter!');
         } else {
             dispatch({
-                type: dispatchType.type,
+                type: 'EDIT_ROUTE',
                 payload: {
-                    gradeScheme: gradeScheme,
+                    id: id,
+                    grades_id: grade,
+                    date: selectedDate,
                     sent: sendStatus,
                     rope_type_id: rope,
                     wall_id: wall,
                     holds_id: hold,
                     flash: flash,
+                    notes: notes,
+                    image: image
                 }
             })
             setOpen(false);
@@ -97,6 +109,10 @@ function EditRouteForm({ classes }) {
         }
     }
 
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+    };
+
     return (
         <div>
             <Button onClick={handleEdit}>Edit</Button>
@@ -105,7 +121,44 @@ function EditRouteForm({ classes }) {
                     <DialogContentText>
                         Edit!
                     </DialogContentText>
-
+                    <Grid item xs={12} className={classes.root}>
+                        <FormControl className={classes.formControl}>
+                            <InputLabel id="grades">Grade</InputLabel>
+                            <Select onChange={(event) => { setGrade(event.target.value) }} defaultValue="choose grade" value={grade} labelId="grades" id="grades">
+                                {grades.map(grade => (
+                                    <MenuItem key={grade.id} value={grade.id}>{grade.grade}</MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} className={classes.root}>
+                        <FormControl className={classes.formControl}>
+                            <InputLabel id="sendStatus">Send Status</InputLabel>
+                            <Select onChange={(event) => { setSendStatus(event.target.value) }} defaultValue="sent?" value={sendStatus} labelId="sendStatus" id="sendStatus">
+                                    <MenuItem key={1} value={false}>project</MenuItem>
+                                    <MenuItem key={2} value={true}>sent</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <Grid container justify="space-around">
+                                <KeyboardDatePicker
+                                    disableToolbar
+                                    variant="inline"
+                                    format="MM/dd/yyyy"
+                                    margin="normal"
+                                    id="date-picker-inline"
+                                    label="Date"
+                                    value={selectedDate}
+                                    onChange={handleDateChange}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date',
+                                    }}
+                                />
+                            </Grid>
+                        </MuiPickersUtilsProvider>
+                    </Grid>
                     <Grid item xs={12} className={classes.root}>
                         <FormControl className={classes.formControl}>
                             <InputLabel id="ropes">Climb Type</InputLabel>
@@ -145,6 +198,12 @@ function EditRouteForm({ classes }) {
                             </Select>
                         </FormControl>
                     </Grid>
+                    <Grid item xs={12} className={classes.root}>
+							<TextField onChange={(event) => { setNotes(event.target.value) }} value={notes} id="notes" label="notes" variant="outlined" />
+						</Grid>
+						<Grid item xs={12} className={classes.root}>
+							<TextField onChange={(event) => { setImage(event.target.value) }} value={image} id="image" label="image url" variant="outlined" />
+						</Grid>
 
                 </DialogContent>
                 <DialogActions>
