@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
+import {format} from 'date-fns';
 
 // material ui
 import Button from '@material-ui/core/Button';
@@ -21,7 +22,7 @@ function RouteDetails() {
     const route = useSelector(store => store.routes.oneRoute);
 
     // in edit mode only
-    const grades = useSelector(store => store.addRouteOptions.gradesReducer)
+    const grades = useSelector(store => store.formOptions.gradesReducer)
 
     // state for edit mode
     const [editMode, setEditMode] = useState(false);
@@ -39,18 +40,19 @@ function RouteDetails() {
 
     const { id } = useParams();
 
-    // loads selected route on page refresh
+    // loads selected route and grade scheme of route on page load
     useEffect(() => {
         dispatch({
             type: 'FETCH_ONE_ROUTE',
             payload: { id: id }
         });
-        dispatch({
-            type: 'FETCH_GRADE_SCHEME',
-            payload: {
-                gradeScheme: "ysd",
-            }
-        })
+        // dispatch({
+        //     type: 'FETCH_GRADE_SCHEME',
+        //     payload: {
+        //         gradeScheme: route.grades_type,
+        //     }
+        // })
+        // console.log('logging grade type maybe?', route);
     }, []);
 
     // deletes single route
@@ -59,6 +61,7 @@ function RouteDetails() {
             type: 'DELETE_ROUTE',
             payload: { id: id }
         })
+        history.push('/routes/list')
     }
 
     // put request to update route with changes
@@ -79,15 +82,18 @@ function RouteDetails() {
                 image: image
             }
         })
-        // setGrade('1');
-        // setNotes('');
-        // setImage('');
-        history.goBack();
+        history.push('/routes/list');
     }
 
     // moves user into edit mode via conditional render
     // sets local state of all inputs to same as route about to edit
     const handleEdit = () => {
+        dispatch({
+            type: 'FETCH_GRADE_SCHEME',
+            payload: {
+                gradeScheme: route.grades_type,
+            }
+        })
         setEditMode(true);
         setGrade(route.grades_id);
         setSelectedDate(route.date);
@@ -113,7 +119,6 @@ function RouteDetails() {
     const handleDateChange = (date) => {
         setSelectedDate(date);
     };
-
 
     return (
         <> {editMode ? <div><h2>EDIT MODE</h2>
@@ -178,7 +183,7 @@ function RouteDetails() {
         </div>
         // not edit mode below
             : <div>
-                <h1>{route?.date?.slice(0, 10)}</h1>
+                {/* <h2>{format(new Date(route?.date), 'dd MMMM yyyy')}</h2> */}
                 <p>Grade: {route.grade}</p>
                 <p>Climb type: {route.rope_type}</p>
                 <p>Wall angle: {route.angle}</p>

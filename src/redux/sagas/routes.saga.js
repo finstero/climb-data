@@ -7,8 +7,9 @@ function* postRoute(action) {
 
     try {
         yield axios.post('/api/routes', action.payload);
-        yield put({ type: 'FETCH_LATEST_ROUTE' });
-
+        // yield put({type: 'SET_ID', payload: createdRouteId.id})
+        yield put({ type: 'FETCH_LATEST_ROUTE'});
+        // console.log('createdRouteId', createdRouteId.data);
     } catch {
         console.log('error in postRoute saga');
     }
@@ -30,7 +31,7 @@ function* getLatestRoute() {
 
 // handles one route - clicked on in RouteList - stores in reducer
 function* getOneRoute(action) {
-    console.log('in getOneRoute saga');
+    console.log('in getOneRoute saga', action.payload.id);
 
     try {
         const oneRoute = yield axios.get(`/api/routes/details/${action.payload.id}`); // want :id to be {actual id}
@@ -80,6 +81,18 @@ function* editRoute (action) {
     }
 }
 
+function* getFilteredRoutes(action) {
+    console.log('in getFilteredRoutes saga');
+
+    try {
+        const filteredRoutes = yield axios.get('/api/routes/filter', {params: action.payload});
+        yield put({ type: 'SET_ALL_ROUTES', payload: filteredRoutes.data })
+
+    } catch {
+        console.log('error in getFilteredRoutes saga');
+    }
+}
+
 function* routesSaga() {
     yield takeLatest('ADD_ROUTE', postRoute);
     yield takeLatest('FETCH_LATEST_ROUTE', getLatestRoute);
@@ -87,6 +100,7 @@ function* routesSaga() {
     yield takeLatest('FETCH_ONE_ROUTE', getOneRoute);
     yield takeLatest('DELETE_ROUTE', deleteRoute);
     yield takeLatest('EDIT_ROUTE', editRoute);
+    yield takeLatest('FETCH_FILTERED_ROUTES', getFilteredRoutes);
 }
 
 export default routesSaga;

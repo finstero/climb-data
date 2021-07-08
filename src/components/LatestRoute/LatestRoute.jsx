@@ -19,30 +19,34 @@ function IndividualRoute() {
     //     })
     // }, []);
 
-    const handleBack = () => {
-        history.goBack();
+    const handleViewGraph = () => {
+        history.push('/routes/graph')
+    }
+
+    const handleViewList = () => {
+        history.push('/routes/list')
     }
 
     return (
         <>
-            <h2>Last Route Added</h2>
+            <h2>Route Added!</h2>
             {latestRoute.map(route => (
                 <div key={route.id}>
                     <h3>{route.date.slice(0,10)}</h3>
                     <p>Grade: {route.grade}</p>
                     <p>Climb type: {route.rope_type}</p>
                     <p>Wall angle: {route.angle}</p>
-                    <p>Flash: {route.flash}</p>
-                    <p>Sent: {route.sent}</p>
+                    <p>Flash: {route.flash ? ' yes' : ' no'}</p>
+                    <p>Sent: {route.sent ? ' yes' : ' no'}</p>
                     <p>Main hold type: {route.type}</p>
                     <p>Notes: {route.notes}</p>
                     <p>Image: {route.image}</p>
                 </div>
             ))}
-            <Button>Delete</Button>
-            <Button>Edit</Button>
-            <Button>View Routes Graph</Button>
-            <Button onClick={handleBack}>Back</Button>
+            {/* <Button>Delete</Button>
+            <Button>Edit</Button> */}
+            <Button onClick={handleViewGraph}>View Routes Graph</Button>
+            <Button onClick={handleViewList}>View Routes List</Button>
         </>
     )
 }

@@ -13,13 +13,13 @@ function Nav() {
   };
 
   if (user.id != null) {
-    loginLinkData.path = '/user';
+    loginLinkData.path = '/routes/home';
     loginLinkData.text = 'Home';
   }
 
   return (
     <div className="nav">
-      <Link to="/home">
+      <Link to="/routes/home">
         <h2 className="nav-title">Climb Data</h2>
       </Link>
       <div>
@@ -36,9 +36,9 @@ function Nav() {
           </>
         )}
 
-        <Link className="navLink" to="/about">
+        {/* <Link className="navLink" to="/about">
           About
-        </Link>
+        </Link> */}
       </div>
     </div>
   );
