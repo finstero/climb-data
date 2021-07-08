@@ -85,7 +85,7 @@ function* getFilteredRoutes(action) {
     console.log('in getFilteredRoutes saga');
 
     try {
-        const filteredRoutes = yield axios.get('/api/routes', {params: action.payload});
+        const filteredRoutes = yield axios.get('/api/routes/filter', {params: action.payload});
         yield put({ type: 'SET_ALL_ROUTES', payload: filteredRoutes.data })
 
     } catch {

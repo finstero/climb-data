@@ -144,6 +144,7 @@ router.put(`/edit/:id`, rejectUnauthenticated, (req, res) => {
         })
 })
 
+// grabs list of filtered routes
 router.get('/filter', rejectUnauthenticated, (req, res) => {
 
     let query =
@@ -152,9 +153,9 @@ router.get('/filter', rejectUnauthenticated, (req, res) => {
         JOIN "rope" ON "rope".id = "routes".rope_type_id
         JOIN "holds" ON "routes".holds_id = "holds".id
         JOIN "wall" ON "routes".wall_id = "wall".id 
-        WHERE "routes".user_id = $1`;
+        WHERE "routes".user_id = $1 `;
 
-    let count = 1;
+    let count = 2;
 
     let values = [req.user.id]
 
