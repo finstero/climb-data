@@ -20,14 +20,21 @@ function Graph() {
     const dispatch = useDispatch();
     const { grading } = useParams();
 
+    // reducers
     const allGraph = useSelector(store => store.graphs.allGraph);
     const ropes = useSelector(store => store.formOptions.ropeReducer)
 	const walls = useSelector(store => store.formOptions.wallReducer)
 	const holds = useSelector(store => store.formOptions.holdReducer)
+    
 
+    // local state
     const [open, setOpen] = useState(false);
     const [sendStatus, setSendStatus] = useState('error');
     const [filterOptions, setFilterOptions] = useState('');
+    const [rope, setRope] = useState('');
+	const [wall, setWall] = useState('');
+	const [hold, setHold] = useState('');
+	const [flash, setFlash] = useState('');
 
     // grabs all routes on page load
     useEffect(() => {
