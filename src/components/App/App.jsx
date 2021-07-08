@@ -59,7 +59,7 @@ function App() {
           <Nav />
           <Switch>
             {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-            <Redirect exact from="/" to="/climbhome" />
+            <Redirect exact from="/" to="/routes/home" />
 
             {/* Visiting localhost:3000/about will show the about page. */}
             {/* <Route
@@ -82,11 +82,11 @@ function App() {
             <ClimbHome />
           </ProtectedRoute> */}
 
-            <ProtectedRoute
+            {/* <ProtectedRoute
               exact
               path="/climbhome">
               <ClimbHome />
-            </ProtectedRoute>
+            </ProtectedRoute> */}
 
             <ProtectedRoute
               exact
@@ -157,7 +157,7 @@ function App() {
               // - else shows LoginPage at /login
               exact
               path="/login"
-              authRedirect="/climbhome"
+              authRedirect="/routes/home"
             >
               <LoginPage />
             </ProtectedRoute>
