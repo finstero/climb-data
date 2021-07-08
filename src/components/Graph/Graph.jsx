@@ -184,7 +184,9 @@ function Graph() {
     //     setOpen(false);
     // }
 
-
+    const dispatchType = { type:
+        'FETCH_FILTERED_GRAPH'
+    };
 
     return (
         <>
@@ -199,7 +201,7 @@ function Graph() {
             }
             <Button onClick={handleBack}>Back</Button>
             <GraphOverlay classes={classes} />
-            <GraphForm classes={classes} />
+            <GraphForm classes={classes} dispatchType={dispatchType} />
         </>
     )
 }

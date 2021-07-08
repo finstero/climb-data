@@ -91,27 +91,6 @@ router.get('/', rejectUnauthenticated, (req, res) => {
         });
 });
 
-// router.get('/overlay', rejectUnauthenticated, (req, res) => {
-//     console.log('in overlay', req.params);
-//     const query =
-//         `SELECT "grades".grade, count("routes") FROM "grades"
-//         LEFT JOIN "routes" ON "grades".id = "routes".grades_id AND "routes".user_id = $1
-//         WHERE "grades".type = $2
-//         GROUP BY "grades".id
-//         ORDER BY "grades"
-//         ;`
-
-//     pool.query(query, [req.user.id, req.params.gradeScheme])
-//         .then(result => {
-//             res.send(result.rows);
-//         })
-//         .catch(error => {
-//             console.log('error in router get', error);
-//             res.sendStatus(500);
-//         });
-// });
-
-
 
 
 module.exports = router;
