@@ -126,11 +126,11 @@ function RoutesList() {
     // on click of grade scheme chip, disappears un selected chips and sets grade scheme to chosen grade scheme for dispatch
     const handleChipClick = (chipToChoose) => () => {
         setChipData((chips) => chips.filter((chip) => chip.key == chipToChoose.key));
-        console.log('log chipToChoose', chipToChoose.key);
+        // console.log('log chipToChoose', chipToChoose.key);
         setGradeScheme(chipToChoose.key);
     }
 
-    const dispatchType = {type: ``}
+    const dispatchType = {type: `FETCH_FILTERED_ROUTES`};
 
     return (
         <>

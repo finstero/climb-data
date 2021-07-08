@@ -83,10 +83,8 @@ router.get('/', rejectUnauthenticated, (req, res) => {
             console.log('error in get all routes', error);
             res.sendStatus(500);
         })
-
 })
 
-// /api/routes
 // posts one route 
 router.post('/', rejectUnauthenticated, (req, res) => {
     console.log('req.body in routes post', req.body);
@@ -101,31 +99,6 @@ router.post('/', rejectUnauthenticated, (req, res) => {
             console.log('created route id', result.rows[0].id);
             const createdRouteId = result.rows[0].id;
             res.sendStatus(201);
-        //     const insertWallQuery =
-        //         `INSERT INTO "routes_wall" ("routes_id", "wall_id")
-        // VALUES ($1, $2);`
-
-            // pool.query(insertWallQuery, [createdRouteId, req.body.wall_id])
-            //     .then(result => {
-            //         const insertHoldsQuery =
-            //             `INSERT INTO "routes_holds" ("routes_id", "holds_id")
-            // VALUES ($1, $2);`
-
-            //         pool.query(insertHoldsQuery, [createdRouteId, req.body.holds_id])
-            //             .then(result => {
-            //                 console.log('all add route queries worked!');
-            //                 // res.send({id: createdRouteId});
-            //                 res.sendStatus(201)
-            //             })
-            //             .catch(error => {
-            //                 console.log('error in insertHoldsQuery', error);
-            //                 res.sendStatus(500);
-            //             })
-            //     })
-            //     .catch(error => {
-            //         console.log('error in insertWall query', error);
-            //         res.sendStatus(500);
-            //     })
         })
         .catch(error => {
             console.log('error in climbingRoutes post', error);
@@ -164,37 +137,33 @@ router.put(`/edit/:id`, rejectUnauthenticated, (req, res) => {
         [req.body.notes, req.body.image, req.body.flash, req.body.sent, req.body.date, req.body.grades_id, req.body.rope_type_id, req.body.holds_id, req.body.wall_id, req.params.id, req.user.id])
         .then(result => {
             res.sendStatus(201);
-            // const wallQuery =
-            //     `UPDATE "routes_wall"
-            // SET "wall_id" = $1
-            // WHERE "routes_id" = $2
-            // ;`
-
-            // pool.query(wallQuery, [req.body.wall_id, req.params.id])
-            //     .then(result => {
-
-            //         const holdsQuery =
-            //             `UPDATE "routes_holds"
-            //     SET "holds_id" = $1
-            //     WHERE "routes_id" = $2
-            //     ;`
-
-            //         pool.query(holdsQuery, [req.body.holds_id, req.params.id])
-            //             .then(result => {
-            //                 res.sendStatus(201);
-            //             })
-            //             .catch(error => {
-            //                 console.log('error in wallQuery put', error);
-            //                 res.sendStatus(500);
-            //             })
-            //     })
-            //     .catch(error => {
-            //         console.log('error in wallQuery put', error);
-            //         res.sendStatus(500);
-            //     })
         })
         .catch(error => {
             console.log('error in router.put for routes', error);
+            res.sendStatus(500);
+        })
+})
+
+router.get('/filter', rejectUnauthenticated, (req, res) => {
+
+    // new for data grid
+    const getAllRoutesQuery = 
+        `SELECT "routes".id, "grades".grade, "routes".date, "rope".type AS "rope_type" FROM "routes"
+        JOIN "grades" ON "grades".id = "routes".grades_id
+        JOIN "rope" ON "rope".id = "routes".rope_type_id
+        JOIN "holds" ON "routes".holds_id = "holds".id
+        JOIN "wall" ON "routes".wall_id = "wall".id
+        WHERE "routes".user_id = $1
+        ORDER BY "grades".id ASC
+        ;`;
+
+    pool.query(getAllRoutesQuery, [req.user.id])
+        .then(result => {
+            // console.log('all routes', result.rows);
+            res.send(result.rows);
+        })
+        .catch(error => {
+            console.log('error in get all routes', error);
             res.sendStatus(500);
         })
 })
