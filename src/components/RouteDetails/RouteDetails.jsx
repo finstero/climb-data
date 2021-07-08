@@ -100,23 +100,23 @@ function RouteDetails() {
 
     // moves user into edit mode via conditional render
     // sets local state of all inputs to same as route about to edit
-    const handleEdit = () => {
-        dispatch({
-            type: 'FETCH_GRADE_SCHEME',
-            payload: {
-                gradeScheme: route.grades_type,
-            }
-        })
-        setEditMode(true);
-        setGrade(route.grades_id);
-        setSelectedDate(route.date);
-        setSendStatus(route.sent);
-        setRope(route.rope_type_id);
-        setWall(route.wall_id);
-        setHold(route.holds_id);
-        setFlash(route.flash);
-        setNotes(route.notes);
-    }
+    // const handleEdit = () => {
+    //     dispatch({
+    //         type: 'FETCH_GRADE_SCHEME',
+    //         payload: {
+    //             gradeScheme: route.grades_type,
+    //         }
+    //     })
+    //     setEditMode(true);
+    //     setGrade(route.grades_id);
+    //     setSelectedDate(route.date);
+    //     setSendStatus(route.sent);
+    //     setRope(route.rope_type_id);
+    //     setWall(route.wall_id);
+    //     setHold(route.holds_id);
+    //     setFlash(route.flash);
+    //     setNotes(route.notes);
+    // }
 
     // moves user back to list view
     const handleBack = () => {

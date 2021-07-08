@@ -23,7 +23,11 @@ function EditRouteForm({ classes }) {
     const ropes = useSelector(store => store.formOptions.ropeReducer)
     const walls = useSelector(store => store.formOptions.wallReducer)
     const holds = useSelector(store => store.formOptions.holdReducer)
+    const grades = useSelector(store => store.formOptions.gradesReducer)
+    const route = useSelector(store => store.routes.oneRoute);
 
+    const [grade, setGrade] = useState('1');
+    const [selectedDate, setSelectedDate] = useState(new Date('2021-06-18T11:11:54'));
     const [sendStatus, setSendStatus] = useState('');
     const [rope, setRope] = useState('');
     const [wall, setWall] = useState('');
@@ -31,7 +35,9 @@ function EditRouteForm({ classes }) {
     const [flash, setFlash] = useState('');
     const [open, setOpen] = useState(false);
     const [gradeScheme, setGradeScheme] = useState('');
-    const [gradeInput, setGradeInput] = useState(false);
+    const [notes, setNotes] = useState('');
+    const [image, setImage] = useState('');
+    
 
     const { grading } = useParams();
 
@@ -43,6 +49,20 @@ function EditRouteForm({ classes }) {
 
     // opens dialog form for sent/project selection
     const handleEdit = () => {
+        dispatch({
+            type: 'FETCH_GRADE_SCHEME',
+            payload: {
+                gradeScheme: route.grades_type,
+            }
+        })
+        setGrade(route.grades_id);
+        setSelectedDate(route.date);
+        setSendStatus(route.sent);
+        setRope(route.rope_type_id);
+        setWall(route.wall_id);
+        setHold(route.holds_id);
+        setFlash(route.flash);
+        setNotes(route.notes);
         setOpen(true);
     }
 
@@ -59,7 +79,6 @@ function EditRouteForm({ classes }) {
         if (sendStatus == 'error') {
             alert('Please choose at least one filter!');
         } else {
-
             dispatch({
                 type: dispatchType.type,
                 payload: {
@@ -71,7 +90,6 @@ function EditRouteForm({ classes }) {
                     flash: flash,
                 }
             })
-
             setOpen(false);
             setRope('');
             setHold('');
@@ -85,7 +103,7 @@ function EditRouteForm({ classes }) {
             <Dialog open={open} onClose={handleEditCancel} aria-labelledby="form-dialog-title">
                 <DialogContent>
                     <DialogContentText>
-                        Choose route filters. You may choose any combination of filters.
+                        Edit!
                     </DialogContentText>
 
                     <Grid item xs={12} className={classes.root}>
