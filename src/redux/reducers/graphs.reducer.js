@@ -22,6 +22,8 @@ const overlay = (state = [], action) => {
     switch(action.type) {
         case 'SET_OVERLAY_GRAPH':
             return action.payload;
+        case 'CLEAR_OVERLAY_GRAPH':
+            return [];
         default:
             return state;
     }
