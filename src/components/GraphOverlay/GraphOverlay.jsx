@@ -99,7 +99,7 @@ function GraphOverlay({ classes }) {
 
 	return (
 		<div>
-			<Button onClick={addOverlay}>Add Overlay</Button>
+			<Button onClick={addOverlay} variant="contained" color="primary">Add Overlay</Button>
 			<Dialog open={open} onClose={handleOverlayCancel} aria-labelledby="form-dialog-title" >
 				<DialogContent>
 					<DialogContentText>
@@ -159,10 +159,10 @@ function GraphOverlay({ classes }) {
 					</Grid>
 				</DialogContent>
 				<DialogActions className={classes.root}>
-					<Button onClick={handleOverlayCancel} color="primary">
+					<Button onClick={handleOverlayCancel} variant="contained" color="secondary">
 						Cancel
 					</Button>
-					<Button onClick={handleOverlayChoices} color="primary">
+					<Button onClick={handleOverlayChoices} variant="contained" color="primary">
 						Add
 					</Button>
 				</DialogActions>

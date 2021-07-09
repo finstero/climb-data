@@ -1,6 +1,7 @@
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { format } from 'date-fns';
 
 
 // material ui
@@ -32,7 +33,9 @@ function IndividualRoute() {
             <h2>Route Added!</h2>
             {latestRoute.map(route => (
                 <div key={route.id}>
-                    <h3>{route.date.slice(0,10)}</h3>
+                    {route.date &&
+                        <h3>{format(new Date(route?.date), 'MMMM do, yyyy')}</h3>
+                    }
                     <p>Grade: {route.grade}</p>
                     <p>Climb type: {route.rope_type}</p>
                     <p>Wall angle: {route.angle}</p>

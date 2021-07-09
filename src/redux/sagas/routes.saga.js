@@ -76,6 +76,7 @@ function* editRoute (action) {
         yield axios.put(`api/routes/edit/${action.payload.id}`, action.payload);
         // yield put({type: 'SET_ONE_ROUTE', payload: ''})
         yield put({ type: 'FETCH_ALL_ROUTES'});
+        yield put({ type: 'FETCH_ONE_ROUTE', payload: action.payload});
     } catch{
         console.log('error in editRoute saga');
     }
