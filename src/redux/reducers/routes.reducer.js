@@ -15,6 +15,8 @@ const allRoutes = (state = [], action) => {
     switch(action.type) {
         case 'SET_ALL_ROUTES':
             return action.payload;
+        case 'CLEAR_ALL_ROUTES':
+            return [];
         default:
             return state;
     }

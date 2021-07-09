@@ -130,12 +130,20 @@ function RoutesList() {
         setGradeScheme(chipToChoose.key);
     }
 
+    const handleReset = () => {
+        console.log('clicked reset');
+        dispatch({
+            type: 'FETCH_ALL_ROUTES'
+        })
+    }
+
     const dispatchType = {type: `FETCH_FILTERED_ROUTES`};
 
     return (
         <>
             <h2>All Routes</h2>
             <GraphForm classes={classes} dispatchType={dispatchType}/>
+            <Button onClick={handleReset} variant="contained" color="secondary">Reset</Button>
             <TableContainer component={Paper}>
                 <Table aria-label="routes table">
                     <TableHead>
