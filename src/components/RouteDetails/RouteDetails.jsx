@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { format } from 'date-fns';
 
+// components
 import EditRouteForm from '../EditRouteForm/EditRouteForm';
 
 // material ui
@@ -16,10 +17,9 @@ function RouteDetails() {
     const history = useHistory();
     const route = useSelector(store => store.routes.oneRoute);
 
-
     const { id } = useParams();
 
-    // loads selected route and grade scheme of route on page load
+    // loads selected route on page load
     useEffect(() => {
         dispatch({
             type: 'FETCH_ONE_ROUTE',
@@ -59,6 +59,7 @@ function RouteDetails() {
         },
     }));
 
+    // classes passed to child, EditRouteForm
     const classes = useStyles();
 
     return (

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 // material ui
 import Grid from '@material-ui/core/Grid';
@@ -8,7 +8,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
-import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -17,7 +16,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DateFnsUtils from '@date-io/date-fns';
 import {
     MuiPickersUtilsProvider,
-    KeyboardTimePicker,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
 import TextField from '@material-ui/core/TextField';
@@ -27,12 +25,14 @@ function EditRouteForm({ classes }) {
 
     const dispatch = useDispatch();
 
+    // stores
     const ropes = useSelector(store => store.formOptions.ropeReducer)
     const walls = useSelector(store => store.formOptions.wallReducer)
     const holds = useSelector(store => store.formOptions.holdReducer)
     const grades = useSelector(store => store.formOptions.gradesReducer)
     const route = useSelector(store => store.routes.oneRoute);
 
+    // local state
     const [grade, setGrade] = useState('1');
     const [selectedDate, setSelectedDate] = useState(new Date('2021-06-18T11:11:54'));
     const [sendStatus, setSendStatus] = useState('');
@@ -41,27 +41,28 @@ function EditRouteForm({ classes }) {
     const [hold, setHold] = useState('');
     const [flash, setFlash] = useState('');
     const [open, setOpen] = useState(false);
-    const [gradeScheme, setGradeScheme] = useState('');
     const [notes, setNotes] = useState('');
     const [image, setImage] = useState('');
 
-
     const { id } = useParams();
 
+    // load data for edit form on page load
     useEffect(() => {
         dispatch({
             type: 'FETCH_FORM_OPTIONS'
         })
     }, []);
 
-    // opens dialog form for sent/project selection
+    // opens dialog for edit form
     const handleEdit = () => {
+        // loads grade scheme data from proper grade scheme type
         dispatch({
             type: 'FETCH_GRADE_SCHEME',
             payload: {
                 gradeScheme: route.grades_type,
             }
         })
+        // set inputs to values of selected route
         setGrade(route.grades_id);
         setSelectedDate(route.date);
         setSendStatus(route.sent);
@@ -73,15 +74,12 @@ function EditRouteForm({ classes }) {
         setOpen(true);
     }
 
-    // close dialog form without action
+    // close dialog form without saving edit
     const handleEditCancel = () => {
         setOpen(false);
-        setRope('');
-        setHold('');
-        setWall('');
     }
 
-    // on click of Filter button inside of form dialog, send info to server/db to grab selected routes
+    // on click of save button, put request for edit
     const handleSave = (event) => {
         event.preventDefault();
         if (sendStatus == 'error') {
@@ -204,7 +202,6 @@ function EditRouteForm({ classes }) {
 						<Grid item xs={12} className={classes.root}>
 							<TextField onChange={(event) => { setImage(event.target.value) }} value={image} id="image" label="image url" variant="outlined" />
 						</Grid>
-
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleEditCancel} color="primary">
