@@ -93,15 +93,30 @@ function Graph() {
             xAxisKey: 'grade',
             yAxisKey: 'count'
         },
+        elements: {
+            point: {
+                radius: 0
+            },
+        },
         scales: {
             yAxis: {
+                title: {
+                    display: true,
+                    text: '# routes'
+                },
                 min: 0,
                 ticks: {
                     beginAtZero: true,
                     stepSize: 1,
                 },
             },
-        },
+            xAxis: {
+                title: {
+                    display: true,
+                    text: 'grade'
+                },
+            },
+        }
     };
 
     // moves user back to routes list. Clears reducer holding graph info.
@@ -196,7 +211,7 @@ function Graph() {
     return (
         <>
             {/* <Grid item xs={12} className={classes.root}>  */}
-                <h2>Routes Graph</h2>
+            <h2>Routes Graph</h2>
             {/* </Grid> */}
             {/* <h3>Graph showing: </h3> */}
             {overlayExists.status ?

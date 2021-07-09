@@ -63,25 +63,29 @@ function AddRoute() {
 	// sends added route info as post
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		dispatch({
-			type: 'ADD_ROUTE',
-			payload: {
-				grades_id: grade,
-				date: selectedDate,
-				sent: sendStatus,
-				rope_type_id: rope,
-				wall_id: wall,
-				holds_id: hold,
-				flash: flash,
-				notes: notes,
-				image: image
-			}
-		})
-		setGrade('');
-		setNotes('');
-		setImage('');
-		// console.log('in add route file');
-		history.push(`/routes/latest`);
+		if (sendStatus == '') {
+			alert('Please make sure to enter something for every option.')
+		} else {
+			dispatch({
+				type: 'ADD_ROUTE',
+				payload: {
+					grades_id: grade,
+					date: selectedDate,
+					sent: sendStatus,
+					rope_type_id: rope,
+					wall_id: wall,
+					holds_id: hold,
+					flash: flash,
+					notes: notes,
+					image: image
+				}
+			})
+			setGrade('');
+			setNotes('');
+			setImage('');
+			// console.log('in add route file');
+			history.push(`/routes/latest`);
+		}
 	}
 
 	const handleDateChange = (date) => {
