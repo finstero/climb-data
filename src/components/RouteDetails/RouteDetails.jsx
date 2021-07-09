@@ -78,8 +78,8 @@ function RouteDetails() {
             <p>Main hold type: {route.type}</p>
             <p>Notes: {route.notes}</p>
             <p>Image: {route.image}</p>
-            <Button onClick={handleDelete}>Delete</Button>
-            <Button onClick={handleBack}>Back</Button>
+            <Button onClick={handleDelete} variant="contained" color="primary">Delete</Button>
+            <Button onClick={handleBack} variant="contained" color="primary">Back</Button>
             <EditRouteForm classes={classes} />
         </div>
     )

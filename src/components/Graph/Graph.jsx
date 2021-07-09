@@ -199,7 +199,7 @@ function Graph() {
                 :
                 <Line data={data} options={options} />
             }
-            <Button onClick={handleBack}>Back</Button>
+            <Button onClick={handleBack} variant="contained" color="secondary">Back</Button>
             <GraphOverlay classes={classes} />
             <GraphForm classes={classes} dispatchType={dispatchType} />
         </>

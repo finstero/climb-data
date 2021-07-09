@@ -125,7 +125,7 @@ function GraphForm({ classes, dispatchType }) {
 
     return (
         <div>
-            <Button onClick={handleFilter}>Filter Routes</Button>
+            <Button onClick={handleFilter} variant="contained" color="primary">Filter Routes</Button>
             <Dialog open={open} onClose={handleFilterCancel} aria-labelledby="form-dialog-title">
                 <DialogContent>
                     <DialogContentText>
@@ -202,10 +202,10 @@ function GraphForm({ classes, dispatchType }) {
 
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleFilterCancel} color="primary">
+                    <Button onClick={handleFilterCancel} variant="contained" color="secondary">
                         Cancel
                     </Button>
-                    <Button onClick={handleFilterChoices} color="primary">
+                    <Button onClick={handleFilterChoices} variant="contained" color="primary">
                         Filter
                     </Button>
                 </DialogActions>

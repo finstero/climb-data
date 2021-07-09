@@ -156,8 +156,8 @@ function RoutesList() {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Button onClick={handleAdd}>Add Route</Button>
-            <Button onClick={handleViewGraph}>View Routes Graph</Button>
+            <Button onClick={handleAdd} variant="contained" color="primary">Add Route</Button>
+            <Button onClick={handleViewGraph} variant="contained" color="primary">View Routes Graph</Button>
             <h2>Data Grid</h2>
             <div style={{ width: '100%' }}>
                 <DataGrid rows={allRoutes} columns={columns} autoHeight='true' hideFooterPagination='true' />
@@ -182,10 +182,10 @@ function RoutesList() {
                     </div>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCancel} color="primary">
+                    <Button onClick={handleCancel} variant="contained" color="secondary">
                         Cancel
                     </Button>
-                    <Button onClick={goViewGraph} color="primary">
+                    <Button onClick={goViewGraph} variant="contained" color="primary">
                         View Graph
                     </Button>
                 </DialogActions>

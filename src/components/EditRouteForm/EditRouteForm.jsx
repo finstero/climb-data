@@ -113,7 +113,7 @@ function EditRouteForm({ classes }) {
 
     return (
         <div>
-            <Button onClick={handleEdit}>Edit</Button>
+            <Button onClick={handleEdit} variant="contained" color="primary">Edit</Button>
             <Dialog open={open} onClose={handleEditCancel} aria-labelledby="form-dialog-title">
                 <DialogContent>
                     <DialogContentText>
@@ -204,10 +204,10 @@ function EditRouteForm({ classes }) {
 						</Grid>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleEditCancel} color="primary">
+                    <Button onClick={handleEditCancel} variant="contained" color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={handleSave} color="primary">
+                    <Button onClick={handleSave} variant="contained" color="primary">
                         Save
                     </Button>
                 </DialogActions>
