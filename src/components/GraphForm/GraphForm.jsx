@@ -52,6 +52,7 @@ function GraphForm({ classes, dispatchType }) {
     // close dialog form without action
     const handleFilterCancel = () => {
         setOpen(false);
+        setSendStatus('');
         setRope('');
         setHold('');
         setWall('');
@@ -64,6 +65,7 @@ function GraphForm({ classes, dispatchType }) {
 
     // on click of Filter button inside of form dialog, send info to server/db to grab selected routes
     const handleFilterChoices = () => {
+        console.log('logging sendStatus', sendStatus);
         if (sendStatus == 'error') {
             alert('Please choose at least one filter!');
         } else {
@@ -95,6 +97,7 @@ function GraphForm({ classes, dispatchType }) {
             }
             setOpen(false);
             setFilterChip(sentFilterChips)
+            setSendStatus('');
             setRope('');
             setHold('');
             setWall('');
@@ -199,7 +202,6 @@ function GraphForm({ classes, dispatchType }) {
                             </Select>
                         </FormControl>
                     </Grid>
-
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleFilterCancel} variant="contained" color="secondary">

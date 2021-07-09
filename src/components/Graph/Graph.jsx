@@ -194,10 +194,10 @@ function Graph() {
 
     return (
         <>
-            <h2>All Routes</h2>
+            <h3>Graph showing: </h3>
             {overlayExists.status ?
                 <div>
-                    <h2>overlay true</h2>
+                    <h3>Overlay showing: </h3>
                     <Line data={overlayData} options={options} />
                 </div>
                 :

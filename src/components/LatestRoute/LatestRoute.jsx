@@ -20,8 +20,8 @@ function IndividualRoute() {
     //     })
     // }, []);
 
-    const handleViewGraph = () => {
-        history.push('/routes/graph')
+    const handleAddAnother = () => {
+        history.push('/routes/grades');
     }
 
     const handleViewList = () => {
@@ -46,10 +46,8 @@ function IndividualRoute() {
                     <p>Image: {route.image}</p>
                 </div>
             ))}
-            {/* <Button>Delete</Button>
-            <Button>Edit</Button> */}
-            <Button onClick={handleViewGraph}>View Routes Graph</Button>
-            <Button onClick={handleViewList}>View Routes List</Button>
+            <Button onClick={handleAddAnother} variant="contained" color="primary">Add Another Route</Button>
+            <Button onClick={handleViewList} variant="contained" color="primary">View Routes List</Button>
         </>
     )
 }

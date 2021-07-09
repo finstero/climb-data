@@ -78,22 +78,24 @@ function GradeScheme() {
                 <Grid item>
                     <form onSubmit={handleContinue} className={classes.root}>
                         <ul className={classes.root}>
-                        {chipData.map((data) => {
-                            return (
-                                <div key={data.key} className={classes.root}>
-                                    <Chip
-                                        label={data.label}
-                                        onClick={handleClick(data)}
-                                        className={classes.chip}
-                                        color="primary"
-                                        disabled={false}
-                                    />
-                                </div>
-                            );
-                        })}
+                            {chipData.map((data) => {
+                                return (
+                                    <div key={data.key} className={classes.root}>
+                                        <Chip
+                                            label={data.label}
+                                            onClick={handleClick(data)}
+                                            className={classes.chip}
+                                            color="primary"
+                                            disabled={false}
+                                        />
+                                    </div>
+                                );
+                            })}
                         </ul>
-                        <Button onClick={handleCancel} variant="contained" color="secondary">Cancel</Button>
-                        <Button type="submit" variant="contained" color="primary">Continue</Button>
+                        <Grid item>
+                            <Button onClick={handleCancel} variant="contained" color="secondary">Cancel</Button>
+                            <Button type="submit" variant="contained" color="primary">Continue</Button>
+                        </Grid>
                     </form>
                 </Grid>
             </Grid>

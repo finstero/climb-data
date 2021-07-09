@@ -166,10 +166,10 @@ function RoutesList() {
             </TableContainer>
             <Button onClick={handleAdd} variant="contained" color="primary">Add Route</Button>
             <Button onClick={handleViewGraph} variant="contained" color="primary">View Routes Graph</Button>
-            <h2>Data Grid</h2>
+            {/* <h2>Data Grid</h2>
             <div style={{ width: '100%' }}>
                 <DataGrid rows={allRoutes} columns={columns} autoHeight='true' hideFooterPagination='true' />
-            </div>
+            </div> */}
             <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
                 <DialogContent>
                     <DialogContentText>

@@ -88,6 +88,7 @@ function GraphOverlay({ classes }) {
 			})
 			setOpen(false);
 			setFilterChip(sentFilterChips)
+			setSendStatus('');
 			setRope('');
 			setHold('');
 			setWall('');
