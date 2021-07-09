@@ -71,6 +71,7 @@ function EditRouteForm({ classes }) {
         setHold(route.holds_id);
         setFlash(route.flash);
         setNotes(route.notes);
+        setImage(route.image);
         setOpen(true);
     }
 

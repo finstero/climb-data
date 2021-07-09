@@ -77,7 +77,13 @@ function RouteDetails() {
             <p>Sent: {route.sent ? ' sent' : ' project'}</p>
             <p>Main hold type: {route.type}</p>
             <p>Notes: {route.notes}</p>
-            <p>Image: {route.image}</p>
+            {/* <p>Image: {route.image}</p> */}
+            {route.image &&
+            <div>
+                <p>Image</p>
+                <img src={route.image} width="300" height="300"></img>
+            </div>
+            }
             <Button onClick={handleDelete} variant="contained" color="primary">Delete</Button>
             <Button onClick={handleBack} variant="contained" color="primary">Back</Button>
             <EditRouteForm classes={classes} />

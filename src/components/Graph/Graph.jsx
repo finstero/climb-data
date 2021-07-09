@@ -9,6 +9,7 @@ import GraphOverlay from '../GraphOverlay/GraphOverlay';
 
 // material ui
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -194,15 +195,19 @@ function Graph() {
 
     return (
         <>
-            <h3>Graph showing: </h3>
+            {/* <Grid item xs={12} className={classes.root}>  */}
+                <h2>Routes Graph</h2>
+            {/* </Grid> */}
+            {/* <h3>Graph showing: </h3> */}
             {overlayExists.status ?
                 <div>
-                    <h3>Overlay showing: </h3>
+                    {/* <h3>Overlay showing: </h3> */}
                     <Line data={overlayData} options={options} />
                 </div>
                 :
                 <Line data={data} options={options} />
             }
+
             <Button onClick={handleBack} variant="contained" color="secondary">Back</Button>
             <GraphOverlay classes={classes} />
             <GraphForm classes={classes} dispatchType={dispatchType} />

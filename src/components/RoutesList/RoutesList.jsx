@@ -7,6 +7,7 @@ import GraphForm from '../GraphForm/GraphForm';
 
 // material ui
 import { DataGrid } from '@material-ui/data-grid';
+import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -141,7 +142,9 @@ function RoutesList() {
 
     return (
         <>
-            <h2>All Routes</h2>
+            <Grid item xs={12} className={classes.root}>
+                <h2>All Routes</h2>
+            </Grid>
             <GraphForm classes={classes} dispatchType={dispatchType}/>
             <Button onClick={handleReset} variant="contained" color="secondary">Reset</Button>
             <TableContainer component={Paper}>
