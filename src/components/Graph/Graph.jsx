@@ -108,6 +108,9 @@ function Graph() {
         dispatch({
             type: 'CLEAR_ALL_GRAPH',
         })
+        dispatch({
+            type: 'CLEAR_OVERLAY_GRAPH',
+        })
         history.push('/routes/list')
     }
 
@@ -184,8 +187,9 @@ function Graph() {
     //     setOpen(false);
     // }
 
-    const dispatchType = { type:
-        'FETCH_FILTERED_GRAPH'
+    const dispatchType = {
+        type:
+            'FETCH_FILTERED_GRAPH'
     };
 
     return (
