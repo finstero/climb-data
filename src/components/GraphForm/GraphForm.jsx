@@ -9,19 +9,17 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import Chip from '@material-ui/core/Chip';
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
-
-function GraphForm() {
+// material ui classes passed down for styling
+function GraphForm({ classes, dispatchType }) {
 
     const dispatch = useDispatch();
 
-    const store = useSelector((store) => store);
     const ropes = useSelector(store => store.formOptions.ropeReducer)
     const walls = useSelector(store => store.formOptions.wallReducer)
     const holds = useSelector(store => store.formOptions.holdReducer)
@@ -32,89 +30,124 @@ function GraphForm() {
     const [hold, setHold] = useState('');
     const [flash, setFlash] = useState('');
     const [open, setOpen] = useState(false);
+    const [gradeScheme, setGradeScheme] = useState('');
+    const [gradeInput, setGradeInput] = useState(false);
 
     const { grading } = useParams();
 
-    const [heading, setHeading] = useState('Functional Component');
-
     useEffect(() => {
         dispatch({
-                type: 'FETCH_FORM_OPTIONS'
-            })
+            type: 'FETCH_FORM_OPTIONS'
+        })
     }, []);
 
     // opens dialog form for sent/project selection
     const handleFilter = () => {
+        if (grading == undefined) {
+            setGradeInput(true);
+        }
         setOpen(true);
     }
 
     // close dialog form without action
     const handleFilterCancel = () => {
         setOpen(false);
+        setRope('');
+        setHold('');
+        setWall('');
     }
+
+    const sentFilterChips = [
+        { key: 'true', label: 'sent' },
+        { key: 'false', label: 'project' },
+    ];
 
     // on click of Filter button inside of form dialog, send info to server/db to grab selected routes
     const handleFilterChoices = () => {
         if (sendStatus == 'error') {
-            alert('Please choose what type of routes to see!');
+            alert('Please choose at least one filter!');
         } else {
-            dispatch({
-                type: 'FETCH_FILTERED_GRAPH',
-                payload: {
-                    gradeScheme: grading,
-                    sent: sendStatus,
-                    rope_type_id: rope,
-                    wall_id: wall,
-                    holds_id: hold,
-                    flash: flash,
-                }
-            })
+            if (grading == undefined) {
+                dispatch({
+                    type: dispatchType.type,
+                    payload: {
+                        gradeScheme: gradeScheme,
+                        sent: sendStatus,
+                        rope_type_id: rope,
+                        wall_id: wall,
+                        holds_id: hold,
+                        flash: flash,
+                    }
+                })
+            } else {
+                console.log('grading for filter form', grading);
+                dispatch({
+                    type: dispatchType.type,
+                    payload: {
+                        gradeScheme: grading,
+                        sent: sendStatus,
+                        rope_type_id: rope,
+                        wall_id: wall,
+                        holds_id: hold,
+                        flash: flash,
+                    }
+                })
+            }
             setOpen(false);
-            setFilterChip([
-                { key: 'true', label: 'sent' },
-                { key: 'false', label: 'project' },
-            ])
+            setFilterChip(sentFilterChips)
+            setRope('');
+            setHold('');
+            setWall('');
         }
     }
 
-    const [filterChip, setFilterChip] = useState([
-        { key: 'true', label: 'sent' },
-        { key: 'false', label: 'project' },
-    ]);
+    const [filterChip, setFilterChip] = useState(sentFilterChips);
 
     const handleChipClick = (chipToChoose) => () => {
         setFilterChip((chips) => chips.filter((chip) => chip.label === chipToChoose.label));
-        // console.log('log sendStatusChip', sendStatus);
         setSendStatus(chipToChoose.key);
         console.log('log chipToChoose', chipToChoose);
     }
 
-    const useStyles = makeStyles((theme) => ({
-        root: {
-            display: 'flex',
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-            listStyle: 'none',
-            padding: theme.spacing(0.5),
-            margin: 0,
-        },
-        formControl: {
-            margin: theme.spacing(1),
-            minWidth: 130,
-        },
-    }));
+    // setting up grade scheme chips
+    const [gradeChip, setGradeChip] = useState([
+        { key: 'ysd', label: 'Yosemite Decimal System' },
+        { key: 'ysd_simple', label: 'Yosemite Decimal System - Simple' },
+        { key: 'french', label: 'French' },
+    ]);
 
-    const classes = useStyles();
+    // on click of grade scheme chip, disappears un selected chips and sets grade scheme to chosen grade scheme for dispatch
+    const handleGradeChip = (chipToChoose) => () => {
+        setGradeChip((chips) => chips.filter((chip) => chip.key == chipToChoose.key));
+        console.log('log chipToChoose', chipToChoose.key);
+        setGradeScheme(chipToChoose.key);
+    }
 
     return (
         <div>
-            <Button onClick={handleFilter}>Filter Routes</Button>
+            <Button onClick={handleFilter} variant="contained" color="primary">Filter Routes</Button>
             <Dialog open={open} onClose={handleFilterCancel} aria-labelledby="form-dialog-title">
                 <DialogContent>
                     <DialogContentText>
                         Choose route filters. You may choose any combination of filters.
                     </DialogContentText>
-                    <div>
+                    {gradeInput &&
+                        <ul className={classes.root}>
+                        {gradeChip.map((data) => {
+                            return (
+                                <li key={data.key}>
+                                    <Chip
+                                        label={data.label}
+                                        onClick={handleGradeChip(data)}
+                                        className={classes.chip}
+                                        disabled={false}
+                                    />
+                                </li>
+                            );
+                        })}
+                        </ul>
+                    }
+                    <div className={classes.root}>
                         {filterChip.map((data) => {
                             return (
                                 <span key={data.key}>
@@ -166,12 +199,13 @@ function GraphForm() {
                             </Select>
                         </FormControl>
                     </Grid>
+
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleFilterCancel} color="primary">
+                    <Button onClick={handleFilterCancel} variant="contained" color="secondary">
                         Cancel
                     </Button>
-                    <Button onClick={handleFilterChoices} color="primary">
+                    <Button onClick={handleFilterChoices} variant="contained" color="primary">
                         Filter
                     </Button>
                 </DialogActions>

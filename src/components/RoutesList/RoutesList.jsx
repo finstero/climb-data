@@ -2,7 +2,8 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
-// import RouteListItem from '../RouteListItem/RouteListItem';
+
+import GraphForm from '../GraphForm/GraphForm';
 
 // material ui
 import { DataGrid } from '@material-ui/data-grid';
@@ -19,7 +20,6 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Chip from '@material-ui/core/Chip';
 
 function RoutesList() {
@@ -108,6 +108,10 @@ function RoutesList() {
         chip: {
             margin: theme.spacing(0.5),
         },
+        formControl: {
+            margin: theme.spacing(1),
+            minWidth: 130,
+        },
     }));
 
     const classes = useStyles();
@@ -122,13 +126,16 @@ function RoutesList() {
     // on click of grade scheme chip, disappears un selected chips and sets grade scheme to chosen grade scheme for dispatch
     const handleChipClick = (chipToChoose) => () => {
         setChipData((chips) => chips.filter((chip) => chip.key == chipToChoose.key));
-        console.log('log chipToChoose', chipToChoose.key);
+        // console.log('log chipToChoose', chipToChoose.key);
         setGradeScheme(chipToChoose.key);
     }
+
+    const dispatchType = {type: `FETCH_FILTERED_ROUTES`};
 
     return (
         <>
             <h2>All Routes</h2>
+            <GraphForm classes={classes} dispatchType={dispatchType}/>
             <TableContainer component={Paper}>
                 <Table aria-label="routes table">
                     <TableHead>
@@ -149,8 +156,8 @@ function RoutesList() {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Button onClick={handleAdd}>Add Route</Button>
-            <Button onClick={handleViewGraph}>View Routes Graph</Button>
+            <Button onClick={handleAdd} variant="contained" color="primary">Add Route</Button>
+            <Button onClick={handleViewGraph} variant="contained" color="primary">View Routes Graph</Button>
             <h2>Data Grid</h2>
             <div style={{ width: '100%' }}>
                 <DataGrid rows={allRoutes} columns={columns} autoHeight='true' hideFooterPagination='true' />
@@ -175,10 +182,10 @@ function RoutesList() {
                     </div>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCancel} color="primary">
+                    <Button onClick={handleCancel} variant="contained" color="secondary">
                         Cancel
                     </Button>
-                    <Button onClick={goViewGraph} color="primary">
+                    <Button onClick={goViewGraph} variant="contained" color="primary">
                         View Graph
                     </Button>
                 </DialogActions>

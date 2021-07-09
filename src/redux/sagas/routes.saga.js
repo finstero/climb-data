@@ -76,8 +76,21 @@ function* editRoute (action) {
         yield axios.put(`api/routes/edit/${action.payload.id}`, action.payload);
         // yield put({type: 'SET_ONE_ROUTE', payload: ''})
         yield put({ type: 'FETCH_ALL_ROUTES'});
+        yield put({ type: 'FETCH_ONE_ROUTE', payload: action.payload});
     } catch{
         console.log('error in editRoute saga');
+    }
+}
+
+function* getFilteredRoutes(action) {
+    console.log('in getFilteredRoutes saga');
+
+    try {
+        const filteredRoutes = yield axios.get('/api/routes/filter', {params: action.payload});
+        yield put({ type: 'SET_ALL_ROUTES', payload: filteredRoutes.data })
+
+    } catch {
+        console.log('error in getFilteredRoutes saga');
     }
 }
 
@@ -88,6 +101,7 @@ function* routesSaga() {
     yield takeLatest('FETCH_ONE_ROUTE', getOneRoute);
     yield takeLatest('DELETE_ROUTE', deleteRoute);
     yield takeLatest('EDIT_ROUTE', editRoute);
+    yield takeLatest('FETCH_FILTERED_ROUTES', getFilteredRoutes);
 }
 
 export default routesSaga;

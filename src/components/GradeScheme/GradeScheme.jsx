@@ -92,8 +92,8 @@ function GradeScheme() {
                             );
                         })}
                         </ul>
-                        <Button onClick={handleCancel}>Cancel</Button>
-                        <Button type="submit">Continue</Button>
+                        <Button onClick={handleCancel} variant="contained" color="secondary">Cancel</Button>
+                        <Button type="submit" variant="contained" color="primary">Continue</Button>
                     </form>
                 </Grid>
             </Grid>

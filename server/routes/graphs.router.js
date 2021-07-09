@@ -25,8 +25,9 @@ router.get('/:gradeScheme', rejectUnauthenticated, (req, res) => {
         });
 });
 
+// route for filtering main graph
 router.get('/', rejectUnauthenticated, (req, res) => {
-    console.log('in filtered graph router get req.query', req.query);
+    console.log('in filtered graph', req.query);
 
     // const query =
     //     `SELECT "grades".grade, count("routes") FROM "grades"
@@ -53,7 +54,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     if (req.query.rope_type_id !== '') {
         queryA += `AND "routes".rope_type_id = $${count} `
         count += 1;
-        values.push(req.query.rope);
+        values.push(req.query.rope_type_id);
     }
     if (req.query.sent !== '') {
         console.log('req.query.sent', req.query.sent);
@@ -89,7 +90,6 @@ router.get('/', rejectUnauthenticated, (req, res) => {
             res.sendStatus(500);
         });
 });
-
 
 
 
