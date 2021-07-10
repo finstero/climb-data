@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // material ui
 import { makeStyles } from '@material-ui/core/styles';
@@ -20,6 +20,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 function Nav() {
 
+  const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
 
   const [menu, setMenu] = useState(null);
@@ -33,7 +34,6 @@ function Nav() {
     loginLinkData.path = '/routes/home';
     loginLinkData.text = 'Home';
   }
-
 
   const handleShowGraph = () => {
 
@@ -52,6 +52,9 @@ function Nav() {
     title: {
       flexGrow: 1,
     },
+    toolbar: {
+      minHeight: 80,
+    }
   }));
 
   const classes = useStyles();
@@ -71,37 +74,49 @@ function Nav() {
       </Menu> */}
       <div className={classes.root}>
         <AppBar position="static">
-          <Toolbar>
+          <Toolbar className={classes.toolbar}>
             <Typography variant="h6" className={classes.title}>
               Climb Data
             </Typography>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
+            {/* <Button
               color="inherit"
-              aria-label="menu"
-              onClick={handleShowGraph}
-            >
-              <ShowChartIcon fontSize="large" />
-            </IconButton>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-              onClick={handleShowGraph}
-            >
-              <ListIcon fontSize="large" />
-            </IconButton>
-            <IconButton
-              edge="start"
-              className={classes.logoutButton}
-              color="inherit"
-              aria-label="menu"
-              onClick={handleShowGraph}
-            >
-              <ExitToAppIcon />
-            </IconButton>
+              className={classes.title}>Climb Data</Button> */}
+            {!user.id &&
+              <Link className="navLink" to={loginLinkData.path}>
+                {loginLinkData.text}
+              </Link>
+            }
+            {user.id &&
+              <>
+                <IconButton
+                  edge="start"
+                  className={classes.menuButton}
+                  color="inherit"
+                  aria-label="menu"
+                  onClick={handleShowGraph}
+                >
+                  <ShowChartIcon fontSize="large" />
+                </IconButton>
+                <IconButton
+                  edge="start"
+                  className={classes.menuButton}
+                  color="inherit"
+                  aria-label="menu"
+                // onClick={handleShowRouteList}
+                >
+                  <ListIcon fontSize="large" />
+                </IconButton>
+                <IconButton
+                  edge="start"
+                  className={classes.logoutButton}
+                  color="inherit"
+                  aria-label="menu"
+                  onClick={() => dispatch({ type: 'LOGOUT' })}
+                >
+                  <ExitToAppIcon />
+                </IconButton>
+              </>
+            }
           </Toolbar>
         </AppBar>
       </div>
