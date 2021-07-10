@@ -145,6 +145,7 @@ function RoutesList() {
             <Grid item xs={12} className={classes.root}>
                 <h2>All Routes</h2>
             </Grid>
+            {/* For filter routes button */}
             <GraphForm classes={classes} dispatchType={dispatchType}/>
             <Button onClick={handleReset} variant="contained" color="secondary">Reset</Button>
             <TableContainer component={Paper}>
@@ -176,7 +177,7 @@ function RoutesList() {
             <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
                 <DialogContent>
                     <DialogContentText>
-                        Choose what type of routes to see.
+                        Choose which grade scheme to view.
                     </DialogContentText>
                     <div className={classes.root}>
                         {chipData.map((data) => {

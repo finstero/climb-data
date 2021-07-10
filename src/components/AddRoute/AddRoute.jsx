@@ -83,6 +83,7 @@ function AddRoute() {
 			setGrade('');
 			setNotes('');
 			setImage('');
+			setSendStatus('')
 			// console.log('in add route file');
 			history.push(`/routes/latest`);
 		}
