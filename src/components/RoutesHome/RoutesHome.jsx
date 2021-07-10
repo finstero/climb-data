@@ -44,11 +44,13 @@ function RoutesHome() {
 
     const classes = useStyles();
 
-    const [chipData, setChipData] = useState([
+    const gradeSchemeChips = [
         { key: 'ysd', label: 'Yosemite Decimal System' },
         { key: 'ysd_simple', label: 'Yosemite Decimal System - Simple' },
         { key: 'french', label: 'French' },
-    ]);
+    ];
+
+    const [chipData, setChipData] = useState(gradeSchemeChips);
 
     const handleGradeSchemeSelection = (chipToChoose) => () => {
         setChipData((chips) => chips.filter((chip) => chip.key == chipToChoose.key));
@@ -59,6 +61,7 @@ function RoutesHome() {
     const handleCancel = () => {
         setOpen(false);
         setGradeScheme('error');
+        setChipData(gradeSchemeChips);
     }
 
     const handleContinue = (event) => {

@@ -98,12 +98,12 @@ function App() {
               <RoutesHome />
             </ProtectedRoute>
 
-            <ProtectedRoute
+            {/* <ProtectedRoute
               exact
               path="/routes/grades"
             >
               <GradeScheme />
-            </ProtectedRoute>
+            </ProtectedRoute> */}
 
             <ProtectedRoute
               exact
