@@ -10,6 +10,9 @@ import EditRouteForm from '../EditRouteForm/EditRouteForm';
 import Button from '@material-ui/core/Button';
 import 'date-fns';
 import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 
 function RouteDetails() {
 
@@ -47,7 +50,7 @@ function RouteDetails() {
             justifyContent: 'center',
             flexWrap: 'wrap',
             listStyle: 'none',
-            padding: theme.spacing(0.5),
+            padding: theme.spacing(1),
             margin: 0,
         },
         chip: {
@@ -57,37 +60,75 @@ function RouteDetails() {
             margin: theme.spacing(1),
             minWidth: 130,
         },
+        paper: {
+            // background: '#adc2cd',
+            width: 300,
+        },
     }));
 
     // classes passed to child, EditRouteForm
     const classes = useStyles();
 
+
     return (
 
-        <div>
-            {route.date &&
-                <h3>{format(new Date(route?.date), 'MMMM do, yyyy')}</h3>
-            }
-            <p>Grade: {route.grade}</p>
-            <p>Climb type: {route.rope_type}</p>
-            <p>Wall angle: {route.angle}</p>
-            <p>Flash:
-                {route.flash ? ' yes' : ' no'}
-            </p>
-            <p>Sent: {route.sent ? ' sent' : ' project'}</p>
-            <p>Main hold type: {route.type}</p>
-            <p>Notes: {route.notes}</p>
-            {/* <p>Image: {route.image}</p> */}
-            {route.image &&
-            <div>
-                <p>Image</p>
-                <img src={route.image} width="300" height="300"></img>
-            </div>
-            }
-            <Button onClick={handleDelete} variant="contained" color="primary">Delete</Button>
-            <Button onClick={handleBack} variant="contained" color="primary">Back</Button>
-            <EditRouteForm classes={classes} />
-        </div>
+        <Grid container justify="center">
+            <Paper elevation={3} className={classes.paper}>
+                <Grid container>
+                    <Grid item xs={12} className={classes.root}>
+                        <Typography variant="h5">Route Details</Typography>
+                    </Grid>
+                    <Grid item xs={12} className={classes.root}>
+                        {route.date &&
+                            <Typography variant="subtitle1">{format(new Date(route.date), 'MMMM do, yyyy')}</Typography>
+                        }
+                    </Grid>
+                    <Grid item xs={6} className={classes.root}>
+                        <Typography variant="h6">Grade: {route.grade}</Typography>
+                    </Grid>
+                    <Grid item xs={6} className={classes.root}>
+                        {/* <Typography variant="h6">{route.sent ? ' Sent' : ' Project'}</Typography> */}
+                        {route.sent &&
+                            <Typography variant="h6">{route.flash && route.sent ? 'Flashed' : 'Sent (no flash)'}</Typography>
+                        }
+                        {!route.sent &&
+                            <Typography variant="h6">Project</Typography>
+                        }
+                    </Grid>
+                    <Grid item xs={6} className={classes.root}>
+                        <Typography variant="h6">{route.angle}</Typography>
+                    </Grid>
+
+                        <Grid item xs={6} className={classes.root}>
+                            <Typography variant="h6">{route?.rope_type}</Typography>
+                        </Grid>
+                    
+
+                    <Grid item xs={12} className={classes.root}>
+                        <Typography variant="h6">Main hold type: {route.type}</Typography>
+                    </Grid>
+                    {route.notes &&
+                        <Grid item xs={12} className={classes.root}>
+                            <Typography variant="h6">Notes: {route.notes}</Typography>
+                        </Grid>
+                    }
+                    {/* <p>Image: {route.image}</p> */}
+                    <Grid item xs={12} className={classes.root}>
+                        {route.image &&
+                            <div>
+                                <p>Image</p>
+                                <img src={route.image} width="300" height="300"></img>
+                            </div>
+                        }
+                    </Grid>
+                    <Grid item xs={12} className={classes.root}>
+                        <Button onClick={handleDelete} variant="contained" color="secondary">Delete</Button>
+                        <Button onClick={handleBack} variant="contained" color="primary">Back</Button>
+                        <EditRouteForm classes={classes} />
+                    </Grid>
+                </Grid>
+            </Paper>
+        </Grid>
     )
 }
 

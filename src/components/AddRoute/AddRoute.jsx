@@ -123,7 +123,6 @@ function AddRoute() {
 			marginTop: theme.spacing(2),
 		},
 		paper: {
-			opacity: 1,
 			// background: '#adc2cd',
 			width: 300,
 		},
