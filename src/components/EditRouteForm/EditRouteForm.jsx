@@ -10,6 +10,7 @@ import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
@@ -116,10 +117,8 @@ function EditRouteForm({ classes }) {
         <div>
             <Button onClick={handleEdit} variant="contained" color="primary">Edit</Button>
             <Dialog open={open} onClose={handleEditCancel} aria-labelledby="form-dialog-title">
+                <DialogTitle>Edit Route</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
-                        Edit!
-                    </DialogContentText>
                     <Grid item xs={12} className={classes.root}>
                         <FormControl className={classes.formControl}>
                             <InputLabel id="grades">Grade</InputLabel>
@@ -205,7 +204,7 @@ function EditRouteForm({ classes }) {
 						</Grid>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleEditCancel} variant="contained" color="primary">
+                    <Button onClick={handleEditCancel} variant="contained" color="secondary">
                         Cancel
                     </Button>
                     <Button onClick={handleSave} variant="contained" color="primary">
