@@ -60,8 +60,8 @@ function Graph() {
                 label: 'main',
                 data: allGraph,
                 fill: false,
-                backgroundColor: '#0C163D',
-                borderColor: '#0C163D',
+                backgroundColor: '#263A43',
+                borderColor: '#263A43',
             },
         ],
     };

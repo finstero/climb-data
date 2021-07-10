@@ -41,13 +41,16 @@ function App() {
     dispatch({ type: 'FETCH_USER' });
   }, [dispatch]);
 
+
+
+  // dark blue color #0C163D, secondary for blue: #E26B00
   const theme = createMuiTheme({
     palette: {
       primary: {
-        main: '#0C163D'
+        main: '#263A43'
       },
       secondary: {
-        main: '#E26B00'
+        main: '#C93F2B'
       }
     }
   })
