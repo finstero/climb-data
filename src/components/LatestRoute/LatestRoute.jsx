@@ -15,14 +15,7 @@ function IndividualRoute() {
 
     const dispatch = useDispatch();
     const history = useHistory();
-    // const { id } = useParams();
     const latestRoute = useSelector(store => store.routes.latestRoute);
-
-    // useEffect(() => {
-    //     dispatch({
-    //         type: 'FETCH_ROUTE',
-    //     })
-    // }, []);
 
     const handleAddAnother = () => {
         history.push('/routes/grades');
@@ -42,7 +35,7 @@ function IndividualRoute() {
             margin: 0,
         },
         paperParent: {
-            padding: theme.spacing(3), 
+            padding: theme.spacing(3),
         },
         header: {
             display: 'flex',
@@ -64,7 +57,7 @@ function IndividualRoute() {
             padding: theme.spacing(0.5),
         },
     }));
-    
+
     const classes = useStyles();
 
     return (
@@ -106,7 +99,6 @@ function IndividualRoute() {
                                 <Typography variant="h6">Notes: {latestRoute.notes}</Typography>
                             </Grid>
                         }
-                        {/* <p>Image: {route.image}</p> */}
                         <Grid item xs={12} className={classes.root}>
                             {latestRoute.image &&
                                 <div>
@@ -122,25 +114,6 @@ function IndividualRoute() {
                     </Grid>
                 </Paper>
             </Grid>
-
-            {/* <h2>Route Added!</h2>
-            {latestRoute.map(route => (
-                <div key={route.id}>
-                    {route.date &&
-                        <h3>{format(new Date(route?.date), 'MMMM do, yyyy')}</h3>
-                    }
-                    <p>Grade: {route.grade}</p>
-                    <p>Climb type: {route.rope_type}</p>
-                    <p>Wall angle: {route.angle}</p>
-                    <p>Flash: {route.flash ? ' yes' : ' no'}</p>
-                    <p>Sent: {route.sent ? ' yes' : ' no'}</p>
-                    <p>Main hold type: {route.type}</p>
-                    <p>Notes: {route.notes}</p>
-                    <p>Image: {route.image}</p>
-                </div>
-            ))}
-            <Button onClick={handleAddAnother} variant="contained" color="primary">Add Another Route</Button>
-            <Button onClick={handleViewList} variant="contained" color="primary">View Routes List</Button> */}
         </>
     )
 }

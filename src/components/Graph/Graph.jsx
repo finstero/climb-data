@@ -57,7 +57,7 @@ function Graph() {
         // labels: ['1', '2', '3', '4', '5', '6'],
         datasets: [
             {
-                label: 'main',
+                label: 'Main',
                 data: allGraph,
                 fill: false,
                 backgroundColor: '#263A43',
@@ -71,18 +71,18 @@ function Graph() {
         // labels: ['1', '2', '3', '4', '5', '6'],
         datasets: [
             {
-                label: 'main',
+                label: 'Main',
                 data: allGraph,
                 fill: false,
-                backgroundColor: '#0C163D',
-                borderColor: '#0C163D',
+                backgroundColor: '#263A43',
+                borderColor: '#263A43',
             },
             {
-                label: 'overlay',
+                label: 'Overlay',
                 data: overlay,
                 fill: false,
-                backgroundColor: '#E26B00',
-                borderColor: '#E26B00',
+                backgroundColor: '#799AA3',
+                borderColor: '#799AA3',
             },
         ],
     };
@@ -102,7 +102,7 @@ function Graph() {
             yAxis: {
                 title: {
                     display: true,
-                    text: '# routes'
+                    text: '# Routes'
                 },
                 min: 0,
                 ticks: {
@@ -113,7 +113,7 @@ function Graph() {
             xAxis: {
                 title: {
                     display: true,
-                    text: 'grade'
+                    text: 'Grade'
                 },
             },
         }
@@ -217,10 +217,10 @@ function Graph() {
             {overlayExists.status ?
                 <div>
                     {/* <h3>Overlay showing: </h3> */}
-                    <Line data={overlayData} options={options} />
+                    <Line data={overlayData} options={options} height={250} />
                 </div>
                 :
-                <Line data={data} options={options} />
+                <Line data={data} options={options} height={250} />
             }
             <Grid item xs={12} className={classes.root}>
                 <Button onClick={handleBack} variant="contained" color="secondary">Back</Button>
