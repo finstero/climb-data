@@ -62,12 +62,6 @@ function RoutesList() {
             alert('please select a grade scheme!')
 
         } else {
-            // dispatch({
-            //     type: 'FETCH_GRAPH_DATA',
-            //     payload: {
-            //         gradeScheme: gradeScheme
-            //     }
-            // })
             history.push(`/routes/graph/${gradeScheme}`);
         }
     }
@@ -147,6 +141,7 @@ function RoutesList() {
             </Grid>
             {/* For filter routes button */}
             <GraphForm classes={classes} dispatchType={dispatchType}/>
+
             <Button onClick={handleReset} variant="contained" color="secondary">Reset</Button>
             <TableContainer component={Paper}>
                 <Table aria-label="routes table">
@@ -174,6 +169,8 @@ function RoutesList() {
             <div style={{ width: '100%' }}>
                 <DataGrid rows={allRoutes} columns={columns} autoHeight='true' hideFooterPagination='true' />
             </div> */}
+
+            {/* For grade scheme choice pop up */}
             <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
                 <DialogContent>
                     <DialogContentText>
