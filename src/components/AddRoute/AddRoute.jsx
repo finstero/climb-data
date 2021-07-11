@@ -255,20 +255,23 @@ function AddRoute() {
 										</Select>
 									</FormControl>
 								</Grid>
-								<Grid item xs={12} className={classes.root}>
-									<FormControl required className={classes.formControl}>
-										<InputLabel id="flash">Flashed?</InputLabel>
-										<Select
-											onChange={(event) => { setFlash(event.target.value) }}
-											defaultValue="flash?"
-											value={flash}
-											labelId="flash"
-											id="flash">
-											<MenuItem value='false'>no</MenuItem>
-											<MenuItem value='true'>yes</MenuItem>
-										</Select>
-									</FormControl>
-								</Grid>
+
+								{sendStatus &&
+									<Grid item xs={12} className={classes.root}>
+										<FormControl required className={classes.formControl}>
+											<InputLabel id="flash">Flashed?</InputLabel>
+											<Select
+												onChange={(event) => { setFlash(event.target.value) }}
+												defaultValue="flash?"
+												value={flash}
+												labelId="flash"
+												id="flash">
+												<MenuItem value='false'>no</MenuItem>
+												<MenuItem value='true'>yes</MenuItem>
+											</Select>
+										</FormControl>
+									</Grid>
+								}
 								<Grid item xs={12} className={classes.root}>
 									<TextField
 										onChange={(event) => { setNotes(event.target.value) }}
