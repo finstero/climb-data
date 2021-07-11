@@ -15,6 +15,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
+
+// GRAPHFORM USED FOR BOTH GRAPH FILTER AND ROUTES LIST FILTER
 // material ui classes passed down for styling
 function GraphForm({ classes, dispatchType }) {
 
@@ -72,6 +74,7 @@ function GraphForm({ classes, dispatchType }) {
         if (sendStatus == 'error') {
             alert('Please choose at least one filter!');
         } else {
+            // grading will be undefined if user is filtering for list view
             if (grading == undefined) {
                 dispatch({
                     type: dispatchType.type,
