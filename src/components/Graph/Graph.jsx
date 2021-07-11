@@ -210,9 +210,9 @@ function Graph() {
 
     return (
         <>
-            {/* <Grid item xs={12} className={classes.root}>  */}
-            <h2>Routes Graph</h2>
-            {/* </Grid> */}
+            <Grid item xs={12} className={classes.root}>
+                <h1>Routes Graph</h1>
+            </Grid>
             {/* <h3>Graph showing: </h3> */}
             {overlayExists.status ?
                 <div>
@@ -222,10 +222,11 @@ function Graph() {
                 :
                 <Line data={data} options={options} />
             }
-
-            <Button onClick={handleBack} variant="contained" color="secondary">Back</Button>
-            <GraphOverlay classes={classes} />
-            <GraphForm classes={classes} dispatchType={dispatchType} />
+            <Grid item xs={12} className={classes.root}>
+                <Button onClick={handleBack} variant="contained" color="secondary">Back</Button>
+                <GraphOverlay classes={classes} />
+                <GraphForm classes={classes} dispatchType={dispatchType} />
+            </Grid>
         </>
     )
 }

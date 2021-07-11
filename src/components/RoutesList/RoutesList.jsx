@@ -132,17 +132,20 @@ function RoutesList() {
         })
     }
 
-    const dispatchType = {type: `FETCH_FILTERED_ROUTES`};
+    const dispatchType = { type: `FETCH_FILTERED_ROUTES` };
 
     return (
         <>
-            <Grid item xs={12} className={classes.root}>
-                <h2>All Routes</h2>
+            <Grid container>
+                <Grid item xs={12} className={classes.root}>
+                    <h1>All Routes</h1>
+                </Grid>
+                {/* For filter routes button */}
+                <Grid item xs={12} className={classes.root}>
+                    <GraphForm classes={classes} dispatchType={dispatchType} />
+                    <Button onClick={handleReset} variant="contained" color="secondary">Reset</Button>
+                </Grid>
             </Grid>
-            {/* For filter routes button */}
-            <GraphForm classes={classes} dispatchType={dispatchType}/>
-
-            <Button onClick={handleReset} variant="contained" color="secondary">Reset</Button>
             <TableContainer component={Paper}>
                 <Table aria-label="routes table">
                     <TableHead>
@@ -163,15 +166,15 @@ function RoutesList() {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Button onClick={handleAdd} variant="contained" color="primary">Add Route</Button>
-            <Button onClick={handleViewGraph} variant="contained" color="primary">View Routes Graph</Button>
+            {/* <Button onClick={handleAdd} variant="contained" color="primary">Add Route</Button> */}
+            {/* <Button onClick={handleViewGraph} variant="contained" color="primary">View Routes Graph</Button> */}
             {/* <h2>Data Grid</h2>
             <div style={{ width: '100%' }}>
                 <DataGrid rows={allRoutes} columns={columns} autoHeight='true' hideFooterPagination='true' />
             </div> */}
 
-            {/* For grade scheme choice pop up */}
-            <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
+            {/* For grade scheme choice for graph pop up */}
+            {/* <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
                 <DialogContent>
                     <DialogContentText>
                         Choose which grade scheme to view.
@@ -198,7 +201,7 @@ function RoutesList() {
                         View Graph
                     </Button>
                 </DialogActions>
-            </Dialog>
+            </Dialog> */}
         </>
     )
 }

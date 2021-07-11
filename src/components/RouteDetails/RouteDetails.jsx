@@ -69,6 +69,9 @@ function RouteDetails() {
             padding: theme.spacing(1),
             margin: 0,
         },
+        paperParent: {
+            padding: theme.spacing(3), 
+        },
         header: {
             display: 'flex',
             justifyContent: 'center',
@@ -94,6 +97,7 @@ function RouteDetails() {
         paper: {
             // background: '#adc2cd',
             width: 300,
+            padding: theme.spacing(0.5),
         },
     }));
 
@@ -102,7 +106,7 @@ function RouteDetails() {
 
     return (
         <>
-            <Grid container justify="center">
+            <Grid container justify="center" className={classes.paperParent}>
                 <Paper elevation={3} className={classes.paper}>
                     <Grid container>
                         <Grid item xs={12} className={classes.header}>

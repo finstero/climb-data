@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,6 +15,9 @@ import ListIcon from '@material-ui/icons/List';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AddBoxIcon from '@material-ui/icons/AddBox';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import AddIcon from '@material-ui/icons/Add';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -24,10 +27,12 @@ import Chip from '@material-ui/core/Chip';
 function Nav() {
 
   const dispatch = useDispatch();
+  const history = useHistory();
   const user = useSelector((store) => store.user);
 
   const [open, setOpen] = useState(false);
   const [gradeScheme, setGradeScheme] = useState('error');
+  const [graph, setGraph] = useState(false);
 
   let loginLinkData = {
     path: '/login',
@@ -71,6 +76,8 @@ function Nav() {
       alert('please select a grade scheme!')
     } else {
       history.push(`/routes/graph/${gradeScheme}`);
+      setOpen(false)
+      setChipData(gradeSchemeChips);
     }
   }
 
@@ -136,6 +143,17 @@ function Nav() {
             }
             {user.id &&
               <>
+              <Link className="navLink" to='/routes/'>
+                  <IconButton
+                    edge="start"
+                    className={classes.chartButton}
+                    color="inherit"
+                    aria-label="menu"
+                    onClick={handleShowGraph}
+                  >
+                    <AddIcon fontSize="large" />
+                  </IconButton>
+                </Link>
                 <Link className="navLink" to='/routes/list'>
                   <IconButton
                     edge="start"
