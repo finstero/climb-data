@@ -108,7 +108,7 @@ function IndividualRoute() {
                             }
                         </Grid>
                         <Grid item xs={12} className={classes.root}>
-                            <Button onClick={handleAddAnother} variant="contained" color="primary">Add Another Route</Button>
+                            {/* <Button onClick={handleAddAnother} variant="contained" color="primary">Add Another Route</Button> */}
                             <Button onClick={handleViewList} variant="contained" color="primary">View Routes List</Button>
                         </Grid>
                     </Grid>
