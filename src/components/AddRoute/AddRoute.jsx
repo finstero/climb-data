@@ -40,7 +40,7 @@ function AddRoute() {
 	// local states for all inputs
 	const [grade, setGrade] = useState('');
 	const [selectedDate, setSelectedDate] = useState(new Date('2021-06-18T11:11:54'));
-	const [sendStatus, setSendStatus] = useState('');
+	const [sendStatus, setSendStatus] = useState('error');
 	const [rope, setRope] = useState('');
 	const [wall, setWall] = useState('');
 	const [hold, setHold] = useState('');
@@ -67,7 +67,8 @@ function AddRoute() {
 	// sends added route info as post
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		if (sendStatus == '') {
+		console.log('send status', sendStatus);
+		if (sendStatus == 'error') {
 			alert('Please make sure to enter something for every option.')
 		} else {
 			dispatch({
@@ -87,7 +88,7 @@ function AddRoute() {
 			setGrade('');
 			setNotes('');
 			setImage('');
-			setSendStatus('')
+			setSendStatus('error')
 			// console.log('in add route file');
 			history.push(`/routes/latest`);
 		}
@@ -112,12 +113,15 @@ function AddRoute() {
 			margin: 0,
 			width: '100%'
 		},
+		paperParent: {
+			padding: theme.spacing(3),
+		},
 		chip: {
 			margin: theme.spacing(0.5),
 		},
 		formControl: {
 			margin: theme.spacing(1),
-			minWidth: 130,
+			minWidth: 140,
 		},
 		selectEmpty: {
 			marginTop: theme.spacing(2),
@@ -145,120 +149,152 @@ function AddRoute() {
 
 	return (
 		<>
-			<Grid container justify="center">
-				<Grid item>
-					<Paper elevation={3} className={classes.paper}>
-						<Grid container className={classes.root}>
-							<Typography variant="h4"> New Route </Typography>
-							<form onSubmit={handleSubmit}>
-								<Grid container justify="center">
-									<Grid item xs={12} className={classes.root}>
-										<FormControl className={classes.formControl}>
-											<InputLabel id="grades">Grade</InputLabel>
-											<Select onChange={(event) => { setGrade(event.target.value) }} defaultValue="choose grade" value={grade} labelId="grades" id="grades">
-												{grades.map(grade => (
-													<MenuItem key={grade.id} value={grade.id}>{grade.grade}</MenuItem>
-												))}
-											</Select>
-										</FormControl>
-									</Grid>
-									<Grid item xs={12}>
-										<MuiPickersUtilsProvider utils={DateFnsUtils}>
-											<Grid container justify="space-around">
-												<KeyboardDatePicker
-													disableToolbar
-													variant="inline"
-													format="MM/dd/yyyy"
-													margin="normal"
-													id="date-picker-inline"
-													label="Date"
-													value={selectedDate}
-													onChange={handleDateChange}
-													KeyboardButtonProps={{
-														'aria-label': 'change date',
-													}}
-												/>
-											</Grid>
-										</MuiPickersUtilsProvider>
-									</Grid>
-									{/* <label htmlFor="sent">Send status:</label>
+			<Grid container justify="center" className={classes.paperParent}>
+				<Paper elevation={3} className={classes.paper}>
+					<Grid container className={classes.root}>
+						<Typography variant="h4"> New Route </Typography>
+						<form onSubmit={handleSubmit}>
+							<Grid container justify="center">
+								<Grid item xs={12} className={classes.root}>
+									<FormControl required className={classes.formControl}>
+										<InputLabel id="grades">Grade</InputLabel>
+										<Select
+											onChange={(event) => { setGrade(event.target.value) }}
+											defaultValue="choose grade"
+											value={grade}
+											labelId="grades"
+											id="grades">
+											{grades.map(grade => (
+												<MenuItem key={grade.id} value={grade.id}>{grade.grade}</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+								</Grid>
+								<Grid item xs={12}>
+									<MuiPickersUtilsProvider utils={DateFnsUtils}>
+										<Grid container justify="space-around">
+											<KeyboardDatePicker
+												disableToolbar
+												variant="inline"
+												format="MM/dd/yyyy"
+												margin="normal"
+												id="date-picker-inline"
+												label="Date"
+												value={selectedDate}
+												onChange={handleDateChange}
+												KeyboardButtonProps={{
+													'aria-label': 'change date',
+												}}
+											/>
+										</Grid>
+									</MuiPickersUtilsProvider>
+								</Grid>
+								{/* <label htmlFor="sent">Send status:</label>
                     <select onChange={(event) => { setSendStatus(event.target.value) }} value={sendStatus} name="sent" id="sent">
                         <option value="true">sent</option>
                         <option value="false">project</option>
                     </select> */}
-									<Grid item xs={12}>
-										<div className={classes.root}>
-											{sendStatusChip.map((data) => {
-												return (
-													<span key={data.key}>
-														<Chip
-															label={data.label}
-															onClick={handleClick(data)}
-															className={classes.chip}
-															disabled={data.disabled}
-														/>
-													</span>
-												);
-											})}
-										</div>
-									</Grid>
-									<Grid item xs={12} className={classes.root}>
-										<FormControl className={classes.formControl}>
-											<InputLabel id="ropes">Climb Type</InputLabel>
-											<Select onChange={(event) => { setRope(event.target.value) }} defaultValue="choose type" value={rope} labelId="ropes" id="ropes">
-												{ropes.map(rope => (
-													<MenuItem key={rope.id} value={rope.id}>{rope.type}</MenuItem>
-												))}
-											</Select>
-										</FormControl>
-									</Grid>
-									<Grid item xs={12} className={classes.root}>
-										<FormControl className={classes.formControl}>
-											<InputLabel id="walls">Wall Angle</InputLabel>
-											<Select onChange={(event) => { setWall(event.target.value) }} defaultValue="choose angle" value={wall} labelId="walls" id="walls">
-												{walls.map(wall => (
-													<MenuItem key={wall.id} value={wall.id}>{wall.angle}</MenuItem>
-												))}
-											</Select>
-										</FormControl>
-									</Grid>
-									<Grid item xs={12} className={classes.root}>
-										<FormControl className={classes.formControl}>
-											<InputLabel id="holds">Main Hold Type</InputLabel>
-											<Select onChange={(event) => { setHold(event.target.value) }} defaultValue="choose main hold type" value={hold} labelId="holds" id="holds">
-												{holds.map(hold => (
-													<MenuItem key={hold.id} value={hold.id}>{hold.type}</MenuItem>
-												))}
-											</Select>
-										</FormControl>
-									</Grid>
-									<Grid item xs={12} className={classes.root}>
-										<FormControl className={classes.formControl}>
-											<InputLabel id="flash">Flashed?</InputLabel>
-											<Select onChange={(event) => { setFlash(event.target.value) }} defaultValue="flash?" value={flash} labelId="flash" id="flash">
-												<MenuItem value='false'>no</MenuItem>
-												<MenuItem value='true'>yes</MenuItem>
-											</Select>
-										</FormControl>
-									</Grid>
-									<Grid item xs={12} className={classes.root}>
-										<TextField onChange={(event) => { setNotes(event.target.value) }} value={notes} id="outlined-basic" label="notes" variant="outlined" />
-									</Grid>
-									<Grid item xs={12} className={classes.root}>
-										<TextField onChange={(event) => { setImage(event.target.value) }} value={image} id="outlined-basic" label="image url" variant="outlined" />
-									</Grid>
-									<Grid item xs={12} className={classes.root}>
-										<Button onClick={handleCancel} variant="contained" color="secondary">Cancel</Button>
-										<Button type="submit" variant="contained" color="primary">
-											Done
-										</Button>
-									</Grid>
+								<Grid item xs={12}>
+									<div className={classes.root}>
+										{sendStatusChip.map((data) => {
+											return (
+												<span key={data.key}>
+													<Chip
+														label={data.label}
+														onClick={handleClick(data)}
+														className={classes.chip}
+														disabled={data.disabled}
+													/>
+												</span>
+											);
+										})}
+									</div>
 								</Grid>
-							</form>
-
-						</Grid>
-					</Paper>
-				</Grid>
+								<Grid item xs={12} className={classes.root}>
+									<FormControl required className={classes.formControl}>
+										<InputLabel id="ropes">Climb Type</InputLabel>
+										<Select
+											onChange={(event) => { setRope(event.target.value) }}
+											defaultValue="choose type"
+											value={rope}
+											labelId="ropes"
+											id="ropes">
+											{ropes.map(rope => (
+												<MenuItem key={rope.id} value={rope.id}>{rope.type}</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+								</Grid>
+								<Grid item xs={12} className={classes.root}>
+									<FormControl required className={classes.formControl}>
+										<InputLabel id="walls">Wall Angle</InputLabel>
+										<Select
+											onChange={(event) => { setWall(event.target.value) }}
+											defaultValue="choose angle"
+											value={wall}
+											labelId="walls"
+											id="walls">
+											{walls.map(wall => (
+												<MenuItem key={wall.id} value={wall.id}>{wall.angle}</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+								</Grid>
+								<Grid item xs={12} className={classes.root}>
+									<FormControl required className={classes.formControl}>
+										<InputLabel id="holds">Main Hold Type</InputLabel>
+										<Select
+											onChange={(event) => { setHold(event.target.value) }}
+											defaultValue="choose main hold type"
+											value={hold}
+											labelId="holds"
+											id="holds">
+											{holds.map(hold => (
+												<MenuItem key={hold.id} value={hold.id}>{hold.type}</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+								</Grid>
+								<Grid item xs={12} className={classes.root}>
+									<FormControl required className={classes.formControl}>
+										<InputLabel id="flash">Flashed?</InputLabel>
+										<Select
+											onChange={(event) => { setFlash(event.target.value) }}
+											defaultValue="flash?"
+											value={flash}
+											labelId="flash"
+											id="flash">
+											<MenuItem value='false'>no</MenuItem>
+											<MenuItem value='true'>yes</MenuItem>
+										</Select>
+									</FormControl>
+								</Grid>
+								<Grid item xs={12} className={classes.root}>
+									<TextField
+										onChange={(event) => { setNotes(event.target.value) }}
+										value={notes}
+										id="outlined-basic"
+										label="notes"
+										variant="outlined" />
+								</Grid>
+								<Grid item xs={12} className={classes.root}>
+									<TextField
+										onChange={(event) => { setImage(event.target.value) }}
+										value={image}
+										id="outlined-basic"
+										label="image url"
+										variant="outlined" />
+								</Grid>
+								<Grid item xs={12} className={classes.root}>
+									<Button onClick={handleCancel} variant="contained" color="secondary">Cancel</Button>
+									<Button type="submit" variant="contained" color="primary">
+										Done
+									</Button>
+								</Grid>
+							</Grid>
+						</form>
+					</Grid>
+				</Paper>
 			</Grid>
 		</>
 	)
