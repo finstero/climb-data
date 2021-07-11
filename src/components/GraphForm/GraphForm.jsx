@@ -52,10 +52,13 @@ function GraphForm({ classes, dispatchType }) {
     // close dialog form without action
     const handleFilterCancel = () => {
         setOpen(false);
+        setGradeChip(gradeChipDefault);
+        setFilterChip(sentFilterChips);
         setSendStatus('');
         setRope('');
         setHold('');
         setWall('');
+        setFlash('');
     }
 
     const sentFilterChips = [
@@ -96,11 +99,13 @@ function GraphForm({ classes, dispatchType }) {
                 })
             }
             setOpen(false);
-            setFilterChip(sentFilterChips)
+            setGradeChip(gradeChipDefault);
+            setFilterChip(sentFilterChips);
             setSendStatus('');
             setRope('');
             setHold('');
             setWall('');
+            setFlash('');
         }
     }
 
@@ -109,15 +114,17 @@ function GraphForm({ classes, dispatchType }) {
     const handleChipClick = (chipToChoose) => () => {
         setFilterChip((chips) => chips.filter((chip) => chip.label === chipToChoose.label));
         setSendStatus(chipToChoose.key);
-        console.log('log chipToChoose', chipToChoose);
+        // console.log('log chipToChoose', chipToChoose);
     }
 
     // setting up grade scheme chips
-    const [gradeChip, setGradeChip] = useState([
+    const gradeChipDefault = [
         { key: 'ysd', label: 'Yosemite Decimal System' },
         { key: 'ysd_simple', label: 'Yosemite Decimal System - Simple' },
         { key: 'french', label: 'French' },
-    ]);
+    ];
+
+    const [gradeChip, setGradeChip] = useState(gradeChipDefault);
 
     // on click of grade scheme chip, disappears un selected chips and sets grade scheme to chosen grade scheme for dispatch
     const handleGradeChip = (chipToChoose) => () => {

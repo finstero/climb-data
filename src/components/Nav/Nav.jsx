@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import LogOutButton from '../LogOutButton/LogOutButton';
+import GradePopup from '../GradePopup/GradePopup';
 import './Nav.css';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -23,6 +24,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import Chip from '@material-ui/core/Chip';
+import { DriveEtaOutlined } from '@material-ui/icons';
 
 function Nav() {
 
@@ -143,8 +145,8 @@ function Nav() {
             }
             {user.id &&
               <>
-              <Link className="navLink" to='/routes/'>
-                  <IconButton
+              <div className="navLink">
+                  {/* <IconButton
                     edge="start"
                     className={classes.chartButton}
                     color="inherit"
@@ -152,8 +154,9 @@ function Nav() {
                     onClick={handleShowGraph}
                   >
                     <AddIcon fontSize="large" />
-                  </IconButton>
-                </Link>
+                  </IconButton> */}
+                  <GradePopup classes={classes} />
+                </div>
                 <Link className="navLink" to='/routes/list'>
                   <IconButton
                     edge="start"

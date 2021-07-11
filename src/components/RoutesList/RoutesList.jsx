@@ -140,7 +140,8 @@ function RoutesList() {
                 <Grid item xs={12} className={classes.root}>
                     <h1>All Routes</h1>
                 </Grid>
-                {/* For filter routes button */}
+
+                {/* FILTER ROUTES button */}
                 <Grid item xs={12} className={classes.root}>
                     <GraphForm classes={classes} dispatchType={dispatchType} />
                     <Button onClick={handleReset} variant="contained" color="secondary">Reset</Button>
@@ -172,36 +173,6 @@ function RoutesList() {
             <div style={{ width: '100%' }}>
                 <DataGrid rows={allRoutes} columns={columns} autoHeight='true' hideFooterPagination='true' />
             </div> */}
-
-            {/* For grade scheme choice for graph pop up */}
-            {/* <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
-                <DialogContent>
-                    <DialogContentText>
-                        Choose which grade scheme to view.
-                    </DialogContentText>
-                    <div className={classes.root}>
-                        {chipData.map((data) => {
-                            return (
-                                <span key={data.key}>
-                                    <Chip
-                                        label={data.label}
-                                        onClick={handleChipClick(data)}
-                                        className={classes.chip}
-                                    />
-                                </span>
-                            );
-                        })}
-                    </div>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleCancel} variant="contained" color="secondary">
-                        Cancel
-                    </Button>
-                    <Button onClick={goViewGraph} variant="contained" color="primary">
-                        View Graph
-                    </Button>
-                </DialogActions>
-            </Dialog> */}
         </>
     )
 }
