@@ -68,6 +68,10 @@ function AddRoute() {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		console.log('send status', sendStatus);
+		// if route is a project, automatically sets flash to false. (in climbing, flash means you send it the first time you climb it. i.e. it is impossible to have flashed something you haven't sent).
+		if (sendStatus == 'false') {
+			setFlash(false);
+		}
 		if (sendStatus == 'error') {
 			alert('Please make sure to enter something for every option.')
 		} else {
@@ -256,6 +260,7 @@ function AddRoute() {
 									</FormControl>
 								</Grid>
 
+												{/* Option for selecting flash disappears if user selects project */}
 								{sendStatus &&
 									<Grid item xs={12} className={classes.root}>
 										<FormControl required className={classes.formControl}>
