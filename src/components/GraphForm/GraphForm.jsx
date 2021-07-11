@@ -15,6 +15,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
+
+// GRAPHFORM USED FOR BOTH GRAPH FILTER AND ROUTES LIST FILTER
 // material ui classes passed down for styling
 function GraphForm({ classes, dispatchType }) {
 
@@ -52,9 +54,13 @@ function GraphForm({ classes, dispatchType }) {
     // close dialog form without action
     const handleFilterCancel = () => {
         setOpen(false);
+        setGradeChip(gradeChipDefault);
+        setFilterChip(sentFilterChips);
+        setSendStatus('');
         setRope('');
         setHold('');
         setWall('');
+        setFlash('');
     }
 
     const sentFilterChips = [
@@ -64,9 +70,11 @@ function GraphForm({ classes, dispatchType }) {
 
     // on click of Filter button inside of form dialog, send info to server/db to grab selected routes
     const handleFilterChoices = () => {
+        console.log('logging sendStatus', sendStatus);
         if (sendStatus == 'error') {
             alert('Please choose at least one filter!');
         } else {
+            // grading will be undefined if user is filtering for list view
             if (grading == undefined) {
                 dispatch({
                     type: dispatchType.type,
@@ -94,10 +102,13 @@ function GraphForm({ classes, dispatchType }) {
                 })
             }
             setOpen(false);
-            setFilterChip(sentFilterChips)
+            setGradeChip(gradeChipDefault);
+            setFilterChip(sentFilterChips);
+            setSendStatus('');
             setRope('');
             setHold('');
             setWall('');
+            setFlash('');
         }
     }
 
@@ -106,15 +117,17 @@ function GraphForm({ classes, dispatchType }) {
     const handleChipClick = (chipToChoose) => () => {
         setFilterChip((chips) => chips.filter((chip) => chip.label === chipToChoose.label));
         setSendStatus(chipToChoose.key);
-        console.log('log chipToChoose', chipToChoose);
+        // console.log('log chipToChoose', chipToChoose);
     }
 
     // setting up grade scheme chips
-    const [gradeChip, setGradeChip] = useState([
+    const gradeChipDefault = [
         { key: 'ysd', label: 'Yosemite Decimal System' },
         { key: 'ysd_simple', label: 'Yosemite Decimal System - Simple' },
         { key: 'french', label: 'French' },
-    ]);
+    ];
+
+    const [gradeChip, setGradeChip] = useState(gradeChipDefault);
 
     // on click of grade scheme chip, disappears un selected chips and sets grade scheme to chosen grade scheme for dispatch
     const handleGradeChip = (chipToChoose) => () => {
@@ -199,7 +212,6 @@ function GraphForm({ classes, dispatchType }) {
                             </Select>
                         </FormControl>
                     </Grid>
-
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleFilterCancel} variant="contained" color="secondary">

@@ -4,7 +4,9 @@ import user from './user.reducer';
 import formOptions from './formOptions.reducer';
 import routes from './routes.reducer';
 import graphs from './graphs.reducer';
+import status from './status.reducer';
 // import id from './id.reducer';
+
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -18,6 +20,7 @@ const rootReducer = combineReducers({
   formOptions,
   routes,
   graphs,
+  status,
   // id,
 });
 

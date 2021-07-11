@@ -48,6 +48,7 @@ function* getAllRoutes() {
     console.log('in getAllRoutes saga');
 
     try {
+        yield put({ type: 'CLEAR_ALL_ROUTES'})
         const allRoutes = yield axios.get('/api/routes');
         yield put({ type: 'SET_ALL_ROUTES', payload: allRoutes.data })
 
@@ -86,6 +87,7 @@ function* getFilteredRoutes(action) {
     console.log('in getFilteredRoutes saga');
 
     try {
+        yield put({ type: 'CLEAR_ALL_ROUTES'});
         const filteredRoutes = yield axios.get('/api/routes/filter', {params: action.payload});
         yield put({ type: 'SET_ALL_ROUTES', payload: filteredRoutes.data })
 

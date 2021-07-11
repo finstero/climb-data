@@ -19,10 +19,8 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
-import ClimbHome from '../ClimbHome/ClimbHome';
 import RoutesHome from '../RoutesHome/RoutesHome';
 import AddRoute from '../AddRoute/AddRoute';
-import GradeScheme from '../GradeScheme/GradeScheme';
 import LatestRoute from '../LatestRoute/LatestRoute';
 import RoutesList from '../RoutesList/RoutesList';
 import RouteDetails from '../RouteDetails/RouteDetails';
@@ -41,13 +39,16 @@ function App() {
     dispatch({ type: 'FETCH_USER' });
   }, [dispatch]);
 
+
+
+  // dark blue color #0C163D, secondary for blue: #E26B00
   const theme = createMuiTheme({
     palette: {
       primary: {
-        main: '#0C163D'
+        main: '#263A43'
       },
       secondary: {
-        main: '#E26B00'
+        main: '#C93F2B'
       }
     }
   })
@@ -95,12 +96,12 @@ function App() {
               <RoutesHome />
             </ProtectedRoute>
 
-            <ProtectedRoute
+            {/* <ProtectedRoute
               exact
               path="/routes/grades"
             >
               <GradeScheme />
-            </ProtectedRoute>
+            </ProtectedRoute> */}
 
             <ProtectedRoute
               exact

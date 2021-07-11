@@ -9,6 +9,7 @@ import GraphOverlay from '../GraphOverlay/GraphOverlay';
 
 // material ui
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -56,11 +57,11 @@ function Graph() {
         // labels: ['1', '2', '3', '4', '5', '6'],
         datasets: [
             {
-                label: 'main',
+                label: 'Main',
                 data: allGraph,
                 fill: false,
-                backgroundColor: '#0C163D',
-                borderColor: '#0C163D',
+                backgroundColor: '#263A43',
+                borderColor: '#263A43',
             },
         ],
     };
@@ -70,18 +71,18 @@ function Graph() {
         // labels: ['1', '2', '3', '4', '5', '6'],
         datasets: [
             {
-                label: 'main',
+                label: 'Main',
                 data: allGraph,
                 fill: false,
-                backgroundColor: '#0C163D',
-                borderColor: '#0C163D',
+                backgroundColor: '#263A43',
+                borderColor: '#263A43',
             },
             {
-                label: 'overlay',
+                label: 'Overlay',
                 data: overlay,
                 fill: false,
-                backgroundColor: '#E26B00',
-                borderColor: '#E26B00',
+                backgroundColor: '#799AA3',
+                borderColor: '#799AA3',
             },
         ],
     };
@@ -92,15 +93,30 @@ function Graph() {
             xAxisKey: 'grade',
             yAxisKey: 'count'
         },
+        elements: {
+            point: {
+                radius: 0
+            },
+        },
         scales: {
             yAxis: {
+                title: {
+                    display: true,
+                    text: '# Routes'
+                },
                 min: 0,
                 ticks: {
                     beginAtZero: true,
                     stepSize: 1,
                 },
             },
-        },
+            xAxis: {
+                title: {
+                    display: true,
+                    text: 'Grade'
+                },
+            },
+        }
     };
 
     // moves user back to routes list. Clears reducer holding graph info.
@@ -194,18 +210,23 @@ function Graph() {
 
     return (
         <>
-            <h2>All Routes</h2>
+            <Grid item xs={12} className={classes.root}>
+                <h1>Routes Graph</h1>
+            </Grid>
+            {/* <h3>Graph showing: </h3> */}
             {overlayExists.status ?
                 <div>
-                    <h2>overlay true</h2>
-                    <Line data={overlayData} options={options} />
+                    {/* <h3>Overlay showing: </h3> */}
+                    <Line data={overlayData} options={options} height={250} />
                 </div>
                 :
-                <Line data={data} options={options} />
+                <Line data={data} options={options} height={250} />
             }
-            <Button onClick={handleBack} variant="contained" color="secondary">Back</Button>
-            <GraphOverlay classes={classes} />
-            <GraphForm classes={classes} dispatchType={dispatchType} />
+            <Grid item xs={12} className={classes.root}>
+                <Button onClick={handleBack} variant="contained" color="secondary">Back</Button>
+                <GraphOverlay classes={classes} />
+                <GraphForm classes={classes} dispatchType={dispatchType} />
+            </Grid>
         </>
     )
 }
