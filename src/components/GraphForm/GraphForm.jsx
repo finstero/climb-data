@@ -116,6 +116,7 @@ function GraphForm({ classes, dispatchType }) {
             setOpen(false);
             setGradeChip(gradeChipDefault);
             setFilterChip(sentFilterChips);
+            setGradeScheme('');
             setSendStatus('');
             setRope('');
             setHold('');

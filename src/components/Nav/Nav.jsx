@@ -15,16 +15,12 @@ import IconButton from '@material-ui/core/IconButton';
 import ListIcon from '@material-ui/icons/List';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import AddBoxIcon from '@material-ui/icons/AddBox';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 import AddIcon from '@material-ui/icons/Add';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import Chip from '@material-ui/core/Chip';
-import { DriveEtaOutlined } from '@material-ui/icons';
 
 function Nav() {
 
@@ -80,6 +76,7 @@ function Nav() {
       history.push(`/routes/graph/${gradeScheme}`);
       setOpen(false)
       setChipData(gradeSchemeChips);
+      setGradeScheme('');
     }
   }
 
@@ -200,7 +197,7 @@ function Nav() {
       <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
         <DialogContent>
           <DialogContentText>
-            Choose which grade scheme to view.
+            Which grade scheme would you like to view?
           </DialogContentText>
           <div className={classes.dialog}>
             {chipData.map((data) => {

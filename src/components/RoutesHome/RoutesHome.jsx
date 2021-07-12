@@ -12,6 +12,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
 
 function RoutesHome() {
 
@@ -36,6 +41,18 @@ function RoutesHome() {
             flexWrap: 'wrap',
             padding: theme.spacing(0.5),
             margin: 0,
+        },
+        cardGrid: {
+            padding: theme.spacing(2),
+        },
+        card: {
+            backgroundColor: theme.palette.primary.main,
+        },
+        typography: {
+            display: 'flex',
+            justifyContent: 'center',
+            margin: 0,
+            color: 'white',
         },
         chip: {
             margin: theme.spacing(0.5),
@@ -79,21 +96,52 @@ function RoutesHome() {
         setAlertOpen(false);
     }
 
-
     return (
         <>
             <Grid container className={classes.root}>
-                <Grid item xs={12}>
-                    <div onClick={handleAdd} className={classes.root}>
-                        <h1>ADD</h1>
-                        <img src="https://karstclimbingkrabi.com/wp-content/uploads/2019/10/Railay_Rock_Climbing_Lead_Course-1024x683.jpg" width="300" height="175"></img>
-                    </div>
+                <Grid item xs={12} className={classes.cardGrid}>
+                    <Card className={classes.card}>
+                        <CardActionArea>
+                            <CardContent>
+                                <Typography 
+                                variant="h4" 
+                                component="h2" 
+                                className={classes.typography}>
+                                    Add New Route
+                                </Typography>
+                            </CardContent>
+                            <CardMedia
+                                component="img"
+                                alt="Image for Add New Route Selection"
+                                height="250"
+                                image="https://karstclimbingkrabi.com/wp-content/uploads/2019/10/Railay_Rock_Climbing_Lead_Course-1024x683.jpg"
+                                title="Add New Route"
+                                onClick={handleAdd}
+                            />
+                        </CardActionArea>
+                    </Card>
                 </Grid>
-                <Grid item xs={12}>
-                    <div onClick={handleViewRoutes} className={classes.root}>
-                        <h1>VIEW ROUTES</h1>
-                        <img src="https://thumbs.cartowall.com/api/image/69d4be50-26bb-11e8-8912-afb644dc7dac.jpg" width="300" height="175"></img>
-                    </div>
+                <Grid item xs={12} className={classes.cardGrid}>
+                    <Card className={classes.card}>
+                        <CardActionArea>
+                            <CardContent>
+                                <Typography 
+                                variant="h4" 
+                                component="h2" 
+                                className={classes.typography}>
+                                    View Routes
+                                </Typography>
+                            </CardContent>
+                            <CardMedia
+                                component="img"
+                                alt="Image for View Routes Selection"
+                                height="250"
+                                image="https://thumbs.cartowall.com/api/image/69d4be50-26bb-11e8-8912-afb644dc7dac.jpg"
+                                title="View Routes"
+                                onClick={handleViewRoutes}
+                            />
+                        </CardActionArea>
+                    </Card>
                 </Grid>
             </Grid>
 
@@ -101,7 +149,7 @@ function RoutesHome() {
             <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
                 <DialogContent>
                     <DialogContentText>
-                        What grade scheme are you using?
+                        Which grade scheme would you like to view?
                     </DialogContentText>
                     <div className={classes.root}>
                         {chipData.map((data) => {

@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
 
 const allGraph = (state = [], action) => {
+    
     switch (action.type) {
         case 'SET_ALL_GRAPH':
+            console.log('state in allGraph', state);
             console.log('action.payload in all graph reducer', action.payload);
-            return action.payload;
+            return action.payload
         // case 'SET_FILTERED_GRAPH':
         //     console.log('filter reducer', action.payload);
         //     console.log('filter reducer state', state);
