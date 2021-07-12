@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 
 // stores last route added by user
-const latestRoute = (state = [], action) => {
+const latestRoute = (state = {}, action) => {
     switch(action.type) {
         case 'SET_LATEST_ROUTE':
-            return action.payload;
+            return action.payload[0];
         default:
             return state;
     }
@@ -15,6 +15,8 @@ const allRoutes = (state = [], action) => {
     switch(action.type) {
         case 'SET_ALL_ROUTES':
             return action.payload;
+        case 'CLEAR_ALL_ROUTES':
+            return [];
         default:
             return state;
     }

@@ -3,14 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import 'date-fns';
 
+import './AddRoute.css';
+
 // material ui
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import {
-    MuiPickersUtilsProvider,
-    KeyboardTimePicker,
-    KeyboardDatePicker,
+	MuiPickersUtilsProvider,
+	KeyboardTimePicker,
+	KeyboardDatePicker,
 } from '@material-ui/pickers';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -19,210 +21,291 @@ import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import Chip from '@material-ui/core/Chip';
 import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 
 function AddRoute() {
 
-    const history = useHistory();
-    const dispatch = useDispatch();
-    const { grading } = useParams();
-    // const [gradeScheme, setGradeScheme] = useState('ysd');
-    const grades = useSelector(store => store.addRouteOptions.gradesReducer)
+	const history = useHistory();
+	const dispatch = useDispatch();
+	const { grading } = useParams();
+	// const [gradeScheme, setGradeScheme] = useState('ysd');
+	const grades = useSelector(store => store.formOptions.gradesReducer)
+	const ropes = useSelector(store => store.formOptions.ropeReducer)
+	const walls = useSelector(store => store.formOptions.wallReducer)
+	const holds = useSelector(store => store.formOptions.holdReducer)
 
-    // const createdRouteId = useSelector(store => store.id);
+	// const createdRouteId = useSelector(store => store.id);
 
-    // local states for all inputs
-    const [grade, setGrade] = useState('');
-    const [selectedDate, setSelectedDate] = useState(new Date('2021-06-18T11:11:54'));
-    const [sendStatus, setSendStatus] = useState('true');
-    const [rope, setRope] = useState('1');
-    const [wall, setWall] = useState('1');
-    const [hold, setHold] = useState('1');
-    const [flash, setFlash] = useState('true');
-    const [notes, setNotes] = useState('');
-    const [image, setImage] = useState('');
+	// local states for all inputs
+	const [grade, setGrade] = useState('');
+	const [selectedDate, setSelectedDate] = useState(new Date('2021-06-18T11:11:54'));
+	const [sendStatus, setSendStatus] = useState('error');
+	const [rope, setRope] = useState('');
+	const [wall, setWall] = useState('');
+	const [hold, setHold] = useState('');
+	const [flash, setFlash] = useState('');
+	const [notes, setNotes] = useState('');
+	const [image, setImage] = useState('');
 
-    useEffect(() => {
-        // dispatch({
-        //     type: 'FETCH_ADD_OPTIONS',
-        // });
-        dispatch({
-            type: 'FETCH_GRADE_SCHEME',
-            payload: {
-                gradeScheme: grading,
-            }
-        })
-        if (grading == 'french') {
-            setGrade('39');
-            console.log('in if statement log grading', grading);
-        }
-    }, []);
+	useEffect(() => {
+		dispatch({
+			type: 'FETCH_FORM_OPTIONS',
+		});
+		dispatch({
+			type: 'FETCH_GRADE_SCHEME',
+			payload: {
+				gradeScheme: grading,
+			}
+		})
+		if (grading == 'french') {
+			setGrade('39');
+			console.log('in if statement log grading', grading);
+		}
+	}, []);
 
-    // sends added route info as post
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        dispatch({
-            type: 'ADD_ROUTE',
-            payload: {
-                grades_id: grade,
-                date: selectedDate,
-                sent: sendStatus,
-                rope_type_id: rope,
-                wall_id: wall,
-                holds_id: hold,
-                flash: flash,
-                notes: notes,
-                image: image
-            }
-        })
-        setGrade('1');
-        setNotes('');
-        setImage('');
-        // console.log('in add route file');
-        history.push(`/routes/latest`);
-    }
+	// sends added route info as post
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		console.log('send status', sendStatus);
+		// if route is a project, automatically sets flash to false. (in climbing, flash means you send it the first time you climb it. i.e. it is impossible to have flashed something you haven't sent).
+		if (sendStatus == 'false') {
+			setFlash(false);
+		}
+		if (sendStatus == 'error') {
+			alert('Please make sure to enter something for every option.')
+		} else {
+			dispatch({
+				type: 'ADD_ROUTE',
+				payload: {
+					grades_id: grade,
+					date: selectedDate,
+					sent: sendStatus,
+					rope_type_id: rope,
+					wall_id: wall,
+					holds_id: hold,
+					flash: flash,
+					notes: notes,
+					image: image
+				}
+			})
+			setGrade('');
+			setNotes('');
+			setImage('');
+			setSendStatus('error')
+			// console.log('in add route file');
+			history.push(`/routes/latest`);
+		}
+	}
 
-    const handleDateChange = (date) => {
-        setSelectedDate(date);
-    };
+	const handleDateChange = (date) => {
+		setSelectedDate(date);
+	};
 
-    // moves user back to grade scheme selection
-    const handleCancel = () => {
-        history.push('/routes/grades');
-    }
+	// moves user back to grade scheme selection
+	const handleCancel = () => {
+		history.push('/routes/home');
+	}
 
-    const useStyles = makeStyles((theme) => ({
-        root: {
-            display: 'flex',
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-            listStyle: 'none',
-            padding: theme.spacing(0.5),
-            margin: 0,
-        },
-        chip: {
-            margin: theme.spacing(0.5),
-        },
-        formControl: {
-            margin: theme.spacing(1),
-            minWidth: 120,
-        },
-        selectEmpty: {
-            marginTop: theme.spacing(2),
-        },
-    }));
+	const useStyles = makeStyles((theme) => ({
+		root: {
+			display: 'flex',
+			justifyContent: 'center',
+			flexWrap: 'wrap',
+			listStyle: 'none',
+			padding: theme.spacing(0.5),
+			margin: 0,
+			width: '100%'
+		},
+		paperParent: {
+			padding: theme.spacing(3),
+		},
+		chip: {
+			margin: theme.spacing(0.5),
+		},
+		formControl: {
+			margin: theme.spacing(1),
+			minWidth: 140,
+		},
+		selectEmpty: {
+			marginTop: theme.spacing(2),
+		},
+		paper: {
+			// background: '#adc2cd',
+			width: 300,
+		},
 
-    const classes = useStyles();
+	}));
 
-    const [sendStatusChip, setSendStatusChip] = useState([
-        { key: true, label: 'sent', disabled: false },
-        { key: false, label: 'project', disabled: false },
-    ]);
+	const classes = useStyles();
 
-    // const makeDisabled = (array) => {
-    //     for (chip of array) {
-    //         if (chip.label == 'sent') {
-    //             chip.disable
-    //         }
-    //     }
-    // }
+	const [sendStatusChip, setSendStatusChip] = useState([
+		{ key: true, label: 'sent', disabled: false },
+		{ key: false, label: 'project', disabled: false },
+	]);
 
-    // setSendStatusChip((chips) => chips.map((chip) => {
-    //     if(chip.label === !chipToChoose.label) {
-    //         chip.disabled = true;
-    //         console.log('in if of map');
-    //     }
-    // }));
+	const handleClick = (chipToChoose) => () => {
+		setSendStatusChip((chips) => chips.filter((chip) => chip.label === chipToChoose.label));
+		console.log('log sendStatusChip', sendStatusChip);
+		setSendStatus(chipToChoose.key);
+		console.log('log chipToChoose', chipToChoose);
+	}
 
-    const handleClick = (chipToChoose) => () => {  
-        setSendStatusChip((chips) => chips.filter((chip) => chip.label === chipToChoose.label));
-        console.log('log sendStatusChip', sendStatusChip);
-        setSendStatus(chipToChoose.key);
-        console.log('log chipToChoose', chipToChoose);
-    }
-
-    return (
-        <>
-            <Grid container>
-                <form onSubmit={handleSubmit}>
-                    <FormControl className={classes.formControl}>
-                        <InputLabel id="grades">Grade</InputLabel>
-                        <Select onChange={(event) => { setGrade(event.target.value) }} defaultValue="choose grade" value={grade} labelId="grades" id="grades">
-                            {grades.map(grade => (
-                                <MenuItem key={grade.id} value={grade.id}>{grade.grade}</MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <Grid container justify="space-around">
-                            <KeyboardDatePicker
-                                disableToolbar
-                                variant="inline"
-                                format="MM/dd/yyyy"
-                                margin="normal"
-                                id="date-picker-inline"
-                                label="Date"
-                                value={selectedDate}
-                                onChange={handleDateChange}
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date',
-                                }}
-                            />
-                        </Grid>
-                    </MuiPickersUtilsProvider>
-                    {/* <label htmlFor="sent">Send status:</label>
+	return (
+		<>
+			<Grid container justify="center" className={classes.paperParent}>
+				<Paper elevation={3} className={classes.paper}>
+					<Grid container className={classes.root}>
+						<Typography variant="h4"> New Route </Typography>
+						<form onSubmit={handleSubmit}>
+							<Grid container justify="center">
+								<Grid item xs={12} className={classes.root}>
+									<FormControl required className={classes.formControl}>
+										<InputLabel id="grades">Grade</InputLabel>
+										<Select
+											onChange={(event) => { setGrade(event.target.value) }}
+											defaultValue="choose grade"
+											value={grade}
+											labelId="grades"
+											id="grades">
+											{grades.map(grade => (
+												<MenuItem key={grade.id} value={grade.id}>{grade.grade}</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+								</Grid>
+								<Grid item xs={12}>
+									<MuiPickersUtilsProvider utils={DateFnsUtils}>
+										<Grid container justify="space-around">
+											<KeyboardDatePicker
+												disableToolbar
+												variant="inline"
+												format="MM/dd/yyyy"
+												margin="normal"
+												id="date-picker-inline"
+												label="Date"
+												value={selectedDate}
+												onChange={handleDateChange}
+												KeyboardButtonProps={{
+													'aria-label': 'change date',
+												}}
+											/>
+										</Grid>
+									</MuiPickersUtilsProvider>
+								</Grid>
+								{/* <label htmlFor="sent">Send status:</label>
                     <select onChange={(event) => { setSendStatus(event.target.value) }} value={sendStatus} name="sent" id="sent">
                         <option value="true">sent</option>
                         <option value="false">project</option>
                     </select> */}
-                    <div>
-                        {sendStatusChip.map((data) => {
-                            return (
-                                <span key={data.key}>
-                                    <Chip
-                                        label={data.label}
-                                        onClick={handleClick(data)}
-                                        className={classes.chip}
-                                        disabled={data.disabled}
-                                    />
-                                </span>
-                            );
-                        })}
-                    </div>
-                    <label htmlFor="rope">Type of climb:</label>
-                    <select onChange={(event) => { setRope(event.target.value) }} value={rope} name="rope" id="rope">
-                        <option value="1">top rope</option>
-                        <option value="2">lead</option>
-                        <option value="3">autobelay</option>
-                    </select>
-                    <label htmlFor="wall">Wall angle:</label>
-                    <select onChange={(event) => { setWall(event.target.value) }} value={wall} name="wall" id="wall">
-                        <option value="1">slab</option>
-                        <option value="2">vertical</option>
-                        <option value="3">overhang</option>
-                    </select>
-                    <label htmlFor="hold">Main hold type:</label>
-                    <select onChange={(event) => { setHold(event.target.value) }} value={hold} name="hold" id="hold">
-                        <option value="1">crimps</option>
-                        <option value="2">slopers</option>
-                        <option value="3">jugs</option>
-                        <option value="4">pinches</option>
-                    </select>
-                    <label htmlFor="flash">Flashed?</label>
-                    <select onChange={(event) => { setFlash(event.target.value) }} value={flash} name="flash" id="flash">
-                        <option value="true">yes</option>
-                        <option value="false">no</option>
-                    </select>
-                    <TextField onChange={(event) => { setNotes(event.target.value) }} value={notes} id="outlined-basic" label="notes" variant="outlined" />
-                    <TextField onChange={(event) => { setImage(event.target.value) }} value={image} id="outlined-basic" label="image url" variant="outlined" />
-                    <Button type="submit" variant="contained" color="primary">
-                        Done
-                    </Button>
+								<Grid item xs={12}>
+									<div className={classes.root}>
+										{sendStatusChip.map((data) => {
+											return (
+												<span key={data.key}>
+													<Chip
+														label={data.label}
+														onClick={handleClick(data)}
+														className={classes.chip}
+														disabled={data.disabled}
+													/>
+												</span>
+											);
+										})}
+									</div>
+								</Grid>
+								<Grid item xs={12} className={classes.root}>
+									<FormControl required className={classes.formControl}>
+										<InputLabel id="ropes">Climb Type</InputLabel>
+										<Select
+											onChange={(event) => { setRope(event.target.value) }}
+											defaultValue="choose type"
+											value={rope}
+											labelId="ropes"
+											id="ropes">
+											{ropes.map(rope => (
+												<MenuItem key={rope.id} value={rope.id}>{rope.type}</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+								</Grid>
+								<Grid item xs={12} className={classes.root}>
+									<FormControl required className={classes.formControl}>
+										<InputLabel id="walls">Wall Angle</InputLabel>
+										<Select
+											onChange={(event) => { setWall(event.target.value) }}
+											defaultValue="choose angle"
+											value={wall}
+											labelId="walls"
+											id="walls">
+											{walls.map(wall => (
+												<MenuItem key={wall.id} value={wall.id}>{wall.angle}</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+								</Grid>
+								<Grid item xs={12} className={classes.root}>
+									<FormControl required className={classes.formControl}>
+										<InputLabel id="holds">Main Hold Type</InputLabel>
+										<Select
+											onChange={(event) => { setHold(event.target.value) }}
+											defaultValue="choose main hold type"
+											value={hold}
+											labelId="holds"
+											id="holds">
+											{holds.map(hold => (
+												<MenuItem key={hold.id} value={hold.id}>{hold.type}</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+								</Grid>
 
-                </form>
-                <Button onClick={handleCancel} variant="contained" color="secondary">Cancel</Button>
-            </Grid>
-        </>
-    )
+												{/* Option for selecting flash disappears if user selects project */}
+								{sendStatus &&
+									<Grid item xs={12} className={classes.root}>
+										<FormControl required className={classes.formControl}>
+											<InputLabel id="flash">Flashed?</InputLabel>
+											<Select
+												onChange={(event) => { setFlash(event.target.value) }}
+												defaultValue="flash?"
+												value={flash}
+												labelId="flash"
+												id="flash">
+												<MenuItem value='false'>no</MenuItem>
+												<MenuItem value='true'>yes</MenuItem>
+											</Select>
+										</FormControl>
+									</Grid>
+								}
+								<Grid item xs={12} className={classes.root}>
+									<TextField
+										onChange={(event) => { setNotes(event.target.value) }}
+										value={notes}
+										id="outlined-basic"
+										label="notes"
+										variant="outlined" />
+								</Grid>
+								<Grid item xs={12} className={classes.root}>
+									<TextField
+										onChange={(event) => { setImage(event.target.value) }}
+										value={image}
+										id="outlined-basic"
+										label="image url"
+										variant="outlined" />
+								</Grid>
+								<Grid item xs={12} className={classes.root}>
+									<Button onClick={handleCancel} variant="contained" color="secondary">Cancel</Button>
+									<Button type="submit" variant="contained" color="primary">
+										Done
+									</Button>
+								</Grid>
+							</Grid>
+						</form>
+					</Grid>
+				</Paper>
+			</Grid>
+		</>
+	)
 }
 
 export default AddRoute;

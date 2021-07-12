@@ -1,19 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
-import {format} from 'date-fns';
+import { format } from 'date-fns';
+
+// components
+import EditRouteForm from '../EditRouteForm/EditRouteForm';
 
 // material ui
 import Button from '@material-ui/core/Button';
 import 'date-fns';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-    MuiPickersUtilsProvider,
-    KeyboardTimePicker,
-    KeyboardDatePicker,
-} from '@material-ui/pickers';
-import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 function RouteDetails() {
 
@@ -21,42 +25,21 @@ function RouteDetails() {
     const history = useHistory();
     const route = useSelector(store => store.routes.oneRoute);
 
-    // in edit mode only
-    const grades = useSelector(store => store.addRouteOptions.gradesReducer)
-
-    // state for edit mode
-    const [editMode, setEditMode] = useState(false);
-
-    // in edit mode only
-    const [grade, setGrade] = useState('1');
-    const [selectedDate, setSelectedDate] = useState(new Date('2021-06-18T11:11:54'));
-    const [sendStatus, setSendStatus] = useState('');
-    const [rope, setRope] = useState('1');
-    const [wall, setWall] = useState('2');
-    const [hold, setHold] = useState('1');
-    const [flash, setFlash] = useState('true');
-    const [notes, setNotes] = useState('');
-    const [image, setImage] = useState('');
-
     const { id } = useParams();
 
-    // loads selected route and grade scheme of route on page load
+    const [open, setOpen] = useState(false);
+
+    // loads selected route on page load
     useEffect(() => {
         dispatch({
             type: 'FETCH_ONE_ROUTE',
             payload: { id: id }
         });
-        // dispatch({
-        //     type: 'FETCH_GRADE_SCHEME',
-        //     payload: {
-        //         gradeScheme: route.grades_type,
-        //     }
-        // })
-        // console.log('logging grade type maybe?', route);
     }, []);
 
     // deletes single route
-    const handleDelete = () => {
+    const handleDelete = (event) => {
+        event.preventDefault();
         dispatch({
             type: 'DELETE_ROUTE',
             payload: { id: id }
@@ -64,45 +47,12 @@ function RouteDetails() {
         history.push('/routes/list')
     }
 
-    // put request to update route with changes
-    const handleSave = (event) => {
-        event.preventDefault();
-        dispatch({
-            type: 'EDIT_ROUTE',
-            payload: {
-                id: id,
-                grades_id: grade,
-                date: selectedDate,
-                sent: sendStatus,
-                rope_type_id: rope,
-                wall_id: wall,
-                holds_id: hold,
-                flash: flash,
-                notes: notes,
-                image: image
-            }
-        })
-        history.push('/routes/list');
+    const handleDeleteConfirmation = () => {
+        setOpen(true);
     }
 
-    // moves user into edit mode via conditional render
-    // sets local state of all inputs to same as route about to edit
-    const handleEdit = () => {
-        dispatch({
-            type: 'FETCH_GRADE_SCHEME',
-            payload: {
-                gradeScheme: route.grades_type,
-            }
-        })
-        setEditMode(true);
-        setGrade(route.grades_id);
-        setSelectedDate(route.date);
-        setSendStatus(route.sent);
-        setRope(route.rope_type_id);
-        setWall(route.wall_id);
-        setHold(route.holds_id);
-        setFlash(route.flash);
-        setNotes(route.notes);
+    const handleDeleteCancel = () => {
+        setOpen(false);
     }
 
     // moves user back to list view
@@ -110,95 +60,124 @@ function RouteDetails() {
         history.push('/routes/list');
     }
 
-    // moves user out of edit mode without saving changes
-    const handleCancel = () => {
-        setEditMode(false);
-    }
+    const useStyles = makeStyles((theme) => ({
+        root: {
+            display: 'flex',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            listStyle: 'none',
+            padding: theme.spacing(1),
+            margin: 0,
+        },
+        paperParent: {
+            padding: theme.spacing(3), 
+        },
+        header: {
+            display: 'flex',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            margin: 0,
+            paddingTop: theme.spacing(1),
+        },
+        subhead: {
+            display: 'flex',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            padding: theme.spacing(0.5),
+            margin: 0,
+        },
+        chip: {
+            margin: theme.spacing(0.5),
 
-    // for edit mode
-    const handleDateChange = (date) => {
-        setSelectedDate(date);
-    };
+        },
+        formControl: {
+            margin: theme.spacing(1),
+            minWidth: 130,
+        },
+        paper: {
+            // background: '#adc2cd',
+            width: 300,
+            padding: theme.spacing(0.5),
+        },
+    }));
+
+    // classes passed to child, EditRouteForm
+    const classes = useStyles();
 
     return (
-        <> {editMode ? <div><h2>EDIT MODE</h2>
-            <form onSubmit={handleSave}>
-                <label htmlFor="grades">Choose a grade:</label>
-                <select onChange={(event) => { setGrade(event.target.value) }} value={grade} name="grades" id="grades">
-                    {grades.map(grade => (
-                        <option key={grade.id} value={grade.id}>{grade.grade}</option>
-                    ))}
-                </select>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <Grid container justify="space-around">
-                        <KeyboardDatePicker
-                            disableToolbar
-                            variant="inline"
-                            format="MM/dd/yyyy"
-                            margin="normal"
-                            id="date-picker-inline"
-                            label="Date"
-                            value={selectedDate}
-                            onChange={handleDateChange}
-                            KeyboardButtonProps={{
-                                'aria-label': 'change date',
-                            }}
-                        />
+        <>
+            <Grid container justify="center" className={classes.paperParent}>
+                <Paper elevation={3} className={classes.paper}>
+                    <Grid container>
+                        <Grid item xs={12} className={classes.header}>
+                            <Typography variant="h5">Route Details</Typography>
+                        </Grid>
+                        <Grid item xs={12} className={classes.subhead}>
+                            {route.date &&
+                                <Typography variant="subtitle1">{format(new Date(route.date), 'MMMM do, yyyy')}</Typography>
+                            }
+                        </Grid>
+                        <Grid item xs={6} className={classes.root}>
+                            <Typography variant="h6">Grade: {route.grade}</Typography>
+                        </Grid>
+                        <Grid item xs={6} className={classes.root}>
+                            {/* <Typography variant="h6">{route.sent ? ' Sent' : ' Project'}</Typography> */}
+                            {route.sent &&
+                                <Typography variant="h6">{route.flash && route.sent ? 'Flashed' : 'Sent (no flash)'}</Typography>
+                            }
+                            {!route.sent &&
+                                <Typography variant="h6">Project</Typography>
+                            }
+                        </Grid>
+                        <Grid item xs={6} className={classes.root}>
+                            <Typography variant="h6">{route.angle}</Typography>
+                        </Grid>
+                        <Grid item xs={6} className={classes.root}>
+                            <Typography variant="h6">{route?.rope_type}</Typography>
+                        </Grid>
+                        <Grid item xs={12} className={classes.root}>
+                            <Typography variant="h6">Main hold type: {route.type}</Typography>
+                        </Grid>
+                        {route.notes &&
+                            <Grid item xs={12} className={classes.root}>
+                                <Typography variant="h6">Notes: {route.notes}</Typography>
+                            </Grid>
+                        }
+                        {/* <p>Image: {route.image}</p> */}
+                        <Grid item xs={12} className={classes.root}>
+                            {route.image &&
+                                <div>
+                                    <p>Image</p>
+                                    <img src={route.image} width="300" height="300"></img>
+                                </div>
+                            }
+                        </Grid>
+                        <Grid item xs={12} className={classes.root}>
+                            <Button onClick={handleBack} variant="contained" color="primary">Back</Button>
+                            <Button onClick={handleDeleteConfirmation} variant="contained" color="secondary">Delete</Button>
+                            <EditRouteForm classes={classes} />
+                        </Grid>
                     </Grid>
-                </MuiPickersUtilsProvider>
-                <label htmlFor="sent">Send status:</label>
-                <select onChange={(event) => { setSendStatus(event.target.value) }} value={sendStatus} name="sent" id="sent">
-                    <option value={true}>sent</option>
-                    <option value={false}>project</option>
-                </select>
-                <label htmlFor="rope">Type of climb:</label>
-                <select onChange={(event) => { setRope(event.target.value) }} value={rope} name="rope" id="rope">
-                    <option value="1">top rope</option>
-                    <option value="2">lead</option>
-                    <option value="3">autobelay</option>
-                </select>
-                <label htmlFor="wall">Wall angle:</label>
-                <select onChange={(event) => { setWall(event.target.value) }} value={wall} name="wall" id="wall">
-                    <option value="1">slab</option>
-                    <option value="2">vertical</option>
-                    <option value="3">overhang</option>
-                </select>
-                <label htmlFor="hold">Main hold type:</label>
-                <select onChange={(event) => { setHold(event.target.value) }} value={hold} name="hold" id="hold">
-                    <option value="1">crimps</option>
-                    <option value="2">slopers</option>
-                    <option value="3">jugs</option>
-                    <option value="4">pinches</option>
-                </select>
-                <label htmlFor="flash">Flashed?</label>
-                <select onChange={(event) => { setFlash(event.target.value) }} value={flash} name="flash" id="flash">
-                    <option value="true">yes</option>
-                    <option value="false">no</option>
-                </select>
-                <TextField onChange={(event) => { setNotes(event.target.value) }} value={notes} id="outlined-basic" label="notes" variant="outlined" />
-                <TextField onChange={(event) => { setImage(event.target.value) }} value={image} id="outlined-basic" label="image url" variant="outlined" />
-                <Button type="submit">Save</Button>
-            </form>
-            <Button onClick={handleCancel}>Cancel</Button>
-        </div>
-        // not edit mode below
-            : <div>
-                {/* <h2>{format(new Date(route?.date), 'dd MMMM yyyy')}</h2> */}
-                <p>Grade: {route.grade}</p>
-                <p>Climb type: {route.rope_type}</p>
-                <p>Wall angle: {route.angle}</p>
-                <p>Flash:
-                    {route.flash ? ' yes' : ' no'}
-                </p>
-                <p>Sent: {route.sent ? ' sent' : ' project'}</p>
-                <p>Main hold type: {route.type}</p>
-                <p>Notes: {route.notes}</p>
-                <p>Image: {route.image}</p>
-                <Button onClick={handleDelete}>Delete</Button>
-                <Button onClick={handleEdit}>Edit</Button>
-                <Button onClick={handleBack}>Back</Button>
-            </div>
-        }
+                </Paper>
+            </Grid>
+
+{/* DIALOG FOR DELETE CONFIRMATION */}
+            <Dialog
+                open={open}
+                onClose={handleDeleteCancel}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">Are you sure you want to delete this route?</DialogTitle>
+                <DialogActions>
+                    <Button onClick={handleDeleteCancel} variant="contained" color="secondary">
+                        Oops, no
+                    </Button>
+                    <Button onClick={handleDelete} variant="contained" color="primary" autoFocus>
+                        Yes
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </>
     )
 }

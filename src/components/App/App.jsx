@@ -19,10 +19,8 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
-import ClimbHome from '../ClimbHome/ClimbHome';
 import RoutesHome from '../RoutesHome/RoutesHome';
 import AddRoute from '../AddRoute/AddRoute';
-import GradeScheme from '../GradeScheme/GradeScheme';
 import LatestRoute from '../LatestRoute/LatestRoute';
 import RoutesList from '../RoutesList/RoutesList';
 import RouteDetails from '../RouteDetails/RouteDetails';
@@ -41,13 +39,16 @@ function App() {
     dispatch({ type: 'FETCH_USER' });
   }, [dispatch]);
 
+
+
+  // dark blue color #0C163D, secondary for blue: #E26B00
   const theme = createMuiTheme({
     palette: {
       primary: {
-        main: '#ffa4a2'
+        main: '#263A43'
       },
       secondary: {
-        main: '#af4448'
+        main: '#C93F2B'
       }
     }
   })
@@ -59,16 +60,16 @@ function App() {
           <Nav />
           <Switch>
             {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-            <Redirect exact from="/" to="/climbhome" />
+            <Redirect exact from="/" to="/routes/home" />
 
             {/* Visiting localhost:3000/about will show the about page. */}
-            <Route
+            {/* <Route
               // shows AboutPage at all times (logged in or not)
               exact
               path="/about"
             >
               <AboutPage />
-            </Route>
+            </Route> */}
 
             {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
@@ -82,11 +83,11 @@ function App() {
             <ClimbHome />
           </ProtectedRoute> */}
 
-            <ProtectedRoute
+            {/* <ProtectedRoute
               exact
               path="/climbhome">
               <ClimbHome />
-            </ProtectedRoute>
+            </ProtectedRoute> */}
 
             <ProtectedRoute
               exact
@@ -95,12 +96,12 @@ function App() {
               <RoutesHome />
             </ProtectedRoute>
 
-            <ProtectedRoute
+            {/* <ProtectedRoute
               exact
               path="/routes/grades"
             >
               <GradeScheme />
-            </ProtectedRoute>
+            </ProtectedRoute> */}
 
             <ProtectedRoute
               exact
@@ -134,7 +135,8 @@ function App() {
 
             <ProtectedRoute
               exact
-              path="/routes/graph"
+              path="/routes/graph/:grading"
+              children={<Graph />}
             >
               <Graph />
             </ProtectedRoute>
@@ -156,7 +158,7 @@ function App() {
               // - else shows LoginPage at /login
               exact
               path="/login"
-              authRedirect="/climbhome"
+              authRedirect="/routes/home"
             >
               <LoginPage />
             </ProtectedRoute>
