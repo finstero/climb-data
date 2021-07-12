@@ -143,11 +143,9 @@ function RouteDetails() {
                                 <Typography variant="h6">Notes: {route.notes}</Typography>
                             </Grid>
                         }
-                        {/* <p>Image: {route.image}</p> */}
                         <Grid item xs={12} className={classes.root}>
                             {route.image &&
                                 <div>
-                                    <p>Image</p>
                                     <img src={route.image} width="300" height="300"></img>
                                 </div>
                             }

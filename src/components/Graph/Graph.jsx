@@ -181,6 +181,10 @@ function Graph() {
             margin: theme.spacing(1),
             minWidth: 130,
         },
+        btn: {
+            color: 'white',
+            backgroundColor: '#799AA3'
+        }
     }));
 
     const classes = useStyles();
@@ -213,6 +217,11 @@ function Graph() {
         <>
             <Grid item xs={12} className={classes.root}>
                 <h1>Routes Graph</h1>
+                {/* <ul>{allGraph.map(item => (
+                    <li>{item.grade}</li>
+                ))
+                
+                }</ul> */}
             </Grid>
             {/* {filter.status &&
                 <h3>Main filtered by: 

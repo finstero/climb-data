@@ -92,6 +92,7 @@ function GraphOverlay({ classes }) {
 			setRope('');
 			setHold('');
 			setWall('');
+			setFlash('');
 			dispatch({
 				type: 'SET_OVERLAY_TRUE',
 			})
@@ -100,7 +101,7 @@ function GraphOverlay({ classes }) {
 
 	return (
 		<div>
-			<Button onClick={addOverlay} variant="contained" color="primary">Add Overlay</Button>
+			<Button onClick={addOverlay} variant="contained" className={classes.btn}>Add Overlay</Button>
 			<Dialog open={open} onClose={handleOverlayCancel} aria-labelledby="form-dialog-title" >
 				<DialogContent>
 					<DialogContentText>
