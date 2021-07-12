@@ -28,6 +28,7 @@ function Graph() {
     const allGraph = useSelector(store => store.graphs.allGraph);
     const overlay = useSelector(store => store.graphs.overlay);
     const overlayExists = useSelector(store => store.graphs.overlayExists);
+    const filter = useSelector(store => store.filter);
     const ropes = useSelector(store => store.formOptions.ropeReducer)
     const walls = useSelector(store => store.formOptions.wallReducer)
     const holds = useSelector(store => store.formOptions.holdReducer)
@@ -204,8 +205,8 @@ function Graph() {
     // }
 
     const dispatchType = {
-        type:
-            'FETCH_FILTERED_GRAPH'
+        type: 'FETCH_FILTERED_GRAPH',
+        filter: 'SET_GRAPH_FILTER_DISPLAY'
     };
 
     return (
@@ -213,7 +214,16 @@ function Graph() {
             <Grid item xs={12} className={classes.root}>
                 <h1>Routes Graph</h1>
             </Grid>
-            {/* <h3>Graph showing: </h3> */}
+            {/* {filter.status &&
+                <h3>Main filtered by: 
+                    {filter.sendStatus ?  
+                    <span>Sent</span>
+                :
+                <span>Project</span>
+                }
+
+                </h3>
+            } */}
             {overlayExists.status ?
                 <div>
                     {/* <h3>Overlay showing: </h3> */}

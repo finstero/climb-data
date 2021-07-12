@@ -13,4 +13,9 @@ function* getFilteredSelections (action) {
     }
 }
 
+function* filterSaga() {
+    yield takeLatest('FETCH_FILTER_GRAPH_SELECTIONS', getFilteredSelections)
+
+}
+
 export default filterSaga;

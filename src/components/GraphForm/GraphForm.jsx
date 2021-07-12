@@ -71,9 +71,9 @@ function GraphForm({ classes, dispatchType }) {
     // on click of Filter button inside of form dialog, send info to server/db to grab selected routes
     const handleFilterChoices = () => {
         console.log('logging sendStatus', sendStatus);
-        if (sendStatus == 'error') {
-            alert('Please choose at least one filter!');
-        } else {
+        // if (sendStatus == '') {
+        //     alert('Please choose at least one filter!');
+        // } else {
             // grading will be undefined if user is filtering for list view
             if (grading == undefined) {
                 dispatch({
@@ -87,6 +87,7 @@ function GraphForm({ classes, dispatchType }) {
                         flash: flash,
                     }
                 })
+                // ELSE for filtering main graph
             } else {
                 console.log('grading for filter form', grading);
                 dispatch({
@@ -99,7 +100,18 @@ function GraphForm({ classes, dispatchType }) {
                         holds_id: hold,
                         flash: flash,
                     }
-                })
+                });
+                // dispatch({
+                //     type: dispatchType.filter,
+                //     payload: {
+                //         status: true,
+                //         sent: sendStatus,
+                //         rope_type_id: rope,
+                //         wall_id: wall,
+                //         holds_id: hold,
+                //         flash: flash,
+                //     }
+                // });
             }
             setOpen(false);
             setGradeChip(gradeChipDefault);
@@ -109,7 +121,7 @@ function GraphForm({ classes, dispatchType }) {
             setHold('');
             setWall('');
             setFlash('');
-        }
+        // }
     }
 
     const [filterChip, setFilterChip] = useState(sentFilterChips);

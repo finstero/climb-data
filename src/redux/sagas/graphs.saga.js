@@ -22,7 +22,6 @@ function* getFilteredGraph (action) {
         const forGraph = yield axios.get(`/api/routes/graph`, {params: action.payload});
         // const forFilterDisplay = yield axios.get(`/api/routes/filterdisplay`, {params: action.payload});
         yield put({ type: 'SET_ALL_GRAPH', payload: forGraph.data });
-        // yield put({ type: 'SET_GRAPH_FILTER_DISPLAY', payload: forFilterDisplay.data });
 
 
     } catch {

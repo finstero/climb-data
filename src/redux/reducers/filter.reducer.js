@@ -1,4 +1,4 @@
-const filterReducer = (state = [], action) => {
+const filterReducer = (state = {}, action) => {
     console.log('filterReducer', action.payload);
     switch (action.type) {
       case 'SET_GRAPH_FILTER_DISPLAY':
