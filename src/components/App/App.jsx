@@ -49,7 +49,7 @@ function App() {
       },
       secondary: {
         main: '#C93F2B'
-      }
+      },
     }
   })
 
