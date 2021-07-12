@@ -5,6 +5,7 @@ import formOptions from './formOptions.reducer';
 import routes from './routes.reducer';
 import graphs from './graphs.reducer';
 import status from './status.reducer';
+import filter from './filter.reducer';
 // import id from './id.reducer';
 
 
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   routes,
   graphs,
   status,
+  filter,
   // id,
 });
 

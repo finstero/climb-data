@@ -20,7 +20,9 @@ function* getFilteredGraph (action) {
     try {
         yield put({ type: 'CLEAR_ALL_GRAPH'});
         const forGraph = yield axios.get(`/api/routes/graph`, {params: action.payload});
-        yield put({ type: 'SET_ALL_GRAPH', payload: forGraph.data })
+        // const forFilterDisplay = yield axios.get(`/api/routes/filterdisplay`, {params: action.payload});
+        yield put({ type: 'SET_ALL_GRAPH', payload: forGraph.data });
+
 
     } catch {
         console.log('error in getFilteredGraph saga');

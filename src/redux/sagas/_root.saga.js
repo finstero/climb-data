@@ -5,6 +5,7 @@ import userSaga from './user.saga';
 import formOptionsSaga from './formOptions.saga';
 import routesSaga from './routes.saga';
 import graphsSaga from './graphs.saga';
+import filterSaga from './filter.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -21,5 +22,6 @@ export default function* rootSaga() {
     formOptionsSaga(),
     routesSaga(),
     graphsSaga(),
+    filterSaga(),
   ]);
 }
