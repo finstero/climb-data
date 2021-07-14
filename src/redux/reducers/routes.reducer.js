@@ -11,7 +11,7 @@ const latestRoute = (state = {}, action) => {
 }
 
 // stores all routes for user
-const allRoutes = (state = [], action) => {
+export const allRoutes = (state = [], action) => {
     switch(action.type) {
         case 'SET_ALL_ROUTES':
             return action.payload;
@@ -23,7 +23,7 @@ const allRoutes = (state = [], action) => {
 }
 
 // stores route clicked on in RouteList by user
-const oneRoute = (state = {}, action) => {
+export const oneRoute = (state = {}, action) => {
     switch(action.type) {
         case 'SET_ONE_ROUTE':
             console.log('action.payload in oneRoute reducer', action.payload);
@@ -33,8 +33,8 @@ const oneRoute = (state = {}, action) => {
     } 
 }
 
-export default combineReducers({
-    latestRoute,
-    allRoutes,
-    oneRoute,
-});
+// export default combineReducers({
+//     latestRoute,
+//     allRoutes,
+//     oneRoute,
+// });
