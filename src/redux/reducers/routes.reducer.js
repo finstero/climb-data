@@ -23,7 +23,7 @@ export const allRoutes = (state = [], action) => {
 }
 
 // stores route clicked on in RouteList by user
-export const oneRoute = (state = {}, action) => {
+const oneRoute = (state = {}, action) => {
     switch(action.type) {
         case 'SET_ONE_ROUTE':
             console.log('action.payload in oneRoute reducer', action.payload);
