@@ -1,26 +1,44 @@
 
-# Climb Data -- ReadMe to be updated ASAP
+# Climb Data -- ReadMe to be updated ASAP (7/22)
 
-This version uses React, Redux, Express, Passport, and PostgreSQL (a full list of dependencies can be found in `package.json`).
+Duration: 2 week sprint
 
-This is a Mobile First App.
+## Description
 
-## Prerequisites
+Current rock-climbing apps don’t allow users to store important information about what routes they have climbed, nor do they visualize data in a useful way. This full stack app allows users to enter and store information about what routes they are climbing and working on, including the main hold type of the route and the wall angle. After entering, users can view those routes in graph form, allowing them to see strengths and weaknesses beyond what a simple route grade reveals.
 
-Before you get started, make sure you have the following software installed on your computer:
+## Technology
 
+Mobile First App made using:
+
+JavaScript,
+Material UI,
+Chart.js,
+Passport,
+React,
+React - Redux,
+React - Saga, 
+Jest,
+Axios,
+Node.js,
+Express,
+PostgreSQL, and
+Postico.
+
+
+## Development Setup Instructions
+
+Make sure these are all installed:
 - [Node.js](https://nodejs.org/en/)
 - [PostgreSQL](https://www.postgresql.org/)
 - [Nodemon](https://nodemon.io/)
-
-## Development Setup Instructions
 
 - Run `npm install`
 - Create a `.env` file at the root of the project and paste this line into the file:
   ```
   SERVER_SESSION_SECRET=superDuperSecret
   ```
-  While you're in your new `.env` file, take the time to replace `superDuperSecret` with some long random string like `25POUbVtx6RKVNWszd9ERB9Bb6` to keep your application secure. Here's a site that can help you: [https://passwordsgenerator.net/](https://passwordsgenerator.net/). If you don't do this step, create a secret with less than eight characters, or leave it as `superDuperSecret`, you will get a warning.
+   Replace `superDuperSecret` with some long random string like `25POUbVtx6RKVNWszd9ERB9Bb6` to keep the application secure ([https://passwordsgenerator.net/](https://passwordsgenerator.net/)). If you don't do this step, create a secret with less than eight characters, or leave it as `superDuperSecret`, you will get a warning.
 - Start postgres if not running already by using `brew services start postgresql`
 - Run `npm run server`
 - Run `npm run client`
