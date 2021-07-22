@@ -25,7 +25,6 @@ Express,
 PostgreSQL, and
 Postico.
 
-
 ## Development Setup Instructions
 
 Make sure these are all installed:
