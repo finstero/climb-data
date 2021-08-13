@@ -1,115 +1,81 @@
-
--- NEEDS TO BE UPDATED (7/22/21)
+-- RUN THESE QUERIES TO CREATE DATABASE (POSTICO RECOMMENDED)
 
 -- USER is a reserved keyword with Postgres
 -- You must use double quotes in every query that user is in:
--- ex. SELECT * FROM "user";
--- Otherwise you will have errors!
 CREATE TABLE "user" (
     "id" SERIAL PRIMARY KEY,
     "username" VARCHAR (80) UNIQUE NOT NULL,
     "password" VARCHAR (1000) NOT NULL
 );
 
-CREATE TABLE "ysd" (
+CREATE TABLE "grades" (
   "id" SERIAL PRIMARY KEY,
-  "grade" VARCHAR(10)
+  "grade" VARCHAR(10),
+  "type" VARCHAR(15)
 );
 
-INSERT INTO "ysd" ("grade")
+INSERT INTO "grades" ("grade", "type")
 VALUES
-('5.6'),
-('5.7'),
-('5.8'),
-('5.9'),
-('5.10a'),
-('5.10b'),
-('5.10c'),
-('5.10d'),
-('5.11a'),
-('5.11b'),
-('5.11c'),
-('5.11d'),
-('5.12a'),
-('5.12b'),
-('5.12c'),
-('5.12d'),
-('5.13a'),
-('5.13b'),
-('5.13c'),
-('5.13d'),
-('5.14a'),
-('5.14b'),
-('5.14c'),
-('5.14d')
+('5.6', 'ysd'),
+('5.7', 'ysd'),
+('5.8', 'ysd'),
+('5.9', 'ysd'),
+('5.10a', 'ysd'),
+('5.10b', 'ysd'),
+('5.10c', 'ysd'),
+('5.10d', 'ysd'),
+('5.11a', 'ysd'),
+('5.11b', 'ysd'),
+('5.11c', 'ysd'),
+('5.11d', 'ysd'),
+('5.12a', 'ysd'),
+('5.12b', 'ysd'),
+('5.12c', 'ysd'),
+('5.12d', 'ysd'),
+('5.13a', 'ysd'),
+('5.13b', 'ysd'),
+('5.13c', 'ysd'),
+('5.13d', 'ysd'),
+('5.14a', 'ysd'),
+('5.14b', 'ysd'),
+('5.14c', 'ysd'),
+('5.14d', 'ysd'),
+('5.6', 'ysd_simple'),
+('5.7', 'ysd_simple'),
+('5.8', 'ysd_simple'),
+('5.9', 'ysd_simple'),
+('5.10-', 'ysd_simple'),
+('5.10+', 'ysd_simple'),
+('5.11-', 'ysd_simple'),
+('5.11+', 'ysd_simple'),
+('5.12-', 'ysd_simple'),
+('5.12+', 'ysd_simple'),
+('5.13-', 'ysd_simple'),
+('5.13+', 'ysd_simple'),
+('5.14-', 'ysd_simple'),
+('5.14+', 'ysd_simple'),
+('5a', 'french'),
+('5b', 'french'),
+('5c', 'french'),
+('6a', 'french'),
+('6a+', 'french'),
+('6b', 'french'),
+('6b+', 'french'),
+('6c', 'french'),
+('6c+', 'french'),
+('7a', 'french'),
+('7a+', 'french'),
+('7b', 'french'),
+('7b+', 'french'),
+('7c', 'french'),
+('7c+', 'french'),
+('8a', 'french'),
+('8a+', 'french'),
+('8b', 'french'),
+('8b+', 'french'),
+('8c', 'french'),
+('8c+', 'french')
 ;
-
-CREATE TABLE "ysd_simple" (
-  "id" SERIAL PRIMARY KEY,
-  "grade" VARCHAR(10)
-);
-
-INSERT INTO "ysd_simple" ("grade")
-VALUES
-('5.6'),
-('5.7'),
-('5.8'),
-('5.9'),
-('5.10-'),
-('5.10+'),
-('5.11-'),
-('5.11+'),
-('5.12-'),
-('5.12+'),
-('5.13-'),
-('5.13+'),
-('5.14-'),
-('5.14+')
-;
-
-CREATE TABLE "french" (
-  "id" SERIAL PRIMARY KEY,
-  "grade" VARCHAR(10)
-);
-
-INSERT INTO "french" ("grade")
-VALUES
-('5a'),
-('5b'),
-('5c'),
-('6a'),
-('6a+'),
-('6b'),
-('6b+'),
-('6c'),
-('6c+'),
-('7a'),
-('7a+'),
-('7b'),
-('7b+'),
-('7c'),
-('7c+'),
-('8a'),
-('8a+'),
-('8b'),
-('8b+'),
-('8c'),
-('8c+')
-;
-
-CREATE TABLE "routes" (
-  "id" SERIAL PRIMARY KEY,
-  "notes" VARCHAR(255),
-  "image" VARCHAR(255),
-  "flash" BOOLEAN NOT NULL,
-  "sent" BOOLEAN NOT NULL,
-  "date" DATE NOT NULL,
-  "user_id" INT NOT NULL,
-  "ysd_id" INT,
-  "ysd_simple_id" INT,
-  "french_id" INT,
-  "rope_type_id" INT NOT NULL
-);
 
 CREATE TABLE "rope" (
   "id" SERIAL PRIMARY KEY,
@@ -135,12 +101,6 @@ VALUES
 ('overhang')
 ;
 
-CREATE TABLE "routes_wall" (
-  "id" SERIAL PRIMARY KEY,
-  "routes_id" INT NOT NULL,
-  "wall_id" INT NOT NULL
-);
-
 CREATE TABLE "holds" (
   "id" SERIAL PRIMARY KEY,
   "type" VARCHAR(50)
@@ -154,8 +114,16 @@ VALUES
 ('pinches')
 ;
 
-CREATE TABLE "routes_holds" (
+CREATE TABLE "routes" (
   "id" SERIAL PRIMARY KEY,
-  "routes_id" INT NOT NULL,
-  "holds_id" INT NOT NULL
+  "notes" VARCHAR(255),
+  "image" VARCHAR(255),
+  "flash" BOOLEAN NOT NULL,
+  "sent" BOOLEAN NOT NULL,
+  "date" DATE NOT NULL,
+  "user_id" INT NOT NULL REFERENCES "user"(id),
+  "grades_id" INT NOT NULL REFERENCES "grades"(id),
+  "rope_type_id" INT NOT NULL REFERENCES "rope"(id),
+  "holds_id" INT REFERENCES "holds"(id),
+  "wall_id" INT REFERENCES "wall"(id)
 );

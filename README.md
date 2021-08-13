@@ -1,5 +1,5 @@
 
-# Climb Data -- ReadMe to be updated ASAP (7/22)
+# Climb Data
 
 Duration: 2 week sprint
 

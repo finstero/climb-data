@@ -66,7 +66,7 @@ function RoutesList() {
         }
     }
 
-    // for data grid
+    // for data grid, currently not being used
     const columns = [
         { field: 'id', headerName: 'ID', width: 50 },
         { field: 'grade', headerName: 'Grade', width: 120, sortable: false },
