@@ -17,7 +17,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 
 
 // GRAPHFORM USED FOR BOTH GRAPH FILTER AND ROUTES LIST FILTER
-// material ui classes passed down for styling
+// props: material ui classes passed down for styling
 function GraphForm({ classes, dispatchType }) {
 
     const dispatch = useDispatch();

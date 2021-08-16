@@ -1,7 +1,7 @@
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
-import { Line } from 'react-chartjs-2';
+import { Line } from 'test-react-chartjs-2';
 
 // components
 import GraphForm from '../GraphForm/GraphForm';
@@ -58,6 +58,7 @@ function Graph() {
         // labels: ['1', '2', '3', '4', '5', '6'],
         datasets: [
             {
+                key: 'D0',
                 label: 'Main',
                 data: allGraph,
                 fill: false,
@@ -69,9 +70,9 @@ function Graph() {
 
     // user views this line graph data if overlay exists
     const overlayData = {
-        // labels: ['1', '2', '3', '4', '5', '6'],
         datasets: [
             {
+                key: 'D1',
                 label: 'Main',
                 data: allGraph,
                 fill: false,
@@ -79,6 +80,7 @@ function Graph() {
                 borderColor: '#263A43',
             },
             {
+                key: 'D2',
                 label: 'Overlay',
                 data: overlay,
                 fill: false,
@@ -208,6 +210,10 @@ function Graph() {
     //     setOpen(false);
     // }
 
+    // const datasetKeyProvider=()=>{ 
+    //     return btoa(Math.random()).substring(0,12)
+    // } 
+ 
     const dispatchType = {
         type: 'FETCH_FILTERED_GRAPH',
         filter: 'SET_GRAPH_FILTER_DISPLAY'

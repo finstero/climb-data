@@ -8,7 +8,7 @@ const {
 router.get('/:gradeScheme', rejectUnauthenticated, (req, res) => {
     console.log('in graph router get', req.params);
     const query =
-        `SELECT "grades".grade, count("routes") FROM "grades"
+        `SELECT "grades".grade, "grades".id AS "label", count("routes") FROM "grades"
         LEFT JOIN "routes" ON "grades".id = "routes".grades_id AND "routes".user_id = $1
         WHERE "grades".type = $2
         GROUP BY "grades".id

@@ -69,8 +69,9 @@ function AddRoute() {
 		event.preventDefault();
 		console.log('send status', sendStatus);
 		// if route is a project, automatically sets flash to false. (in climbing, flash means you send it the first time you climb it. i.e. it is impossible to have flashed something you haven't sent).
-		if (sendStatus == 'false') {
+		if (!sendStatus) {
 			setFlash(false);
+			console.log('flash status', flash);
 		}
 		if (sendStatus == 'error') {
 			alert('Please make sure to enter something for every option.')
