@@ -5,7 +5,6 @@ const {
     rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
 
-// make this based on useParams!!!
 // /api/grades
 router.get('/:gradeScheme', rejectUnauthenticated, (req, res) => {
 
@@ -25,11 +24,6 @@ router.get('/:gradeScheme', rejectUnauthenticated, (req, res) => {
             console.log('error in grades router get', error);
             res.sendStatus(500);
         })
-});
-
-
-router.post('/', (req, res) => {
-    // POST route code here
 });
 
 module.exports = router;

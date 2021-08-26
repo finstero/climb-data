@@ -2,7 +2,7 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-// currently not used
+// CURRENTLY NOT USED
 router.get('/', (req, res) => {
   console.log('filter router', req.query);
   let query =

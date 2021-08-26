@@ -29,14 +29,6 @@ router.get('/:gradeScheme', rejectUnauthenticated, (req, res) => {
 router.get('/', rejectUnauthenticated, (req, res) => {
     console.log('in filtered graph', req.query);
 
-    // const query =
-    //     `SELECT "grades".grade, count("routes") FROM "grades"
-    //     LEFT JOIN "routes" ON "grades".id = "routes".grades_id AND "routes".user_id = $1
-    //     WHERE "grades".type = 'ysd'
-    //     GROUP BY "grades".id
-    //     ORDER BY "grades"
-    //     ;`
-
     let queryA =
         `SELECT "grades".grade, count("routes") FROM "grades"
         LEFT JOIN "routes" ON "grades".id = "routes".grades_id AND "routes".user_id = $1 `;
