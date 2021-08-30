@@ -24,6 +24,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
+import RopeChip from './RopeChip';
+
 function AddRoute() {
 
 	const history = useHistory();
@@ -215,7 +217,7 @@ function AddRoute() {
 									</div>
 								</Grid>
 								<Grid item xs={12} className={classes.root}>
-									<FormControl required className={classes.formControl}>
+									{/* <FormControl required className={classes.formControl}>
 										<InputLabel id="ropes">Climb Type</InputLabel>
 										<Select
 											onChange={(event) => { setRope(event.target.value) }}
@@ -227,7 +229,13 @@ function AddRoute() {
 												<MenuItem key={rope.id} value={rope.id}>{rope.type}</MenuItem>
 											))}
 										</Select>
-									</FormControl>
+									</FormControl> */}
+									{ropes.map(rope => {
+										return (
+											<Grid>
+												<RopeChip key={rope.id} rope={rope} classes={classes} />
+											</Grid>)
+									})}
 								</Grid>
 								<Grid item xs={12} className={classes.root}>
 									<FormControl required className={classes.formControl}>
@@ -260,7 +268,7 @@ function AddRoute() {
 									</FormControl>
 								</Grid>
 
-												{/* Option for selecting flash disappears if user selects project */}
+								{/* Option for selecting flash disappears if user selects project */}
 								{sendStatus &&
 									<Grid item xs={12} className={classes.root}>
 										<FormControl required className={classes.formControl}>
