@@ -37,13 +37,14 @@ function AddRoute() {
 	const walls = useSelector(store => store.formOptions.wallReducer)
 	const holds = useSelector(store => store.formOptions.holdReducer)
 
+	const selectedRope = useSelector(store => store.chips)
+
 	// const createdRouteId = useSelector(store => store.id);
 
 	// local states for all inputs
 	const [grade, setGrade] = useState('');
 	const [selectedDate, setSelectedDate] = useState(new Date('2021-06-18T11:11:54'));
 	const [sendStatus, setSendStatus] = useState('error');
-	const [rope, setRope] = useState('');
 	const [wall, setWall] = useState('');
 	const [hold, setHold] = useState('');
 	const [flash, setFlash] = useState('');
@@ -83,7 +84,7 @@ function AddRoute() {
 					grades_id: grade,
 					date: selectedDate,
 					sent: sendStatus,
-					rope_type_id: rope,
+					rope_type_id: selectedRope[0],
 					wall_id: wall,
 					holds_id: hold,
 					flash: flash,
@@ -217,19 +218,6 @@ function AddRoute() {
 									</div>
 								</Grid>
 								<Grid item xs={12} className={classes.root}>
-									{/* <FormControl required className={classes.formControl}>
-										<InputLabel id="ropes">Climb Type</InputLabel>
-										<Select
-											onChange={(event) => { setRope(event.target.value) }}
-											defaultValue="choose type"
-											value={rope}
-											labelId="ropes"
-											id="ropes">
-											{ropes.map(rope => (
-												<MenuItem key={rope.id} value={rope.id}>{rope.type}</MenuItem>
-											))}
-										</Select>
-									</FormControl> */}
 									{ropes.map(rope => {
 										return (
 											<Grid>

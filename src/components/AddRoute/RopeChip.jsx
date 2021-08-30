@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 
 // material ui
@@ -9,27 +10,19 @@ function RopeChip({ rope, classes }) {
 
     const dispatch = useDispatch();
 
-    // selected and deselected chip color
-    const [chipColor, setChipColor] = useState('default');
+    const selectedChip = useSelector(store => store.chips)
 
-    const handleChipClick = () => {
+    const handleChipClick = (rope) => {
         console.log('rope.id', rope.id);
-        // if clicking on an unselected chip (grey color), sets color to primary
-        // and dispatches that single tag id to reducer
-        if (chipColor == 'default') {
-            setChipColor('primary');
-            dispatch({
-                type: 'ADD_TAG',
-                payload: {tag_id: rope.id}
-            })
-            // if clicking on selected chip (primary color), sets color to default
-            // and deletes that single tag id from reducer
-        } else if (chipColor == 'primary') {
-            setChipColor('default');
-            dispatch({
-                type: 'DELETE_TAG',
-                payload: {delete_id: rope.id}
-            })
+        console.log('selectedChip', selectedChip)
+        // dispatch({ type: 'ADD_ROPE', payload: selectedChip.filter(chip => chip === !rope.id) })
+        
+
+        if (selectedChip.includes(rope.id)) {
+            dispatch({ type: 'DELETE_ROPE' })
+        } else {
+            dispatch({ type: 'DELETE_ROPE' })
+            dispatch({ type: 'ADD_ROPE', payload: rope.id })
         }
     }
 
@@ -37,13 +30,15 @@ function RopeChip({ rope, classes }) {
         <>
             <li
                 key={rope.id}
-                onClick={handleChipClick}
+                // onClick={handleChipClick}
             >
                 <Chip
-                    color={chipColor}
+                    color={selectedChip.includes(rope.id) ? 'primary' : 'default'}
                     value={rope.id}
-                    label={rope.name}
+                    label={rope.type}
+                    clickable={true}
                     className={classes.chip}
+                    onClick={() => handleChipClick(rope)}
                 ></Chip>
             </li>
 
